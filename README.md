@@ -1,6 +1,6 @@
 # Draglands
 
-# GoalPost (slush fund challenge mobile app):  
+<img src="Logo.png" width="150">
  
 # Project Synopsis
 Login: Outsourced through gmail or facebook
