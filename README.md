@@ -36,11 +36,7 @@ Cherry Zou | AI/ML, Web, Back-end, Needfinding | Organized, cooperative, motivat
 # Team Communication
 * Facebook Messenger
 * @stanford Email
-    * cerjesus
-    * dragland
-    * cameron8
-    * cherryz
-
-
-
-  
+    * <cerjesus@stanford.edu>
+    * <dragland@stanford.edu>
+    * <cameron8@stanford.edu>
+    * <cherryz@stanford.edu>
