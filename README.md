@@ -22,7 +22,7 @@ Member | Photo
 --- | ---
 Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150">
 Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150">
-Cam Thouati | INSERT PHOTO
+Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150">
 Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150">
 
 # Team Skills
