@@ -20,7 +20,7 @@ Have some kind of habit everyone has to do if they don't they put money into slu
 # Team Members
 Member | Photo
 --- | ---
-Jesus Cervantes | INSERT PHOTO
+Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150">
 Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150">
 Cam Thouati | INSERT PHOTO
 Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150">
