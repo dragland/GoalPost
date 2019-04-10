@@ -7,7 +7,7 @@ GoalPost is an app that incentivizes users to help reach their goals. For exampl
 
 Rough Implementation Plan:
 - Login for profiles: 
-Outsourced through gmail or facebook to handle authentication and be done securly
+Outsourced through gmail or facebook to handle authentication and be done securely
 - Grouping: 
 Have some kind of habit everyone has to do if they don't they put money into slush fund to be distributed at end or donated (for groups of 1 or optional for groups of multiple people)
 - Each group has:
