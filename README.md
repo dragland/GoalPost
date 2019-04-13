@@ -4,7 +4,7 @@
  
 # Project Synopsis
 GoalPost is an app that incentivizes users to help reach their goals. For example, if a group of friends wants to go to the gym 3 times a week for the rest of the quarter, they would enter that into the app, and if anybody gets lazy, that person would get charged a couple dollars which goes to a common pool. At the end of the goal period, the pool can be split between everybody for a nice dinner or donated to charity, incentivizing individuals to stick to their original goal posts through reminders and friendly competition.
-[View design specifications here](DesignSpec.md)
+[View design specifications here.](DesignSpec.md)
   
 # Team Members
 Member | Photo
