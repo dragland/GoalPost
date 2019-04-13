@@ -1,0 +1,35 @@
+# Design Spec
+
+Rough Implementation Plan:
+- Login for profiles: 
+Outsourced through gmail or facebook to handle authentication and be done securely
+- Grouping: 
+Have some kind of habit everyone has to do if they don't they put money into slush fund to be distributed at end or donated (for groups of 1 or optional for groups of multiple people)
+- Each group has:
+  List of people, activities, habit times and goal post times, reminders for activities through push, confirmation of completions through push, and tracking of money owed by each person
+- Payment:
+  At end of goal post challenge sort out who owes what money to make it as few easy transactions as possible
+  If charity, we give list of charities to donate to
+  Outsource charging and payment infrastructure to trusted api like venmo or paypal or square
+
+
+default goalpost length
+
+motivations
+circle progress indicator with parts that show per person
+
+incremental charges
+money for after midpoint
+handshake ritual to initialize?
+
+
+# Stakeholders 
+- users: want ease of use, accountability for others, low barrier to entry, should not be complicated or cumbersome to set up
+
+# Functional flow diagram
+
+# Architectural digram
+
+# Technical requirements
+
+# Failure modes and mitigation strategies
