@@ -1,5 +1,12 @@
 # Design Spec
 
+# Stakeholders 
+- users: want ease of use, accountability for others, low barrier to entry, should not be complicated or cumbersome to set up
+
+# Functional flow diagram
+
+# Architectural digram
+
 # Rough Implementation Plan:
 - Login for profiles: 
 Outsourced through gmail or facebook to handle authentication and be done securely
@@ -11,6 +18,14 @@ Have some kind of habit everyone has to do if they don't they put money into slu
   At end of goal post challenge sort out who owes what money to make it as few easy transactions as possible
   If charity, we give list of charities to donate to
   Outsource charging and payment infrastructure to trusted api like venmo or paypal or square
+
+# MVP constraints
+- no money
+- a single goal at a time
+- no need to submit proof
+- no live feed of public goals
+- can't join goal after first task
+- once task starts, remove pending invites
 
  # Tech stack
 -Android Studio
@@ -26,15 +41,8 @@ Have some kind of habit everyone has to do if they don't they put money into slu
 - back to page 1 for new goals
 - Stretch goal of feed page/ window
 
-# MVP constraints
-- no money
-- a single goal at a time
-- no need to submit proof
-- no live feed of public goals
-- can't join goal after first task
-- once task starts, remove pending invites
 
-# Notes lol
+# Technical requirements
 Goal struct
 - Goal name
 - active members
@@ -68,14 +76,6 @@ incremental charges
 money for after midpoint
 handshake ritual to initialize?
 
-
-# Stakeholders 
-- users: want ease of use, accountability for others, low barrier to entry, should not be complicated or cumbersome to set up
-
-# Functional flow diagram
-
-# Architectural digram
-
-# Technical requirements
-
 # Failure modes and mitigation strategies
+- need to keep everyone on bandwagon and not let one bad performer pull everyone down
+- need to make sure event updates propagate instantly to all members
