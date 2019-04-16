@@ -33,8 +33,14 @@
 - need to make sure event updates propagate instantly to all members
 
 ### Functional flow diagram
+```diff 
+- add visual (TODO)
+```
 
 ### System architecture digram
+```diff 
+- add visual (TODO)
+```
 - login with user profiles
   - outsourced through facebook api to handle authentication, profile management, and security
   - eases buy in for members by piggybacking off of existing social network most people already use
@@ -77,6 +83,9 @@
   ```
 
 ### UI experience & Screens
+```diff 
+- add visual (TODO)
+```
 - welcome & sign in with facebook
 - page 1: choice to join pending goal or create own goal
 - goal creation page to enter data and invite members
