@@ -3,7 +3,11 @@
 ### User values & requirments
 - app should provide accountability for others and effectivly incentivise indeviduals and group to reach goal
 - app should have low bar to entry and use
-- ease of use and should not be complicated or cumbersome to setup a goal and add members
+- maintaining motivation is key, so home page must hoghlight contribubutions of each person, perhaps with circular visual like apple watch
+- experiece should be fun and pitentialy ritualized to help hype peoople into achieving their goal
+  ```diff 
+  + charges must be incremental at each activity to renforce habit, not at end (strech feature)
+  ```
 
 ### MVP constraints
 - one active goal at a time
@@ -38,6 +42,9 @@
   - push notifications to users before and after event to remind and check attendance
   - tracks historical user contributions and total pot
   ```diff 
+  + users must upload proof to show attendance (strech feature)
+  ```
+  ```diff 
   + anyone who misses activity gets automatically charged (strech feature)
   ```
 - goal completion and winnings distribution
@@ -57,25 +64,35 @@
   + Payment API outsourced to something trusted like square or paypal (strech feature)
   ```
 
-### Screens
+### UI experience & Screens
 - welcome & sign in with Facebook
 - page 1: choice to join pending goal or create own goal
-- goal creation page?
-- page 2: goal home page, where app loads into from now on until goal finishes [contains goalname, checkin buttons, info, statistics, and progress & accountability visualization (so that group accountability is stressed)]
-- once finished, congratulations page with summery and score allocation (everyone has to agree to complete)
+- goal creation page to ente data and invite members
+- page 2: goal home page, where app loads into from now on until goal finishes 
+  - goalname
+  - progress & acountablity visualization to motivate group and indevidual
+  - checkin buttons
+  - info button
+  - completion statistics
+  ```diff 
+  + interfce to scroll through multiple active goals (strech feature)
+  ```
+  ```diff 
+  + window showing public goal progress, similar to venmo (strech feature)
+  ```
+- completion page with summary anf score allocation
+  - everyone has to agree to complete
 - back to page 1 for new goals
-- Stretch goal of feed page/ window
 
-
-### Technical requirements
+### Technical specifications
 Goal struct
 - Goal name
 - active members
 - pending members
 - private or public
-- duration and start time of goal
+- duration and start time of goal from drop down defaults
 - time and frequency of tasks
-- score penalty per missed task
+- score penalty per missed task from drop down defaults
 - reminder settings
 - max number of members
 
@@ -84,22 +101,17 @@ Profile struct
 - name
 - profile pic
 - friends list
-
-Datbase struct
--active accoutns atached to goal ids
--pending accoutns to goal ids
--active goals
-
-
-invitations to app
-default goalpost length
-
-motivations
-circle progress indicator with parts that show per person
-
-incremental charges
-money for after midpoint
-handshake ritual to initialize?
+- list of active goal
+- list of completed goals
+  ```diff 
+  + list of completed goals (strech feature)
+  ```
+  
+Database struct
+- active accounts atached to active goal ids
+- active accounts atached to completed goal ids
+- pending accounts atached to active goal ids
+- pending accounts atached to completed goal ids
 
 ### Failure modes and mitigation strategies
 - need to keep everyone on bandwagon and not let one bad performer pull everyone down
