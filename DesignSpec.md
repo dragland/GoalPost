@@ -70,18 +70,6 @@
   + winner cashes out slush pot of money (stretch feature)
   ```
 
-### Tech stack
-- Android app
-  - Android Studio
-  - Facebook API
-  - Gcal API
-  - Firebase API
-- BackEnd
-  - Firebase
-  ```diff 
-  + Payment API outsourced to something trusted like square or paypal (stretch feature)
-  ```
-
 ### UI experience & Screens
 ```diff 
 - add visual (TODO)
@@ -105,6 +93,18 @@
   - everyone has to agree to complete
 - back to page 1 for new goals
 
+### Technology stack
+- Android app
+  - Android Studio
+  - Facebook API
+  - Gcal API
+  - Firebase API
+- BackEnd
+  - Firebase
+  ```diff 
+  + Payment API outsourced to something trusted like square or paypal (stretch feature)
+  ```
+  
 ### Technical specifications
 Goal struct
 - Goal name
