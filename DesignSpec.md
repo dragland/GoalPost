@@ -17,8 +17,14 @@
 ### Stretch features
 ```diff 
 + charging for failed activity attendance and cash payout at end (stretch feature)
+```
+```diff 
 + multiple active goals at a time (stretch feature)
+```
+```diff 
 + live feed of public goals (stretch feature)
+```
+```diff 
 + need to submit proof or attendance of goal (stretch feature)
 ```
 
