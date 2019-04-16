@@ -1,18 +1,22 @@
 # Design Spec
 
-# Stakeholders 
-- users: want ease of use, accountability for others, low barrier to entry, should not be complicated or cumbersome to set up
+# User as Stakeholder & their requirments
+- wants ease of use and should not be complicated or cumbersome to setup
+- app should provide accountability for others and incentivise indeviduals and group to reach goal
+- app should have low bar to entry and setup
 
 # Functional flow diagram
 
-# Architectural digram
+# System architecture digram
+- profiles: 
+  - outsourced through facebook api to handle authentication, profile managment, and security, in adddition to easing social buy in
+- goals
+  - object managed by us and contins user ids tht goal applies to
+  - also contains slush pot and user's contribution history
+  
+- payment
 
-# Rough Implementation Plan:
-- Login for profiles: 
-Outsourced through gmail or facebook to handle authentication and be done securely
-- Grouping: 
-Have some kind of habit everyone has to do if they don't they put money into slush fund to be distributed at end or donated (for groups of 1 or optional for groups of multiple people)
-- Each group has:
+
   List of people, activities, habit times and goal post times, reminders for activities through push, confirmation of completions through push, and tracking of money owed by each person
 - Payment:
   At end of goal post challenge sort out who owes what money to make it as few easy transactions as possible
@@ -27,12 +31,20 @@ Have some kind of habit everyone has to do if they don't they put money into slu
 - can't join goal after first task
 - once task starts, remove pending invites
 
- # Tech stack
--Android Studio
--Firebase
--Facebook login
+# Tech stack
+- Android app
+  - Android Studio
+  - Facebook API
+  - Gcal API
+  - Firebase API
+- BackEnd
+  - Firebase
+  - Payment API 
+  ```diff 
+  + Payment API (strech feature)
+  ```
 
- # Screens
+# Screens
 - welcome & sign in with Facebook
 - page 1: choice to join pending goal or create own goal
 - goal creation page?
