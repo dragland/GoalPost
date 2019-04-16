@@ -1,55 +1,61 @@
 # Design Spec
 
-### User values & requirments
-- app should provide accountability for others and effectivly incentivise indeviduals and group to reach goal
+### User values & requirements
+- app should provide accountability for others and effectively incentive individuals and group to reach goal
 - app should have low bar to entry and use
-- maintaining motivation is key, so home page must hoghlight contribubutions of each person, perhaps with circular visual like apple watch
-- experiece should be fun and pitentialy ritualized to help hype peoople into achieving their goal
-  ```diff 
-  + charges must be incremental at each activity to renforce habit, not at end (strech feature)
-  ```
+- maintaining motivation is key, so home page must highlight contributions of each person, perhaps with circular visual like apple watch
+- experience should be fun and potentially ritualized to help hype people into achieving their goal
+```diff 
++ charges must be incremental at each activity to reinforce habit, not at end (stretch feature)
+```
 
 ### MVP constraints
 - one active goal at a time
-- cannot join goal after first task starts, as it removes oending invites
-- scores allocated are imagnary currency points
+- cannot join goal after first task starts, as it removes pending invites
+- scores allocated are imaginary currency points
 
-### Strech feautures
-- charging for failed activity attendance and cash payout at end
-- multiple active goals at a time
-- live feed of public goals
-- need to submit proof or attendance of goal
+### Stretch features
+```diff 
++ charging for failed activity attendance and cash payout at end (stretch feature)
++ multiple active goals at a time (stretch feature)
++ live feed of public goals (stretch feature)
++ need to submit proof or attendance of goal (stretch feature)
+```
+
+### Failure modes and mitigation strategies
+- need to keep everyone on bandwagon and not let one bad performer pull everyone down
+- need to make sure event updates propagate instantly to all members
 
 ### Functional flow diagram
 
 ### System architecture digram
 - login with user profiles
-  - outsourced through facebook api to handle authentication, profile managment, and security
+  - outsourced through facebook api to handle authentication, profile management, and security
   - eases buy in for members by piggybacking off of existing social network most people already use
   ```diff 
-  + user enters finantial information in order to finish setup (strech feature)
+  + user enters financial information in order to finish setup (stretch feature)
   ```
 - pending goals
-  - need to handle race conditions and keep track of penfding invites for users that are invited to join app
+  - need to handle race conditions and keep track of pending invites for users that are invited to join app
 - goal creation
   - object managed by us in backend
   - contains user ids that goal applies to
   - contains pending invites
   - contains time data for goal
-  - contains time data for indevidual activities
+  - contains time data for individual activities
   - score cost for missing activity can be chosen from drop down menu
 - goal and activity progress
   - push notifications to users before and after event to remind and check attendance
   - tracks historical user contributions and total pot
   ```diff 
-  + users must upload proof to show attendance (strech feature)
+  + users must upload proof to show attendance (stretch feature)
   ```
   ```diff 
-  + anyone who misses activity gets automatically charged (strech feature)
+  + anyone who misses activity gets automatically charged (stretch feature)
   ```
 - goal completion and winnings distribution
   ```diff 
-  + winner cashes out slush pot of money (strech feature)
+  + winner cashes out slush pot of money (stretch feature)
   ```
 
 ### Tech stack
@@ -61,26 +67,26 @@
 - BackEnd
   - Firebase
   ```diff 
-  + Payment API outsourced to something trusted like square or paypal (strech feature)
+  + Payment API outsourced to something trusted like square or paypal (stretch feature)
   ```
 
 ### UI experience & Screens
-- welcome & sign in with Facebook
+- welcome & sign in with facebook
 - page 1: choice to join pending goal or create own goal
-- goal creation page to ente data and invite members
+- goal creation page to enter data and invite members
 - page 2: goal home page, where app loads into from now on until goal finishes 
-  - goalname
-  - progress & acountablity visualization to motivate group and indevidual
+  - goal name
+  - progress & accountability visualization to motivate group and individual
   - checkin buttons
   - info button
   - completion statistics
   ```diff 
-  + interfce to scroll through multiple active goals (strech feature)
+  + interface to scroll through multiple active goals (stretch feature)
   ```
   ```diff 
-  + window showing public goal progress, similar to venmo (strech feature)
+  + window showing public goal progress, similar to venmo (stretch feature)
   ```
-- completion page with summary anf score allocation
+- completion page with summary and score allocation
   - everyone has to agree to complete
 - back to page 1 for new goals
 
@@ -102,17 +108,11 @@ Profile struct
 - profile pic
 - friends list
 - list of active goal
-- list of completed goals
-  ```diff 
-  + list of completed goals (strech feature)
-  ```
+```diff 
++ list of completed goals (stretch feature)
+```
   
 Database struct
-- active accounts atached to active goal ids
-- active accounts atached to completed goal ids
-- pending accounts atached to active goal ids
-- pending accounts atached to completed goal ids
-
-### Failure modes and mitigation strategies
-- need to keep everyone on bandwagon and not let one bad performer pull everyone down
-- need to make sure event updates propagate instantly to all members
+- active user ids attached to active goal ids
+- active user ids attached to completed goal ids
+- pending user ids attached to active goal ids
