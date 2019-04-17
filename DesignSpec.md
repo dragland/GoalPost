@@ -36,7 +36,7 @@
 
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vRKIoLY0rWtWKpHmWYkfLzQMgrxeiKymKfJZ2pPpsZPfa0BfOOll6Mo_Z7qZLTTe1DI_F_d0nZT3zJ1/pub?w=960&amp;h=720">
 
-### System architecture digram
+### System architecture diagram
 ```diff 
 - add visual (TODO)
 ```
