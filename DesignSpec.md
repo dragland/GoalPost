@@ -70,9 +70,6 @@
   ```
 
 ### UI experience & Screens
-```diff 
-- add visual (TODO)
-```
 - welcome & sign in with facebook
   - <img src="https://user-images.githubusercontent.com/38739818/56320701-8f6ef100-6119-11e9-8461-d4f69464fb43.png" width="150"/> <img src="https://user-images.githubusercontent.com/38739818/56319913-bdebcc80-6117-11e9-8809-df714488ed5a.png" width="150"/>
   
