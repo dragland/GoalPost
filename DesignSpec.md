@@ -86,7 +86,7 @@
   - info button
   - completion statistics
   ```diff 
-  + goal selection interface such as tab or sidebar to scroll through multiple active goals (stretch feature)
+  + goal selection interface (tab/sidebar) to scroll through multiple active goals (stretch feature)
   ```
   ```diff 
   + window showing public goal progress, similar to venmo (stretch feature)
