@@ -122,6 +122,7 @@ Goal struct
 - score penalty per missed task from drop down defaults
 - reminder settings
 - max number of members
+- active or completed status
 
 Profile struct
 - unique id from FB
