@@ -33,11 +33,10 @@
 - need to make sure event updates propagate instantly to all members
 
 ### Functional flow diagram
-```diff 
-- add visual (TODO)
-```
 
-### System architecture digram
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vRKIoLY0rWtWKpHmWYkfLzQMgrxeiKymKfJZ2pPpsZPfa0BfOOll6Mo_Z7qZLTTe1DI_F_d0nZT3zJ1/pub?w=960&amp;h=720">
+
+### System architecture diagram
 ```diff 
 - add visual (TODO)
 ```
@@ -71,12 +70,15 @@
   ```
 
 ### UI experience & Screens
-```diff 
-- add visual (TODO)
-```
 - welcome & sign in with facebook
+  - <img src="https://user-images.githubusercontent.com/38739818/56320701-8f6ef100-6119-11e9-8461-d4f69464fb43.png" width="150"/> <img src="https://user-images.githubusercontent.com/38739818/56319913-bdebcc80-6117-11e9-8809-df714488ed5a.png" width="150"/>
+  
 - page 1: choice to join pending goal or create own goal
+  - <img src="https://user-images.githubusercontent.com/38739818/56321593-e70e5c00-611b-11e9-8844-75fafc976cbd.png" width="150"/>
+  
 - goal creation page to enter data and invite members
+  - <img src="https://user-images.githubusercontent.com/38739818/56321747-2e94e800-611c-11e9-9601-bc9fc9227321.png" width="150"/>
+  
 - page 2: goal home page, where app loads into from now on until goal finishes 
   - goal name
   - progress & accountability visualization to motivate group and individual
@@ -84,13 +86,17 @@
   - info button
   - completion statistics
   ```diff 
-  + interface to scroll through multiple active goals (stretch feature)
+  + goal selection interface (tab/sidebar) to scroll through multiple active goals (stretch feature)
   ```
   ```diff 
   + window showing public goal progress, similar to venmo (stretch feature)
   ```
+  - <img src="https://user-images.githubusercontent.com/38739818/56321860-6e5bcf80-611c-11e9-925f-7c4002eb5e53.png" width="150"/> <img src="https://user-images.githubusercontent.com/38739818/56322151-212c2d80-611d-11e9-9e65-815e415080b7.png" width="150"/>
+  
 - completion page with summary and score allocation
   - everyone has to agree to complete
+  - <img src="https://user-images.githubusercontent.com/38739818/56322051-dca09200-611c-11e9-81de-ad015246bd74.png" width="150"/>
+  
 - back to page 1 for new goals
 
 ### Technology stack
@@ -116,6 +122,7 @@ Goal struct
 - score penalty per missed task from drop down defaults
 - reminder settings
 - max number of members
+- active or completed status
 
 Profile struct
 - unique id from FB
