@@ -1,21 +1,21 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
-class Home extends React.Component {
+class CreateGoal extends React.Component {
   static navigationOptions = {
-    title: 'Home'
+    title: 'CreateGoal'
    };
-render() {
+ render() {
  return (
   <View style={{ 
    flex: 1,
    alignItems:'center',
    justifyContent:'center'
   }}>
-  <Button title="Go to Create Goal screen"
-    onPress={() => this.props.navigation.navigate('CreateGoal')}
+   <Button title="Go to Home screen"
+    onPress={() => this.props.navigation.navigate('Home')}
    />
   </View>
 );
 }
 }
-export default Home;
+export default CreateGoal;
