@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
-class CreateGoal extends React.Component {
+class Completion extends React.Component {
   static navigationOptions = {
-    title: 'CreateGoal'
+    title: 'Completion'
    };
  render() {
  return (
@@ -11,9 +11,6 @@ class CreateGoal extends React.Component {
    alignItems:'center',
    justifyContent:'center'
   }}>
-   <Button title="Go to Goal Completion screen"
-    onPress={() => this.props.navigation.navigate('Completion')}
-   />
    <Button title="Go Back"
     onPress={() => this.props.navigation.goBack()}
    />
@@ -21,4 +18,4 @@ class CreateGoal extends React.Component {
 );
 }
 }
-export default CreateGoal;
+export default Completion;
