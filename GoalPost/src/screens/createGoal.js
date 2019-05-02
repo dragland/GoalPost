@@ -10,7 +10,12 @@ class CreateGoal extends React.Component {
   state = {
     isDateTimePickerVisible: false,
     enablePushNotifs: true,
+    goalName: null,
     date: null,
+  };
+
+  updateGoalName = (e) => {
+    this.setState({ goalName: e.nativeEvent.text });
   };
 
   showDateTimePicker = () => {
@@ -38,8 +43,15 @@ render() {
   }}>
 
    <View style={styles.inputRow}>
-     <Text style={styles.inputHeader}>Goal Name</Text>
-     <Input placeholder='Gym Buddies' />
+     <View style={styles.inputHeaderContainer}>
+       <Text style={styles.inputHeader}>Goal Name</Text>
+     </View>
+     <View style={styles.inputTakerContainer}>
+       <Input
+         placeholder='Gym Buddies' 
+         onChange={this.updateGoalName}
+       />
+     </View>
    </View>
 
    <View style={styles.inputRow}>
@@ -77,7 +89,9 @@ render() {
    </View>
 
    <Button title="Go to Goal Completion screen"
-    onPress={() => this.props.navigation.navigate('Completion')}
+    onPress={() => this.props.navigation.navigate('Completion', {
+      goalName: this.state.goalName,
+    })}
    />
    <Button title="Go Back"
     onPress={() => this.props.navigation.goBack()}
@@ -94,11 +108,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  inputHeaderContainer: {
+    flex: 0.4,
+  },
   inputHeader: {
     color: '#484848',
     fontWeight: 'bold',
     fontSize: 18,
     lineHeight: 21,
+  },
+  inputTakerContainer: {
+    flex: 0.5,
   },
 });
 
