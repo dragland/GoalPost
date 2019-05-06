@@ -1,21 +1,136 @@
-import React from 'react';
-import { Button, View, Text } from 'react-native';
-class Home extends React.Component {
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { Avatar, Button } from "react-native-elements";
+import baseStyles from "../../styles/baseStyles";
+
+export default class Home extends React.Component {
   static navigationOptions = {
-    title: 'Home'
-   };
-render() {
- return (
-  <View style={{ 
-   flex: 1,
-   alignItems:'center',
-   justifyContent:'center'
-  }}>
-  <Button title="Go to Create Goal screen"
-    onPress={() => this.props.navigation.navigate('CreateGoal')}
-   />
-  </View>
-);
+    title: "Home"
+  };
+
+  registerYes = () => {
+    // currently does nothing
+  };
+
+  registerNo = () => {
+    // currently does nothing
+  };
+
+  render() {
+    const { navigation } = this.props;
+    const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
+
+    return (
+      <View style={baseStyles.screen}>
+        <Text style={baseStyles.text}>Current GoalPost:</Text>
+        <Text style={baseStyles.heading}>{goalName}</Text>
+        <Text style={baseStyles.text}>Did you complete today's goal?</Text>
+
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            buttonStyle={styles.button}
+            title="Yes"
+            type="outline"
+            onPress={this.registerYes}
+          />
+
+          <Button
+            buttonStyle={styles.button}
+            title="No"
+            type="outline"
+            onPress={this.registerNo}
+          />
+        </View>
+
+        <Text style={baseStyles.heading2}>Current Leaderboard:</Text>
+        <View style={styles.boardEntry}>
+          <Text style={baseStyles.heading2}>#1</Text>
+          <Avatar
+            size="medium"
+            rounded
+            source={require("../../images/davy.jpg")}
+          />
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+        </View>
+        <View style={styles.boardEntry}>
+          <Text style={baseStyles.heading2}>#2</Text>
+          <Avatar
+            size="medium"
+            rounded
+            source={require("../../images/cherry.jpg")}
+          />
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+        </View>
+        <View style={styles.boardEntry}>
+          <Text style={baseStyles.heading2}>#3</Text>
+          <Avatar
+            size="medium"
+            rounded
+            source={require("../../images/jesus.jpg")}
+          />
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+        </View>
+        <View style={styles.boardEntry}>
+          <Text style={baseStyles.heading2}>#4</Text>
+          <Avatar
+            size="medium"
+            rounded
+            source={require("../../images/cam.jpg")}
+          />
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+          <View style={styles.progressBox}></View>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+        <Button
+          title="Go to Goal Completion Screen"
+          onPress={() =>
+            this.props.navigation.navigate("Completion", {
+              goalName: goalName
+            })
+          }
+        />
+        <Button
+          title="Go Back"
+          onPress={() => this.props.navigation.goBack()}
+        />
+        </View>
+      </View>
+    );
+  }
 }
-}
-export default Home;
+
+const styles = StyleSheet.create({
+  boardEntry: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignSelf: "flex-start",
+    margin: 5
+  },
+  button: {
+    width: 100,
+    margin: 10
+  },
+  progressBox: {
+    backgroundColor: "#67E9AA",
+    width: 20,
+    height: 20,
+    margin: 5,
+    marginTop: 12
+  },
+});

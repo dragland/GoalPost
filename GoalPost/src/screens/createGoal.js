@@ -2,6 +2,7 @@ import React from "react";
 import { Button, View, StyleSheet, Switch, Text } from "react-native";
 import { Input } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
+import baseStyles from "../../styles/baseStyles";
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
@@ -35,7 +36,7 @@ class CreateGoal extends React.Component {
 
   render() {
     return (
-      <View style={styles.screen}>
+      <View style={baseStyles.screen}>
         <View style={styles.inputRow}>
           <View style={styles.inputHeaderContainer}>
             <Text style={styles.inputHeader}>Goal Name</Text>
@@ -97,9 +98,9 @@ class CreateGoal extends React.Component {
         </View>
 
         <Button
-          title="Go to Goal Completion screen"
+          title="Create New Goal"
           onPress={() =>
-            this.props.navigation.navigate("Completion", {
+            this.props.navigation.navigate("Home", {
               goalName: this.state.goalName
             })
           }
@@ -114,11 +115,6 @@ class CreateGoal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
   inputRow: {
     flex: 1,
     flexDirection: "row",
