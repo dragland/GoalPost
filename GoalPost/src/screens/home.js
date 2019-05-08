@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 
@@ -7,13 +7,18 @@ export default class Home extends React.Component {
   static navigationOptions = {
     title: "Home"
   };
+  state = {
+    yesNoDisabled: false
+  };
 
   registerYes = () => {
-    // currently does nothing
+    this.setState({ yesNoDisabled: true });
+    Alert.alert('Keep up the good work!');
   };
 
   registerNo = () => {
-    // currently does nothing
+    this.setState({ yesNoDisabled: true });
+    Alert.alert('You have chosen...poorly.');
   };
 
   render() {
@@ -32,6 +37,7 @@ export default class Home extends React.Component {
             title="Yes"
             type="outline"
             onPress={this.registerYes}
+            disabled={this.state.yesNoDisabled}
           />
 
           <Button
@@ -39,6 +45,7 @@ export default class Home extends React.Component {
             title="No"
             type="outline"
             onPress={this.registerNo}
+            disabled={this.state.yesNoDisabled}
           />
         </View>
 
