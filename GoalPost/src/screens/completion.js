@@ -14,7 +14,7 @@ export default class Completion extends React.Component {
     return (
       <View style={baseStyles.screen}>
         <Text style={baseStyles.heading}>Congratulations!</Text>
-        <Text style={baseStyles.text}>You've completed the task&nbsp;
+        <Text style={baseStyles.text}>You've completed the goal&nbsp;
           <Text style={{ fontWeight: "bold" }}>{goalName}</Text>
         !</Text>
 
