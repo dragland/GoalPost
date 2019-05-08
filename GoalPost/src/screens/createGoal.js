@@ -3,6 +3,7 @@ import { Button, View, StyleSheet, Switch, Text } from "react-native";
 import { Input } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
+import firebase from 'react-native-firebase';
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
@@ -99,11 +100,10 @@ class CreateGoal extends React.Component {
 
         <Button
           title="Create New Goal"
-          onPress={() =>
-            this.props.navigation.navigate("Home", {
-              goalName: this.state.goalName
-            })
-          }
+          onPress={() => {
+            this.ref.add({title: this.state.goalName, complete: false,});
+            this.props.navigation.navigate("Home", {goalName: this.state.goalName});
+          }}
         />
         <Button
           title="Go Back"
@@ -111,6 +111,10 @@ class CreateGoal extends React.Component {
         />
       </View>
     );
+  }
+  constructor() {
+    super();
+    this.ref = firebase.firestore().collection('goals');
   }
 }
 
