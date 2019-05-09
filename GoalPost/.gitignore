@@ -2,6 +2,10 @@
 #
 android/app/google-services.json
 
+#Lock
+#
+GoalPost/package-lock.json
+
 # OSX
 #
 .DS_Store

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Image, StyleSheet, View, Text } from "react-native";
 import baseStyles from "../../styles/baseStyles";
+import Cloud from "../components/database";
 
 export default class Completion extends React.Component {
   static navigationOptions = {
@@ -8,7 +9,6 @@ export default class Completion extends React.Component {
   };
 
   render() {
-    /* Get passed params, provide fallback if nothing set */
     const { navigation } = this.props;
     const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
     return (

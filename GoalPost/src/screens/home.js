@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
+import Clouds from "../components/database";
 
 export default class Home extends React.Component {
   static navigationOptions = {
