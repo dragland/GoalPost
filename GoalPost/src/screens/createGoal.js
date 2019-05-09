@@ -4,6 +4,7 @@ import { Input } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
+import RNCalendarEvents from 'react-native-calendar-events';
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
@@ -13,7 +14,8 @@ class CreateGoal extends React.Component {
     isDateTimePickerVisible: false,
     enablePushNotifs: true,
     goalName: null,
-    date: null
+    startDate: null,
+    endDate: null
   };
 
   updateGoalName = e => {
@@ -26,11 +28,14 @@ class CreateGoal extends React.Component {
   hideDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: false });
   };
-  handleDatePicked = date => {
-    this.setState({ date: date.toLocaleDateString() });
+  handleStartDatePicked = startDate => {
+    this.setState({ startDate: startDate.toLocaleDateString() });
     this.hideDateTimePicker();
   };
-
+  handleEndDatePicked = endDate => {
+    this.setState({ endDate: endDate.toLocaleDateString() });
+    this.hideDateTimePicker();
+  };
   togglePushNotifs = bool => {
     this.setState({ enablePushNotifs: bool });
   };
@@ -52,10 +57,24 @@ class CreateGoal extends React.Component {
             <Text style={styles.inputHeader}>Start Date</Text>
           </View>
           <View style={styles.inputTakerContainer}>
-            <Input value={this.state.date} onFocus={this.showDateTimePicker} />
+            <Input value={this.state.startDate} onFocus={this.showDateTimePicker} />
             <DateTimePicker
               isVisible={this.state.isDateTimePickerVisible}
-              onConfirm={this.handleDatePicked}
+              onConfirm={this.handleStartDatePicked}
+              onCancel={this.hideDateTimePicker}
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputRow}>
+          <View style={styles.inputHeaderContainer}>
+            <Text style={styles.inputHeader}>End Date</Text>
+          </View>
+          <View style={styles.inputTakerContainer}>
+            <Input value={this.state.endDate} onFocus={this.showDateTimePicker} />
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleEndDatePicked}
               onCancel={this.hideDateTimePicker}
             />
           </View>
