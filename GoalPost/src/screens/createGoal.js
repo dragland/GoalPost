@@ -120,7 +120,7 @@ class CreateGoal extends React.Component {
         <Button
           title="Create New Goal"
           onPress={() => {
-            Cloud.pushGoalToDB(this.state.goalName);
+            Cloud.addGoal("0", "0", this.state.goalName);
             this.props.navigation.navigate("Home", {goalName: this.state.goalName});
           }}
         />
