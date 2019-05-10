@@ -112,6 +112,9 @@
   ```
   
 ### Technical specifications
+
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vTcj8aRlEeXgu_qAhYIugT8xC0sdZYblWw6zErl9qYc8dgqkmSVwfKxPk_NY1r-k4mFiK5VpO8QI8GT/pub?w=1542&amp;h=751">
+
 Goal struct
 - Goal name
 - active members
