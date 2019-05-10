@@ -2,8 +2,8 @@ import firebase from 'react-native-firebase';
 
 class dataBase {
 	constructor() {
-		this.users = firebase.firestore().collection('users');
-		this.goals = firebase.firestore().collection('goals');
+		this.users = firebase.firestore().collection('users'); // map of userIDs to struct that has lists of different states of goalIDs
+		this.goals = firebase.firestore().collection('goals'); // map of goalIDs to struct that defines their properties
 	}
 
 	getUser(userID) {
@@ -63,9 +63,10 @@ class dataBase {
 		this.goals.add({
 				goal_name: struct,
 			});
+		// return goalID??????
 	}
 
-	updateGoal(userID) {
+	updateGoal(userID, goalID) {
 		/*CALLED ONLY WHEN TASK EXPIRES*/
 
 		// if last task {
@@ -84,9 +85,6 @@ class dataBase {
 
 	getCompletedGoals(userID) {
 		// return [] = map[userID.completed_goals
-	}
-
-	pushGoalToDB(s) {
 	}
 }
 
