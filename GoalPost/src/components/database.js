@@ -107,7 +107,6 @@ class dataBase {
 		// 	end_date = "",
 		// 	task_times = "",
 		// 	penalty = "",
-		// 	reminders = "",
 		// 	privacy = false,
 		// };
 	}
