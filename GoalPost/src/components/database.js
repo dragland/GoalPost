@@ -13,14 +13,14 @@ class dataBase {
 		**************************************************
 		API for internal use within application 
 	*/
-	loginUser(userID, fbData) {
-		// /* Called once user logs in with facebook */
+	loginUser(userID, profile) {
+		// /* Called once user logs in */
 		// if (checkIfUserExists(userID)) {
 		// 	user = getUser(userID);
-		// 	updateUser(userID, fbData, user.pending_goals, user.active_goals, user.completed_goals);
+		// 	updateUser(userID, profile, user.pending_goals, user.active_goals, user.completed_goals);
 		// }
 		// else {
-		// 	createUser(userID, fbData);
+		// 	createUser(userID, profile);
 		// }
 	}
 
@@ -116,11 +116,11 @@ class dataBase {
 		// return db.users[userID] != NULL;
 	}
 
-	updateUser(userID, fbData, pending_goals, active_goals, completed_goals) {
+	updateUser(userID, profile, pending_goals, active_goals, completed_goals) {
 		// db.users[userID].set()
 	}
 
-	createUser(userID, fbData) {
+	createUser(userID, profile) {
 		// db.users[userID].add()
 	}
 
