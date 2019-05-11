@@ -1,90 +1,156 @@
 import firebase from 'react-native-firebase';
 
 class dataBase {
+
+	/* Called one on initialization */
 	constructor() {
 		this.users = firebase.firestore().collection('users'); // map of userIDs to struct that has lists of different states of goalIDs
 		this.goals = firebase.firestore().collection('goals'); // map of goalIDs to struct that defines their properties
 	}
 
-	getUser(userID) {
-		/*CALLED WHEN USER LOGS IN*/
-		// return map[userID]
-	}
 
-	addUser(userID) {
-		/*CALLED WHEN USER LOGS IN*/
-
-		// pend = []
-		// act = []
-		// if map[userID] != NULL {
-		// 	pend = getPendingGoals(userID);
-		// 	act = pend
-		// 	pend = []
+	/*
+		**************************************************
+		API for internal use within application 
+	*/
+	loginUser(userID, fbData) {
+		// /* Called once user logs in with facebook */
+		// if (checkIfUserExists(userID)) {
+		// 	user = getUser(userID);
+		// 	updateUser(userID, fbData, user.pending_goals, user.active_goals, user.completed_goals);
 		// }
-
-		// map[userID] = {
-		// 	user_name = ""
-		// 	profile_pic = ""
-		// 	pending_goals = pend
-		// 	active_goals = act
-		// 	completed_goals = []
+		// else {
+		// 	createUser(userID, fbData);
 		// }
 	}
+
+	loadUser(userID) {
+		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs*/
+		// user = getUser(userID);
+		// for (g in user.pending_goals) {
+		// 	if (getGoal(g).task_times[0] < now) {
+		// 		deletePendingGoal(userID, g)
+		// 		removeUserFromGoal(userID, g);
+		// 	}
+		// }
+		// for (g in user.active_goals) {
+		// 	if (getGoal(g).end_date < now) {
+		// 		completeGoal(userID, g);
+		// 	}
+		// }
+		// return getUser(userID);
+	}
+
+	loadGoal(userID, goalID) {
+		// /* Called on every invocation of active, pending, & completed screens */
+		// goal = getGoal(goalID);
+		// if (goal.end_date < now) {
+		// 	completeGoal(userID, g);
+		// }
+		// return goal;
+	}
+
+	checkInToTask(userID, goalID, present) {
+		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
+		// completed = false;
+		// if (present) {
+		// 	updateUserScore(userID, goalID);
+		// }
+		// goal = getGoal(goalID);
+		// if (goal.task_times[-1] <= now) {
+		// 	completed = true;
+		// 	completeGoal(userID, goalID)
+		// }
+		// return completed;
+	}  
 
 	acceptPendingGoal(userID, goalID) {
-		// map[userID.active_goals.add(goalID)
-		// map[userID.pending_goals.remove(goalID)
+		// activatePendingGoal(userID, goalID);
+		// deletePendingGoal(userID, goalID);
 	}
 
 	rejectPendingGoal(userID, goalID) {
-		// map[userID.pending_goals.remove(goalID)
+		// deletePendingGoal(userID, goalID);
+		// removeUserFromGoal(userID, goalID);
 	}
 
 	addGoal(userID, friends, struct) {
-		/*CALLED WHEN USER CREATES GOAL*/
-
-		// act = fb.installedFriends(friends)
-		// pend = friends - act
-		// for f in pend {
-		// 	map[userID.pending_goals.append(goalID)
+		// goalID = createGoal(struct);
+		// for (f in friends) {
+		// 	inviteToGoal(f, goalID);
 		// }
+		// return goalID;
 
-		// map[goalID] = {
-		// 	goal_name = ""
-		// 	pending_users = pend
-		// 	active_users= userID + act
-		// 	duration = ""
-		// 	task_times = ""
-		// 	penalty = ""
-		// 	reminders = ""
-		// 	privacy = false
-		// 	completed = false
-		// }
 		this.goals.add({
 				goal_name: struct,
 			});
-		// return goalID??????
 	}
 
-	updateGoal(userID, goalID) {
-		/*CALLED ONLY WHEN TASK EXPIRES*/
-
-		// if last task {
-		// 	map[userID.active_goals.remove(goalID)
-		// 	map[userID.completed_goals.add(goalID)
-		// }
+	/* 
+		**************************************************
+		helper functions for above API 
+	*/
+	getUser(userID) {
+		// return db.users[userID] : {
+		// 	user_name = "",
+		// 	profile_pic = "",
+		// 	pending_goals = [],
+		// 	active_goals = [],
+		// 	completed_goals = []
+		// };
 	}
 
-	getPendingGoals(userID) {
-		// return [] = map[userID.pending_goals
+	getGoal(goalID) {
+		// return db.goals[goalID] : {
+		// 	goal_name = "",
+		// 	user_score_map = {users : scores},
+		// 	end_date = "",
+		// 	task_times = "",
+		// 	penalty = "",
+		// 	reminders = "",
+		// 	privacy = false,
+		// };
 	}
 
-	getActiveGoals(userID) {
-		// return [] = map[userID.active_goals
+	checkIfUserExists(userID) {
+		// return db.users[userID] != NULL;
 	}
 
-	getCompletedGoals(userID) {
-		// return [] = map[userID.completed_goals
+	updateUser(userID, fbData, pending_goals, active_goals, completed_goals) {
+		// db.users[userID].set()
+	}
+
+	createUser(userID, fbData) {
+		// db.users[userID].add()
+	}
+
+	removeUserFromGoal(userID, goalID) {
+		// db.goals[goalID].user_score_map.remove(userID);
+	}
+
+	completeGoal(userID, goalID) {
+		// db.users[userID].active_goals.remove(goalID);
+		// db.users[userID].completed_goals.add(goalID);
+	}
+
+	createGoal(struct) {
+		// return db.goals.add()
+	}
+
+	inviteToGoal(userID, goalID) {
+		// db.users[userID].pending_goals.add(GoalID);
+	}
+
+	updateUserScore(userID, goalID) {
+		// db.goals[goalID].user_score_map[userID] += db.goals[goalID].penalty;
+	}
+
+	activatePendingGoal(userID, goalID) {
+		// db.users[userID].active_goals.add(goalID);
+	}
+
+	deletePendingGoal(userID, goalID) {
+		// db.users[userID].pending_goals.remove(goalID);
 	}
 }
 
