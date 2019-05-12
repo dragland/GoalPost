@@ -4,9 +4,9 @@ import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Clouds from "../components/database";
 
-export default class Home extends React.Component {
+export default class ActiveGoal extends React.Component {
   static navigationOptions = {
-    title: "Home"
+    title: "ActiveGoal"
   };
   state = {
     yesNoDisabled: false

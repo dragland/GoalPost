@@ -108,8 +108,10 @@ class dataBase {
 	}
 
 	async test() {
-		let goal = await this.addGoal("test", "test_goal", ["root", "invited", "0"], [0, 1, 2], 5);
-		Alert.alert("created goal with ID: ", goal);
+		this.deletePendingGoal("root", "MpfJFGH51Dl5jlCsy7Yz");
+		this.deletePendingGoal("test", "MpfJFGH51Dl5jlCsy7Yz");
+		this.deletePendingGoal("invited", "MpfJFGH51Dl5jlCsy7Yz");
+		this.deletePendingGoal("0", "MpfJFGH51Dl5jlCsy7Yz");
 	}
 
 	/* 
@@ -190,7 +192,9 @@ class dataBase {
 	}
 
 	deletePendingGoal(userID, goalID) {
-		// db.users[userID].pending_goals.remove(goalID);
+		this.users.doc(userID).update({
+			pending_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
+		});
 	}
 }
 
