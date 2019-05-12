@@ -9,17 +9,9 @@
 + charges must be incremental at each activity to reinforce habit, not at end (stretch feature)
 ```
 
-### MVP constraints
-- one active goal at a time
-- cannot join goal after first task starts, as it removes pending invites
-- scores allocated are imaginary currency points
-
 ### Stretch features
 ```diff 
 + charging for failed activity attendance and cash payout at end (stretch feature)
-```
-```diff 
-+ multiple active goals at a time (stretch feature)
 ```
 ```diff 
 + live feed of public goals (stretch feature)
@@ -37,9 +29,9 @@
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vRKIoLY0rWtWKpHmWYkfLzQMgrxeiKymKfJZ2pPpsZPfa0BfOOll6Mo_Z7qZLTTe1DI_F_d0nZT3zJ1/pub?w=960&amp;h=720">
 
 ### System architecture diagram
-```diff 
-- add visual (TODO)
-```
+
+<img src="https://docs.google.com/drawings/d/e/2PACX-1vTcj8aRlEeXgu_qAhYIugT8xC0sdZYblWw6zErl9qYc8dgqkmSVwfKxPk_NY1r-k4mFiK5VpO8QI8GT/pub?w=1542&amp;h=751">
+
 - login with user profiles
   - outsourced through facebook api to handle authentication, profile management, and security
   - eases buy in for members by piggybacking off of existing social network most people already use
@@ -112,8 +104,6 @@
   ```
   
 ### Technical specifications
-
-<img src="https://docs.google.com/drawings/d/e/2PACX-1vTcj8aRlEeXgu_qAhYIugT8xC0sdZYblWw6zErl9qYc8dgqkmSVwfKxPk_NY1r-k4mFiK5VpO8QI8GT/pub?w=1542&amp;h=751">
 
 Goal struct
 - Goal name
