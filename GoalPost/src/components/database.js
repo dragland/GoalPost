@@ -35,8 +35,8 @@ class dataBase {
 	}
 
 	/*
-		********************************************************************************
-		API for internal use within application 
+		**************************************************
+		API for internal use within application
 	*/
 	async loginUser(userID, userName, userPic) {
 		/* Called once user logs in */
@@ -87,7 +87,7 @@ class dataBase {
 		// 	completeGoal(userID, goalID)
 		// }
 		// return completed;
-	}  
+	}
 
 	acceptPendingGoal(userID, goalID) {
 		// activatePendingGoal(userID, goalID);
@@ -114,9 +114,9 @@ class dataBase {
 		this.deletePendingGoal("0", "MpfJFGH51Dl5jlCsy7Yz");
 	}
 
-	/* 
-		********************************************************************************
-		helper functions for above API 
+	/*
+		**************************************************
+		helper functions for above API
 	*/
 	async getUser(userID) {
 		let doc = await this.users.doc(userID).get();
