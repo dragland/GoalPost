@@ -2,9 +2,9 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import Cloud from "../components/database";
 
-class login extends React.Component {
+class Login extends React.Component {
   static navigationOptions = {
-    title: "login"
+    title: "Login"
   };
   render() {
     // Cloud.test();
@@ -24,4 +24,4 @@ class login extends React.Component {
     );
   }
 }
-export default login;
+export default Login;

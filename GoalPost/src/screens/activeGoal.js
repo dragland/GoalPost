@@ -4,7 +4,7 @@ import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Clouds from "../components/database";
 
-export default class ActiveGoal extends React.Component {
+class ActiveGoal extends React.Component {
   static navigationOptions = {
     title: "ActiveGoal"
   };
@@ -105,14 +105,6 @@ export default class ActiveGoal extends React.Component {
 
         <View style={{ flexDirection: "row" }}>
         <Button
-          title="Go to Goal Completion Screen"
-          onPress={() =>
-            this.props.navigation.navigate("Completion", {
-              goalName: goalName
-            })
-          }
-        />
-        <Button
           title="Go Back"
           onPress={() => this.props.navigation.goBack()}
         />
@@ -142,3 +134,4 @@ const styles = StyleSheet.create({
     marginTop: 12
   },
 });
+export default ActiveGoal;

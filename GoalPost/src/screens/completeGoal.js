@@ -3,9 +3,9 @@ import { Button, Image, StyleSheet, View, Text } from "react-native";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 
-export default class Completion extends React.Component {
+class CompleteGoal extends React.Component {
   static navigationOptions = {
-    title: "Completion"
+    title: "CompleteGoal"
   };
 
   render() {
@@ -39,3 +39,4 @@ const styles = StyleSheet.create({
     margin: 20
   }
 });
+export default CompleteGoal;

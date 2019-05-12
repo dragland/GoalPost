@@ -4,7 +4,8 @@ import Login from "./src/screens/login";
 import Home from "./src/screens/home";
 import ActiveGoal from "./src/screens/activeGoal";
 import CreateGoal from "./src/screens/createGoal";
-import Completion from "./src/screens/completeGoal";
+import PendingGoal from "./src/screens/pendingGoal";
+import CompleteGoal from "./src/screens/completeGoal";
 const Project= createStackNavigator({
   Login: {
         screen: Login
@@ -13,13 +14,16 @@ const Project= createStackNavigator({
         screen: Home
   },
   ActiveGoal: {
-  	screen: ActiveGoal
+    screen: ActiveGoal
+  },
+  PendingGoal: {
+    screen: PendingGoal
   },
   CreateGoal: {
   	screen: CreateGoal
   },
-  Completion: {
-  	screen: Completion
+  CompleteGoal: {
+  	screen: CompleteGoal
   }
 });
 export default createAppContainer(Project);
