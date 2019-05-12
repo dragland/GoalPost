@@ -1,10 +1,13 @@
 import React from "react";
 import { Button, View, Text } from "react-native";
+import Cloud from "../components/database";
+
 class Home extends React.Component {
   static navigationOptions = {
     title: "Start"
   };
   render() {
+    // Cloud.test();
     return (
       <View
         style={{

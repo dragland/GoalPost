@@ -1,31 +1,56 @@
 import firebase from 'react-native-firebase';
+import FireStoreParser from 'firestore-parser';
+import {Alert} from "react-native";
 
 class dataBase {
 
-	/* Called one on initialization */
-	constructor() {
-		this.users = firebase.firestore().collection('users'); // map of userIDs to struct that has lists of different states of goalIDs
-		this.goals = firebase.firestore().collection('goals'); // map of goalIDs to struct that defines their properties
-	}
+	/* User database object
 
+		db.users[userID] : {
+			user_name : "",
+			profile_pic : "",
+			pending_goals : [],
+			active_goals : [],
+			completed_goals : []
+		};
+	*/
+
+	/* Goal database object
+
+		db.goals[goalID] : {
+			goal_name : "",
+			user_score_map : {users : scores},
+			start_time : 0,
+			end_time : 0,
+			event_id : "",
+			penalty : 0,
+			privacy : false
+		};
+	*/
+
+	/* Called once on initialization */
+	constructor() {
+		this.users = firebase.firestore().collection('users');
+		this.goals = firebase.firestore().collection('goals');
+	}
 
 	/*
 		**************************************************
 		API for internal use within application
 	*/
-	loginUser(userID, profile) {
-		// /* Called once user logs in */
-		// if (checkIfUserExists(userID)) {
-		// 	user = getUser(userID);
-		// 	updateUser(userID, profile, user.pending_goals, user.active_goals, user.completed_goals);
-		// }
-		// else {
-		// 	createUser(userID, profile);
-		// }
+	async loginUser(userID, userName, userPic) {
+		/* Called once user logs in */
+		let user = await this.checkIfUserExists(userID);
+		if (!user.exists) {
+			this.createUser(userID, userName, userPic);
+		}
+		else {
+			this.updateUser(userID, userName, userPic);
+		}
 	}
 
 	loadUser(userID) {
-		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs*/
+		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs */
 		// user = getUser(userID);
 		// for (g in user.pending_goals) {
 		// 	if (getGoal(g).task_times[0] < now) {
@@ -41,7 +66,7 @@ class dataBase {
 		// return getUser(userID);
 	}
 
-	loadGoal(userID, goalID) {
+	async loadGoal(userID, goalID) {
 		// /* Called on every invocation of active, pending, & completed screens */
 		// goal = getGoal(goalID);
 		// if (goal.end_date < now) {
@@ -74,53 +99,54 @@ class dataBase {
 		// removeUserFromGoal(userID, goalID);
 	}
 
-	addGoal(userID, friends, struct) {
-		// goalID = createGoal(struct);
-		// for (f in friends) {
-		// 	inviteToGoal(f, goalID);
-		// }
-		// return goalID;
+	async addGoal(userID, goalName, friends, taskTimes, penalty) {
+		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
+		friends.forEach((f) => {
+			this.inviteToGoal(f, goal.id);
+		});
+		return goal.id;
+	}
 
-		this.goals.add({
-				goal_name: struct,
-			});
+	async test() {
+		let goal = await this.addGoal("test", "test_goal", ["root", "invited", "0"], [0, 1, 2], 5);
+		Alert.alert("created goal with ID: ", goal);
 	}
 
 	/*
 		**************************************************
 		helper functions for above API
 	*/
-	getUser(userID) {
-		// return db.users[userID] : {
-		// 	user_name = "",
-		// 	profile_pic = "",
-		// 	pending_goals = [],
-		// 	active_goals = [],
-		// 	completed_goals = []
-		// };
+	async getUser(userID) {
+		let doc = await this.users.doc(userID).get();
+		return FireStoreParser(doc.data());
 	}
 
-	getGoal(goalID) {
-		// return db.goals[goalID] : {
-		// 	goal_name = "",
-		// 	user_score_map = {users : scores},
-		// 	end_date = "",
-		// 	task_times = "",
-		// 	penalty = "",
-		// 	privacy = false,
-		// };
+	async getGoal(goalID) {
+		// return db.goals[goalID];
 	}
 
-	checkIfUserExists(userID) {
-		// return db.users[userID] != NULL;
+	async checkIfUserExists(userID) {
+		let doc = await this.users.doc(userID).get();
+		return doc;
 	}
 
-	updateUser(userID, profile, pending_goals, active_goals, completed_goals) {
-		// db.users[userID].set()
+	updateUser(userID, userName, userPic) {
+		let data = {
+			user_name : userName,
+			profile_pic : userPic
+		};
+		this.users.doc(userID).set(data, {merge: true});
 	}
 
-	createUser(userID, profile) {
-		// db.users[userID].add()
+	createUser(userID, userName, userPic) {
+		let data = {
+			user_name : userName,
+			profile_pic : userPic,
+			pending_goals : [],
+			active_goals : [],
+			completed_goals : []
+		};
+		this.users.doc(userID).set(data);
 	}
 
 	removeUserFromGoal(userID, goalID) {
@@ -132,12 +158,25 @@ class dataBase {
 		// db.users[userID].completed_goals.add(goalID);
 	}
 
-	createGoal(struct) {
-		// return db.goals.add()
+	async createGoal(userID, goalName, friends, taskTimes, penalty) {
+		let data = {
+			goal_name : goalName,
+			user_score_map : {userID : 0},
+			task_times : taskTimes,
+			penalty : penalty
+		}
+		friends.forEach((f) => {
+			data.user_score_map[f] = 0;
+		});
+		let doc = await this.goals.add(data);
+		this.activatePendingGoal(userID, doc.id);
+		return doc;
 	}
 
 	inviteToGoal(userID, goalID) {
-		// db.users[userID].pending_goals.add(GoalID);
+		this.users.doc(userID).update({
+			pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
 	}
 
 	updateUserScore(userID, goalID) {
@@ -145,7 +184,9 @@ class dataBase {
 	}
 
 	activatePendingGoal(userID, goalID) {
-		// db.users[userID].active_goals.add(goalID);
+		this.users.doc(userID).update({
+			active_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
 	}
 
 	deletePendingGoal(userID, goalID) {
