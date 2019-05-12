@@ -7,23 +7,23 @@ class dataBase {
 	/* User database object
 
 		db.users[userID] : {
-			user_name = "",
-			profile_pic = "",
-			pending_goals = [],
-			active_goals = [],
-			completed_goals = []
+			user_name : "",
+			profile_pic : "",
+			pending_goals : [],
+			active_goals : [],
+			completed_goals : []
 		};
 	*/
 
 	/* Goal database object
 
 		db.goals[goalID] : {
-			goal_name = "",
-			user_score_map = {users : scores},
-			end_date = "",
-			task_times = "",
-			penalty = "",
-			privacy = false,
+			goal_name : "",
+			user_score_map : {users : scores},
+			end_date : "",
+			task_times : "",
+			penalty : "",
+			privacy : false,
 		};
 	*/
 
@@ -37,18 +37,18 @@ class dataBase {
 		********************************************************************************
 		API for internal use within application 
 	*/
-	async loginUser(userID, profile) {
-		// /* Called once user logs in */
-		// if (checkIfUserExists(userID)) {
-		// 	user = getUser(userID);
-		// 	updateUser(userID, profile, user.pending_goals, user.active_goals, user.completed_goals);
-		// }
-		// else {
-		// 	createUser(userID, profile);
-		// }
+	async loginUser(userID, userName, userPic) {
+		/* Called once user logs in */
+		let user = await this.checkIfUserExists(userID);
+		if (!user.exists) {
+			this.createUser(userID, userName, userPic);
+		}
+		else {
+			this.updateUser(userID, userName, userPic);
+		}
 	}
 
-	async loadUser(userID) {
+	loadUser(userID) {
 		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs*/
 		// user = getUser(userID);
 		// for (g in user.pending_goals) {
@@ -74,7 +74,7 @@ class dataBase {
 		// return goal;
 	}
 
-	async checkInToTask(userID, goalID, present) {
+	checkInToTask(userID, goalID, present) {
 		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
 		// completed = false;
 		// if (present) {
@@ -88,17 +88,17 @@ class dataBase {
 		// return completed;
 	}  
 
-	async acceptPendingGoal(userID, goalID) {
+	acceptPendingGoal(userID, goalID) {
 		// activatePendingGoal(userID, goalID);
 		// deletePendingGoal(userID, goalID);
 	}
 
-	async rejectPendingGoal(userID, goalID) {
+	rejectPendingGoal(userID, goalID) {
 		// deletePendingGoal(userID, goalID);
 		// removeUserFromGoal(userID, goalID);
 	}
 
-	async addGoal(userID, friends, struct) {
+	addGoal(userID, friends, struct) {
 		// goalID = createGoal(struct);
 		// for (f in friends) {
 		// 	inviteToGoal(f, goalID);
@@ -111,8 +111,10 @@ class dataBase {
 	}
 
 	async test() {
-		let data = await this.getUser("root");
-		Alert.alert(data.user_name);
+		this.loginUser("invited", "friend", "https://profile_pic.jpg");
+
+		// let data = await this.getUser("root");
+		// Alert.alert(data.user_name);
 		// Alert.alert(data.profile_pic);
 		// Alert.alert(JSON.stringify(data.pending_goals));
 		// Alert.alert(JSON.stringify(data.active_goals));
@@ -124,24 +126,36 @@ class dataBase {
 		helper functions for above API 
 	*/
 	async getUser(userID) {
-    	let doc = await this.users.doc(userID).get();
-    	return FireStoreParser(doc.data());
+		let doc = await this.users.doc(userID).get();
+		return FireStoreParser(doc.data());
 	}
 
-	getGoal(goalID) {
+	async getGoal(goalID) {
 		// return db.goals[goalID];
 	}
 
-	checkIfUserExists(userID) {
-		// return db.users[userID] != NULL;
+	async checkIfUserExists(userID) {
+		let doc = await this.users.doc(userID).get();
+		return doc;
 	}
 
-	updateUser(userID, profile, pending_goals, active_goals, completed_goals) {
-		// db.users[userID].set()
+	updateUser(userID, userName, userPic) {
+		let data = {
+			user_name : userName,
+			profile_pic : userPic
+		};
+		this.users.doc(userID).set(data, {merge: true});
 	}
 
-	createUser(userID, profile) {
-		// db.users[userID].add()
+	createUser(userID, userName, userPic) {
+		let data = {
+			user_name : userName,
+			profile_pic : userPic,
+			pending_goals : [],
+			active_goals : [],
+			completed_goals : []
+		};
+		this.users.doc(userID).set(data);
 	}
 
 	removeUserFromGoal(userID, goalID) {
