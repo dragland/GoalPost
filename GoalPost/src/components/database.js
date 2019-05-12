@@ -11,7 +11,7 @@ class dataBase {
 
 	/*
 		**************************************************
-		API for internal use within application 
+		API for internal use within application
 	*/
 	loginUser(userID, profile) {
 		// /* Called once user logs in */
@@ -62,7 +62,7 @@ class dataBase {
 		// 	completeGoal(userID, goalID)
 		// }
 		// return completed;
-	}  
+	}
 
 	acceptPendingGoal(userID, goalID) {
 		// activatePendingGoal(userID, goalID);
@@ -86,9 +86,9 @@ class dataBase {
 			});
 	}
 
-	/* 
+	/*
 		**************************************************
-		helper functions for above API 
+		helper functions for above API
 	*/
 	getUser(userID) {
 		// return db.users[userID] : {

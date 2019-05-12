@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, View, StyleSheet, Switch, Text, TextInput, Picker } from "react-native";
-import { Input } from "react-native-elements";
+import { Input, CheckBox } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
@@ -11,8 +11,9 @@ class CreateGoal extends React.Component {
     title: "CreateGoal"
   };
   state = {
-    isDateTimePickerVisible: false,
-    isRepeatUnitPickerVisible: true,
+    isDateTimePicker1Visible: false,
+    isDateTimePicker2Visible: false,
+    isRepeatUnitPickerVisible: false,
     enablePushNotifs: true,
     goalName: null,
     startDate: null,
@@ -25,11 +26,17 @@ class CreateGoal extends React.Component {
     this.setState({ goalName: e.nativeEvent.text });
   };
 
-  showDateTimePicker = () => {
-    this.setState({ isDateTimePickerVisible: true });
+  showDateTimePicker1 = () => {
+    this.setState({ isDateTimePicker1Visible: true });
   };
-  hideDateTimePicker = () => {
-    this.setState({ isDateTimePickerVisible: false });
+  hideDateTimePicker1 = () => {
+    this.setState({ isDateTimePicker1Visible: false });
+  };
+  showDateTimePicker2 = () => {
+      this.setState({ isDateTimePicker2Visible: true });
+  };
+  hideDateTimePicker2 = () => {
+    this.setState({ isDateTimePicker2Visible: false });
   };
   showRepeatUnitPicker = () => {
       this.setState({ isRepeatUnitPickerVisible: true });
@@ -40,11 +47,11 @@ class CreateGoal extends React.Component {
 
   handleStartDatePicked = startDate => {
     this.setState({ startDate: startDate.toLocaleDateString() });
-    this.hideDateTimePicker();
+    this.hideDateTimePicker1();
   };
   handleEndDatePicked = endDate => {
     this.setState({ endDate: endDate.toLocaleDateString() });
-    this.hideDateTimePicker();
+    this.hideDateTimePicker2();
   };
   togglePushNotifs = bool => {
     this.setState({ enablePushNotifs: bool });
@@ -74,11 +81,11 @@ class CreateGoal extends React.Component {
             <Text style={styles.inputHeader}>Start Date</Text>
           </View>
           <View style={styles.inputTakerContainer}>
-            <Input value={this.state.startDate} onFocus={this.showDateTimePicker} />
+            <Input value={this.state.startDate} onFocus={this.showDateTimePicker1} />
             <DateTimePicker
-              isVisible={this.state.isDateTimePickerVisible}
+              isVisible={this.state.isDateTimePicker1Visible}
               onConfirm={this.handleStartDatePicked}
-              onCancel={this.hideDateTimePicker}
+              onCancel={this.hideDateTimePicker1}
             />
           </View>
         </View>
@@ -88,11 +95,11 @@ class CreateGoal extends React.Component {
             <Text style={styles.inputHeader}>End Date</Text>
           </View>
           <View style={styles.inputTakerContainer}>
-            <Input value={this.state.endDate} onFocus={this.showDateTimePicker} />
+            <Input value={this.state.endDate} onFocus={this.showDateTimePicker2} />
             <DateTimePicker
-              isVisible={this.state.isDateTimePickerVisible}
+              isVisible={this.state.isDateTimePicker2Visible}
               onConfirm={this.handleEndDatePicked}
-              onCancel={this.hideDateTimePicker}
+              onCancel={this.hideDateTimePicker2}
             />
           </View>
         </View>
@@ -101,26 +108,15 @@ class CreateGoal extends React.Component {
           <View style={styles.inputHeaderContainer}>
             <Text style={styles.inputHeader}>Repeat Every</Text>
           </View>
-          <View style={styles.inputTakerContainer}>
-                      <TextInput placeholder="1"
-                      keyboardType = 'numeric'
-                      onChangeText = {this.repeatFreqChosen}
-                      />
-          </View>
-          <View style={styles.inputTakerContainer}>
-            <Input value={this.state.recurRule} onFocus={this.showRepeatUnitPicker} />
-            <Picker
-              isVisible={this.state.isRepeatUnitPickerVisible}
-              onCancel={this.hideRepeatUnitPicker}
-              selectedValue={this.state.recurRule}
-              style={styles.inputTakerContainer}
-              onValueChange={this.repeatUnitChosen}>
-              <Picker.Item label="Daily" value="Days" />
-              <Picker.Item label="Weekly" value="Weeks" />
-              <Picker.Item label="Monthly" value="Months" />
-              <Picker.Item label="Yearly" value="Years" />
-            </Picker>
-          </View>
+        </View>
+        <View style={styles.inputRow}>
+          <CheckBox title='S' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='M' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='T' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='W' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='Th' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='F' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='S' style={styles.dayCheckBox} checked={this.state.checked} />
         </View>
         <View style={styles.inputRow}>
           <View style={styles.inputHeaderContainer}>
@@ -186,6 +182,9 @@ const styles = StyleSheet.create({
   inputTakerContainer: {
     flex: 0.6,
     alignItems: "flex-start"
+  },
+  dayCheckBox: {
+    width: 10
   }
 });
 
