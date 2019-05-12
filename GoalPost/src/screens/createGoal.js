@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, StyleSheet, Switch, Text } from "react-native";
+import { Button, View, StyleSheet, Switch, Text, TextInput, Picker } from "react-native";
 import { Input } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
@@ -12,10 +12,13 @@ class CreateGoal extends React.Component {
   };
   state = {
     isDateTimePickerVisible: false,
+    isRepeatUnitPickerVisible: true,
     enablePushNotifs: true,
     goalName: null,
     startDate: null,
-    endDate: null
+    endDate: null,
+    recurRule: null,
+    recurFreq: 0
   };
 
   updateGoalName = e => {
@@ -28,6 +31,13 @@ class CreateGoal extends React.Component {
   hideDateTimePicker = () => {
     this.setState({ isDateTimePickerVisible: false });
   };
+  showRepeatUnitPicker = () => {
+      this.setState({ isRepeatUnitPickerVisible: true });
+    };
+  hideRepeatUnitPicker = () => {
+    this.setState({ isRepeatUnitPickerVisible: false });
+  };
+
   handleStartDatePicked = startDate => {
     this.setState({ startDate: startDate.toLocaleDateString() });
     this.hideDateTimePicker();
@@ -38,6 +48,13 @@ class CreateGoal extends React.Component {
   };
   togglePushNotifs = bool => {
     this.setState({ enablePushNotifs: bool });
+  };
+
+  repeatUnitChosen = timeUnit => {
+    this.setState({recurRule: timeUnit})
+  };
+  repeatFreqChosen = freq => {
+    this.setState({recurFreq: parseInt(freq,10)})
   };
 
   render() {
@@ -82,10 +99,27 @@ class CreateGoal extends React.Component {
 
         <View style={styles.inputRow}>
           <View style={styles.inputHeaderContainer}>
-            <Text style={styles.inputHeader}>Repeat?</Text>
+            <Text style={styles.inputHeader}>Repeat Every</Text>
           </View>
           <View style={styles.inputTakerContainer}>
-            <Input placeholder="Weekly M, W, F" />
+                      <TextInput placeholder="1"
+                      keyboardType = 'numeric'
+                      onChangeText = {this.repeatFreqChosen}
+                      />
+          </View>
+          <View style={styles.inputTakerContainer}>
+            <Input value={this.state.recurRule} onFocus={this.showRepeatUnitPicker} />
+            <Picker
+              isVisible={this.state.isRepeatUnitPickerVisible}
+              onCancel={this.hideRepeatUnitPicker}
+              selectedValue={this.state.recurRule}
+              style={styles.inputTakerContainer}
+              onValueChange={this.repeatUnitChosen}>
+              <Picker.Item label="Daily" value="Days" />
+              <Picker.Item label="Weekly" value="Weeks" />
+              <Picker.Item label="Monthly" value="Months" />
+              <Picker.Item label="Yearly" value="Years" />
+            </Picker>
           </View>
         </View>
         <View style={styles.inputRow}>
