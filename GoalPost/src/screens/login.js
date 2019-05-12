@@ -6,6 +6,10 @@ class Login extends React.Component {
   static navigationOptions = {
     title: "Login"
   };
+  state = {
+    userID: "undefined"
+  };
+
   render() {
     Cloud.test();
     return (
@@ -18,7 +22,7 @@ class Login extends React.Component {
       >
         <Button
           title="login"
-          onPress={() => this.props.navigation.navigate("Home")}
+          onPress={() => this.props.navigation.navigate("Home", {userID: this.state.userID})}
         />
       </View>
     );

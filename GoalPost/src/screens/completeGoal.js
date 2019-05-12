@@ -10,7 +10,7 @@ class CompleteGoal extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
+    const goalName = navigation.getParam("goalID", "NO-GOAL-NAME");
     return (
       <View style={baseStyles.screen}>
         <Text style={baseStyles.heading}>Congratulations!</Text>

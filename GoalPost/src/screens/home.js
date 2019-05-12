@@ -8,6 +8,7 @@ class Home extends React.Component {
     title: "Home"
   };
   state = {
+    userID: "undefined",
     goalID: "undefined"
   };
 
@@ -16,6 +17,9 @@ class Home extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const userID = navigation.getParam("userID", "UNDEFINED USER");
+
     return (
       <View
         style={{
@@ -29,11 +33,11 @@ class Home extends React.Component {
         </View>
         <Button
           title="open active goal"
-          onPress={() =>this.props.navigation.navigate("ActiveGoal", {goalName: this.state.goalID})}
+          onPress={() =>this.props.navigation.navigate("ActiveGoal", {goalID: this.state.goalID})}
         />
         <Button
           title="accept or reject a goal"
-          onPress={() => this.props.navigation.navigate("PendingGoal", {goalName: this.state.goalID})}
+          onPress={() => this.props.navigation.navigate("PendingGoal", {goalID: this.state.goalID})}
         />
         <Button
           title="create a goal"
@@ -41,7 +45,7 @@ class Home extends React.Component {
         />
         <Button
           title="view completed goal"
-          onPress={() => this.props.navigation.navigate("CompleteGoal", {goalName: this.state.goalID})}
+          onPress={() => this.props.navigation.navigate("CompleteGoal", {goalID: this.state.goalID})}
         />
         <Button
           title="log out"
