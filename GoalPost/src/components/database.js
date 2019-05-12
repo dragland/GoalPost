@@ -105,10 +105,7 @@ class dataBase {
 	}
 
 	async test() {
-		this.deletePendingGoal("root", "MpfJFGH51Dl5jlCsy7Yz");
-		this.deletePendingGoal("test", "MpfJFGH51Dl5jlCsy7Yz");
-		this.deletePendingGoal("invited", "MpfJFGH51Dl5jlCsy7Yz");
-		this.deletePendingGoal("0", "MpfJFGH51Dl5jlCsy7Yz");
+		// this.loginUser("dragland", "", "");
 	}
 
 	/*
@@ -173,6 +170,7 @@ class dataBase {
 	}
 
 	inviteToGoal(userID, goalID) {
+		//TODO check if user exists already
 		this.users.doc(userID).update({
 			pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
