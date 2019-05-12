@@ -20,14 +20,14 @@ class dataBase {
 		db.goals[goalID] : {
 			goal_name : "",
 			user_score_map : {users : scores},
-			end_date : "",
-			task_times : "",
-			penalty : "",
-			privacy : false,
+			end_date : 0,
+			task_times : [0.0],
+			penalty : 0,
+			privacy : false
 		};
 	*/
 
-	/* Called one on initialization */
+	/* Called once on initialization */
 	constructor() {
 		this.users = firebase.firestore().collection('users');
 		this.goals = firebase.firestore().collection('goals');
@@ -98,27 +98,27 @@ class dataBase {
 		// removeUserFromGoal(userID, goalID);
 	}
 
-	addGoal(userID, friends, struct) {
-		// goalID = createGoal(struct);
-		// for (f in friends) {
-		// 	inviteToGoal(f, goalID);
-		// }
-		// return goalID;
-
-		this.goals.add({
-				goal_name: struct,
-			});
+	async addGoal(userID, friends, struct) {
+		let goal = await this.createGoal(userID, struct);
+		friends.forEach((f) => {
+			this.inviteToGoal(f, goal.id);
+		});
+		return goal.id;
 	}
 
 	async test() {
-		this.loginUser("invited", "friend", "https://profile_pic.jpg");
+		let struct = {
+			goal_name : "test",
+			// user_score_map : {users : scores},
+			end_date : 0,
+			task_times : [0.0],
+			penalty : 5,
+			privacy : false
+		}
 
-		// let data = await this.getUser("root");
-		// Alert.alert(data.user_name);
-		// Alert.alert(data.profile_pic);
-		// Alert.alert(JSON.stringify(data.pending_goals));
-		// Alert.alert(JSON.stringify(data.active_goals));
-		// Alert.alert(JSON.stringify(data.completed_goals));
+		let friends = ["invited", "test", "0"];
+		let goal = await this.addGoal("root", friends, struct);
+		Alert.alert("created goal with ID: ", goal);
 	}
 
 	/* 
@@ -167,12 +167,24 @@ class dataBase {
 		// db.users[userID].completed_goals.add(goalID);
 	}
 
-	createGoal(struct) {
-		// return db.goals.add()
+	async createGoal(userID, struct) {
+		let doc = await this.goals.add(struct);
+		this.users.doc(userID).update({
+			active_goals: firebase.firestore.FieldValue.arrayUnion(doc.id)
+		});
+		return doc;
 	}
 
 	inviteToGoal(userID, goalID) {
-		// db.users[userID].pending_goals.add(GoalID);
+		this.users.doc(userID).update({
+			pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
+
+
+		// let pend = [];
+		// pend_array.push(goalID);
+		// let data = {pending_goals : pend};
+		// this.users.doc(userID).set(data, {merge: true});
 	}
 
 	updateUserScore(userID, goalID) {
