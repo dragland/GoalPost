@@ -50,7 +50,7 @@ class dataBase {
 	}
 
 	loadUser(userID) {
-		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs*/
+		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs */
 		// user = getUser(userID);
 		// for (g in user.pending_goals) {
 		// 	if (getGoal(g).task_times[0] < now) {
@@ -99,8 +99,8 @@ class dataBase {
 		// removeUserFromGoal(userID, goalID);
 	}
 
-	async addGoal(userID, friends, struct) {
-		let goal = await this.createGoal(userID, struct);
+	async addGoal(userID, goalName, friends, taskTimes, penalty) {
+		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goal.id);
 		});
@@ -108,18 +108,7 @@ class dataBase {
 	}
 
 	async test() {
-		let struct = {
-			goal_name : "test",
-			// user_score_map : {users : scores},
-			start_time : 0,
-			end_time : 0,
-			event_id : "",
-			penalty : 5,
-			privacy : false
-		}
-
-		let friends = ["invited", "test", "0"];
-		let goal = await this.addGoal("root", friends, struct);
+		let goal = await this.addGoal("test", "test_goal", ["root", "invited", "0"], [0, 1, 2], 5);
 		Alert.alert("created goal with ID: ", goal);
 	}
 
@@ -169,8 +158,17 @@ class dataBase {
 		// db.users[userID].completed_goals.add(goalID);
 	}
 
-	async createGoal(userID, struct) {
-		let doc = await this.goals.add(struct);
+	async createGoal(userID, goalName, friends, taskTimes, penalty) {
+		let data = {
+			goal_name : goalName,
+			user_score_map : {userID : 0},
+			task_times : taskTimes,
+			penalty : penalty
+		}
+		friends.forEach((f) => {
+			data.user_score_map[f] = 0;
+		});
+		let doc = await this.goals.add(data);
 		this.activatePendingGoal(userID, doc.id);
 		return doc;
 	}
