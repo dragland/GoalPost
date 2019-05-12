@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Start from "./src/screens/start";
+import Login from "./src/screens/login";
 import Home from "./src/screens/home";
+import ActiveGoal from "./src/screens/activeGoal";
 import CreateGoal from "./src/screens/createGoal";
-import Completion from "./src/screens/completion";
+import Completion from "./src/screens/completeGoal";
 const Project= createStackNavigator({
-  Start: {
-        screen: Start
+  Login: {
+        screen: Login
   },
   Home: {
-  	screen: Home
+        screen: Home
+  },
+  ActiveGoal: {
+  	screen: ActiveGoal
   },
   CreateGoal: {
   	screen: CreateGoal
