@@ -2,9 +2,9 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import Cloud from "../components/database";
 
-class Start extends React.Component {
+class Home extends React.Component {
   static navigationOptions = {
-    title: "Start"
+    title: "Home"
   };
   render() {
     // Cloud.test();
@@ -24,4 +24,4 @@ class Start extends React.Component {
     );
   }
 }
-export default Start;
+export default Home;
