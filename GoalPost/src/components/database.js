@@ -20,8 +20,9 @@ class dataBase {
 		db.goals[goalID] : {
 			goal_name : "",
 			user_score_map : {users : scores},
-			end_date : 0,
-			task_times : [0.0],
+			start_time : 0,
+			end_time : 0,
+			event_id : "",
 			penalty : 0,
 			privacy : false
 		};
@@ -110,8 +111,9 @@ class dataBase {
 		let struct = {
 			goal_name : "test",
 			// user_score_map : {users : scores},
-			end_date : 0,
-			task_times : [0.0],
+			start_time : 0,
+			end_time : 0,
+			event_id : "",
 			penalty : 5,
 			privacy : false
 		}
@@ -169,9 +171,7 @@ class dataBase {
 
 	async createGoal(userID, struct) {
 		let doc = await this.goals.add(struct);
-		this.users.doc(userID).update({
-			active_goals: firebase.firestore.FieldValue.arrayUnion(doc.id)
-		});
+		this.activatePendingGoal(userID, doc.id);
 		return doc;
 	}
 
@@ -179,12 +179,6 @@ class dataBase {
 		this.users.doc(userID).update({
 			pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
-
-
-		// let pend = [];
-		// pend_array.push(goalID);
-		// let data = {pending_goals : pend};
-		// this.users.doc(userID).set(data, {merge: true});
 	}
 
 	updateUserScore(userID, goalID) {
@@ -192,7 +186,9 @@ class dataBase {
 	}
 
 	activatePendingGoal(userID, goalID) {
-		// db.users[userID].active_goals.add(goalID);
+		this.users.doc(userID).update({
+			active_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
 	}
 
 	deletePendingGoal(userID, goalID) {
