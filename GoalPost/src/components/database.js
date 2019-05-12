@@ -20,11 +20,8 @@ class dataBase {
 		db.goals[goalID] : {
 			goal_name : "",
 			user_score_map : {users : scores},
-			start_time : 0,
-			end_time : 0,
-			event_id : "",
-			penalty : 0,
-			privacy : false
+			task_times : [],
+			penalty : 0
 		};
 	*/
 

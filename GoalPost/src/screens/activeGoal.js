@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
-import Clouds from "../components/database";
+import Cloud from "../components/database";
 
 class ActiveGoal extends React.Component {
   static navigationOptions = {
