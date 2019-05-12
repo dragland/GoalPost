@@ -7,7 +7,7 @@ class Home extends React.Component {
     title: "Start"
   };
   render() {
-    Cloud.test();
+    // Cloud.test();
     return (
       <View
         style={{
