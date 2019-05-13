@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, View, Text } from "react-native";
 import { Input } from "react-native-elements";
+import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 
 class Home extends React.Component {
@@ -28,9 +29,8 @@ class Home extends React.Component {
           justifyContent: "center"
         }}
       >
-        <View>
-            <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
-        </View>
+        <Text style={baseStyles.text}>Welcome <Text style={{ fontWeight: "bold" }}>{userID}</Text></Text>
+        <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
         <Button
           title="open active goal"
           onPress={() =>this.props.navigation.navigate("ActiveGoal", {goalID: this.state.goalID})}
