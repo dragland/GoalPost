@@ -87,13 +87,13 @@ class dataBase {
 	}
 
 	acceptPendingGoal(userID, goalID) {
-		// activatePendingGoal(userID, goalID);
-		// deletePendingGoal(userID, goalID);
+		this.activatePendingGoal(userID, goalID);
+		this.deletePendingGoal(userID, goalID);
 	}
 
 	rejectPendingGoal(userID, goalID) {
-		// deletePendingGoal(userID, goalID);
-		// removeUserFromGoal(userID, goalID);
+		this.deletePendingGoal(userID, goalID);
+		this.removeUserFromGoal(userID, goalID);
 	}
 
 	async addGoal(userID, goalName, friends, taskTimes, penalty) {
@@ -105,7 +105,7 @@ class dataBase {
 	}
 
 	async test() {
-		// this.loginUser("dragland", "", "");
+		
 	}
 
 	/*
@@ -118,7 +118,8 @@ class dataBase {
 	}
 
 	async getGoal(goalID) {
-		// return db.goals[goalID];
+		let doc = await this.goals.doc(goalID).get();
+		return FireStoreParser(doc.data());
 	}
 
 	async checkIfUserExists(userID) {
@@ -146,21 +147,28 @@ class dataBase {
 	}
 
 	removeUserFromGoal(userID, goalID) {
-		// db.goals[goalID].user_score_map.remove(userID);
+		this.goals.doc(goalID).update({
+			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
+		});
 	}
 
 	completeGoal(userID, goalID) {
-		// db.users[userID].active_goals.remove(goalID);
-		// db.users[userID].completed_goals.add(goalID);
+		this.users.doc(userID).update({
+			active_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
+		});
+		this.users.doc(userID).update({
+			completed_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
 	}
 
 	async createGoal(userID, goalName, friends, taskTimes, penalty) {
 		let data = {
 			goal_name : goalName,
-			user_score_map : {userID : 0},
+			user_score_map : {},
 			task_times : taskTimes,
 			penalty : penalty
 		}
+		data.user_score_map[userID] = 0;
 		friends.forEach((f) => {
 			data.user_score_map[f] = 0;
 		});
@@ -169,15 +177,27 @@ class dataBase {
 		return doc;
 	}
 
-	inviteToGoal(userID, goalID) {
-		//TODO check if user exists already
-		this.users.doc(userID).update({
-			pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
-		});
+	async inviteToGoal(userID, goalID) {
+		let user = await this.checkIfUserExists(userID);
+		if (!user.exists) {
+			let new_user = await this.createUser(userID, "", "");
+			this.users.doc(userID).update({
+				pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+			});
+		}
+		else {
+			this.users.doc(userID).update({
+				pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+			});
+		}
 	}
 
-	updateUserScore(userID, goalID) {
-		// db.goals[goalID].user_score_map[userID] += db.goals[goalID].penalty;
+	async updateUserScore(userID, goalID) {
+		let goal = await Cloud.getGoal(goalID);
+		let score = goal.user_score_map[userID] + goal.penalty;
+		this.goals.doc(goalID).update({
+			['user_score_map.' + userID]: score
+		});
 	}
 
 	activatePendingGoal(userID, goalID) {

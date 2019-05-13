@@ -24,11 +24,17 @@ class PendingGoal extends React.Component {
         <Text style={baseStyles.text}>You are invited to join <Text style={{ fontWeight: "bold" }}>{this.state.goalID}</Text></Text>
         <Button
           title="accept goal"
-          onPress={() => this.props.navigation.goBack()}
+          onPress={() => {
+            Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
+            this.props.navigation.goBack();
+          }}
         />
         <Button
           title="reject goal"
-          onPress={() => this.props.navigation.goBack()}
+          onPress={() => {
+            Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
+            this.props.navigation.goBack();
+          }}
         />
         <Button
           title="go back"
