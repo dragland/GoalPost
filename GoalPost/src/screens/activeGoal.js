@@ -2,13 +2,15 @@ import React from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Avatar, Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
-import Clouds from "../components/database";
+import Cloud from "../components/database";
 
 class ActiveGoal extends React.Component {
   static navigationOptions = {
     title: "ActiveGoal"
   };
   state = {
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID"),
     yesNoDisabled: false
   };
 
@@ -23,13 +25,10 @@ class ActiveGoal extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
-    const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
-
     return (
       <View style={baseStyles.screen}>
         <Text style={baseStyles.text}>Current GoalPost:</Text>
-        <Text style={baseStyles.heading}>{goalName}</Text>
+        <Text style={baseStyles.heading}>{this.state.goalID}</Text>
         <Text style={baseStyles.text}>Did you complete today's goal?</Text>
 
         <View style={{ flexDirection: "row" }}>

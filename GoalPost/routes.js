@@ -6,24 +6,25 @@ import ActiveGoal from "./src/screens/activeGoal";
 import CreateGoal from "./src/screens/createGoal";
 import PendingGoal from "./src/screens/pendingGoal";
 import CompleteGoal from "./src/screens/completeGoal";
+
 const Project= createStackNavigator({
-  Login: {
-        screen: Login
-  },
-  Home: {
-        screen: Home
-  },
-  ActiveGoal: {
-    screen: ActiveGoal
-  },
-  PendingGoal: {
-    screen: PendingGoal
-  },
-  CreateGoal: {
-  	screen: CreateGoal
-  },
-  CompleteGoal: {
-  	screen: CompleteGoal
-  }
+	Login: {
+		screen: Login
+	},
+	Home: {
+		screen: Home
+	},
+	ActiveGoal: {
+		screen: ActiveGoal
+	},
+	PendingGoal: {
+		screen: PendingGoal
+	},
+	CreateGoal: {
+		screen: CreateGoal
+	},
+	CompleteGoal: {
+		screen: CompleteGoal
+	}
 });
 export default createAppContainer(Project);

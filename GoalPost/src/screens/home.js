@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, SectionList, StyleSheet, View, Text } from "react-native";
-import { Button } from 'react-native-elements';
+import { Button, Input } from 'react-native-elements';
 import baseStyles from '../../styles/baseStyles';
 import Cloud from "../components/database";
 
@@ -10,6 +10,8 @@ class Home extends React.Component {
   };
 
   state = {
+    userID: 'undefined default userID',
+    goalID: 'undefined default goalID',
     userName: 'None',
     profilePic: 'None',
     active: [],
@@ -23,7 +25,11 @@ class Home extends React.Component {
     //let goal_name = goal.goal_name;
     //return goal_name;
     return goalID;
-  }
+  };
+
+  selectGoal = e => {
+    this.setState({ goalID: e.nativeEvent.text });
+  };
 
   componentWillMount() {
     const { navigation } = this.props;
@@ -32,6 +38,7 @@ class Home extends React.Component {
 
     Cloud.getUser(userID).then((user) => { 
       this.setState({ 
+        userID: userID,
         userName: user.user_name,
         profilePic: user.profile_pic,
         active: user.active_goals,
@@ -45,6 +52,7 @@ class Home extends React.Component {
     return (
       <View style={styles.screen}>
         <Text style={baseStyles.heading2}>Hi, {this.state.userName}!{'\n'}Here are your Goals</Text>
+        <Input placeholder="Enter goal ID here" onChange={this.selectGoal}/>
         <SectionList
           sections={[
             {title: 'Active Goals', data: this.state.active},
@@ -68,25 +76,25 @@ class Home extends React.Component {
           title="open active goal"
           type="outline"
           raised
-          onPress={() => this.props.navigation.navigate("ActiveGoal")}
+          onPress={() =>this.props.navigation.navigate("ActiveGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="accept or reject a goal"
           type="outline"
           raised
-          onPress={() => this.props.navigation.navigate("PendingGoal")}
+          onPress={() => this.props.navigation.navigate("PendingGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="create a goal"
           type="outline"
           raised
-          onPress={() => this.props.navigation.navigate("CreateGoal")}
+          onPress={() => this.props.navigation.navigate("CreateGoal", {userID: this.state.userID})}
         />
         <Button
           title="view completed goal"
           type="outline"
           raised
-          onPress={() => this.props.navigation.navigate("CompleteGoal")}
+          onPress={() => this.props.navigation.navigate("CompleteGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="log out"
