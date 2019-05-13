@@ -36,7 +36,7 @@ class dataBase {
 		API for internal use within application
 	*/
 	async loginUser(userID, userName, userPic) {
-		/* Called once user logs in */
+		/* Called once user logs in after authenticating */
 		let user = await this.checkIfUserExists(userID);
 		if (!user.exists) {
 			this.createUser(userID, userName, userPic);
@@ -46,9 +46,9 @@ class dataBase {
 		}
 	}
 
-	loadUser(userID) {
-		// /* Called on every invocation of home screen in order to get user profile & list of goalIDs */
-		// user = getUser(userID);
+	async loadUser(userID) {
+		/* Called on every invocation of home screen in order to get user profile & list of goalIDs */
+		let user = await this.getUser(userID);
 		// for (g in user.pending_goals) {
 		// 	if (getGoal(g).task_times[0] < now) {
 		// 		deletePendingGoal(userID, g)
@@ -60,16 +60,18 @@ class dataBase {
 		// 		completeGoal(userID, g);
 		// 	}
 		// }
-		// return getUser(userID);
+		// user = getUser(userID);
+		return user;
 	}
 
 	async loadGoal(userID, goalID) {
-		// /* Called on every invocation of active, pending, & completed screens */
+		/* Called on every invocation of active, pending, & completed screens */
+		let goal = await this.getGoal(goalID);
 		// goal = getGoal(goalID);
 		// if (goal.end_date < now) {
 		// 	completeGoal(userID, g);
 		// }
-		// return goal;
+		return goal;
 	}
 
 	checkInToTask(userID, goalID, present) {
