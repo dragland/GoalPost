@@ -30,19 +30,19 @@ class Home extends React.Component {
         <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
         <Button
           title="open active goal"
-          onPress={() =>this.props.navigation.navigate("ActiveGoal", {goalID: this.state.goalID})}
+          onPress={() =>this.props.navigation.navigate("ActiveGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="accept or reject a goal"
-          onPress={() => this.props.navigation.navigate("PendingGoal", {goalID: this.state.goalID})}
+          onPress={() => this.props.navigation.navigate("PendingGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="create a goal"
-          onPress={() => this.props.navigation.navigate("CreateGoal")}
+          onPress={() => this.props.navigation.navigate("CreateGoal", {userID: this.state.userID})}
         />
         <Button
           title="view completed goal"
-          onPress={() => this.props.navigation.navigate("CompleteGoal", {goalID: this.state.goalID})}
+          onPress={() => this.props.navigation.navigate("CompleteGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
           title="log out"

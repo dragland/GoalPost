@@ -9,6 +9,8 @@ class ActiveGoal extends React.Component {
     title: "ActiveGoal"
   };
   state = {
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID"),
     yesNoDisabled: false
   };
 
@@ -23,13 +25,10 @@ class ActiveGoal extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
-    const goalName = navigation.getParam("goalID", "NO-GOAL-NAME");
-
     return (
       <View style={baseStyles.screen}>
         <Text style={baseStyles.text}>Current GoalPost:</Text>
-        <Text style={baseStyles.heading}>{goalName}</Text>
+        <Text style={baseStyles.heading}>{this.state.goalID}</Text>
         <Text style={baseStyles.text}>Did you complete today's goal?</Text>
 
         <View style={{ flexDirection: "row" }}>

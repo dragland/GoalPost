@@ -11,6 +11,8 @@ class CreateGoal extends React.Component {
     title: "CreateGoal"
   };
   state = {
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: "undefined default goalID",
     isDateTimePicker1Visible: false,
     isDateTimePicker2Visible: false,
     isRepeatUnitPickerVisible: false,
