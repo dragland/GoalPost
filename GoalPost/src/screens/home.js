@@ -9,8 +9,8 @@ class Home extends React.Component {
     title: "Home"
   };
   state = {
-    userID: "undefined",
-    goalID: "undefined"
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: "undefined default goalID"
   };
 
   selectGoal = e => {
@@ -18,9 +18,6 @@ class Home extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
-    const userID = navigation.getParam("userID", "UNDEFINED USER");
-
     return (
       <View
         style={{
@@ -29,7 +26,7 @@ class Home extends React.Component {
           justifyContent: "center"
         }}
       >
-        <Text style={baseStyles.text}>Welcome <Text style={{ fontWeight: "bold" }}>{userID}</Text></Text>
+        <Text style={baseStyles.text}>Welcome <Text style={{ fontWeight: "bold" }}>{this.state.userID}</Text></Text>
         <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
         <Button
           title="open active goal"
