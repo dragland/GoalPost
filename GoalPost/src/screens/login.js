@@ -7,7 +7,7 @@ class Login extends React.Component {
     title: "Login"
   };
   state = {
-    userID: "undefined default userID"
+    userID: "cherry" // TODO change this after dev
   };
 
   render() {

@@ -147,7 +147,8 @@ class dataBase {
 
 	async getGoal(goalID) {
 		let doc = await this.goals.doc(goalID).get();
-		return FireStoreParser(doc.data());
+		let output = FireStoreParser(doc.data());
+                return output;
 	}
 
 	async checkIfUserExists(userID) {
