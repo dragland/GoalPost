@@ -5,6 +5,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import RNCalendarEvents from 'react-native-calendar-events';
+import NotificationManager from "../components/notifications"
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
