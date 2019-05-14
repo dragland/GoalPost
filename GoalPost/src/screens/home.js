@@ -1,144 +1,135 @@
 import React from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
-import { Avatar, Button } from "react-native-elements";
-import baseStyles from "../../styles/baseStyles";
-import Clouds from "../components/database";
+import { Alert, SectionList, StyleSheet, View, Text } from "react-native";
+import { Button, Input } from 'react-native-elements';
+import baseStyles from '../../styles/baseStyles';
+import Cloud from "../components/database";
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   static navigationOptions = {
     title: "Home"
   };
+
   state = {
-    yesNoDisabled: false
+    userID: 'undefined default userID',
+    goalID: 'undefined default goalID',
+    userName: 'None',
+    profilePic: 'None',
+    active: [],
+    completed: [],
+    pending: [],
   };
 
-  registerYes = () => {
-    this.setState({ yesNoDisabled: true });
-    Alert.alert('Keep up the good work!');
+  getGoalName = async (goalID) => {
+    //Alert.alert(goalID);
+    //let goal = await Cloud.loadGoal(goalID);
+    //let goal_name = goal.goal_name;
+    //return goal_name;
+    return goalID;
   };
 
-  registerNo = () => {
-    this.setState({ yesNoDisabled: true });
-    Alert.alert('You have chosen...poorly.');
+  selectGoal = e => {
+    this.setState({ goalID: e.nativeEvent.text });
   };
+
+  componentWillMount() {
+    const { navigation } = this.props;
+    const userID = navigation.getParam('userID', 'root');
+    // TODO change from getUser to loadUser, also set up navigation from login screen
+
+    Cloud.getUser(userID).then((user) => { 
+      this.setState({ 
+        userID: userID,
+        userName: user.user_name,
+        profilePic: user.profile_pic,
+        active: user.active_goals,
+        completed: user.completed_goals,
+        pending: user.pending_goals
+      }); 
+    });
+  }
 
   render() {
-    const { navigation } = this.props;
-    const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
-
     return (
-      <View style={baseStyles.screen}>
-        <Text style={baseStyles.text}>Current GoalPost:</Text>
-        <Text style={baseStyles.heading}>{goalName}</Text>
-        <Text style={baseStyles.text}>Did you complete today's goal?</Text>
-
-        <View style={{ flexDirection: "row" }}>
-          <Button
-            buttonStyle={styles.button}
-            title="Yes"
-            type="outline"
-            onPress={this.registerYes}
-            disabled={this.state.yesNoDisabled}
-          />
-
-          <Button
-            buttonStyle={styles.button}
-            title="No"
-            type="outline"
-            onPress={this.registerNo}
-            disabled={this.state.yesNoDisabled}
-          />
-        </View>
-
-        <Text style={baseStyles.heading2}>Current Leaderboard:</Text>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#1</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../images/davy.jpg")}
-          />
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#2</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../images/cherry.jpg")}
-          />
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#3</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../images/jesus.jpg")}
-          />
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#4</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../images/cam.jpg")}
-          />
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-          <View style={styles.progressBox}></View>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-        <Button
-          title="Go to Goal Completion Screen"
-          onPress={() =>
-            this.props.navigation.navigate("Completion", {
-              goalName: goalName
-            })
+      <View style={styles.screen}>
+        <Text style={baseStyles.heading2}>Hi, {this.state.userName}!{'\n'}Here are your Goals</Text>
+        <Input placeholder="Enter goal ID here" onChange={this.selectGoal}/>
+        <SectionList
+          sections={[
+            {title: 'Active Goals', data: this.state.active},
+            {title: 'Pending Goals', data: this.state.pending},
+            {title: 'Completed Goals', data: this.state.completed},
+          ]}
+          renderItem={({item}) => 
+            <Button 
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.titleStyle}
+              title={item} 
+              type="clear"
+              onPress={() => {}}
+            />
           }
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item, index) => index}
+        />
+
+        <Button
+          title="open active goal"
+          type="outline"
+          raised
+          onPress={() =>this.props.navigation.navigate("ActiveGoal", {userID: this.state.userID, goalID: this.state.goalID})}
         />
         <Button
-          title="Go Back"
+          title="accept or reject a goal"
+          type="outline"
+          raised
+          onPress={() => this.props.navigation.navigate("PendingGoal", {userID: this.state.userID, goalID: this.state.goalID})}
+        />
+        <Button
+          title="create a goal"
+          type="outline"
+          raised
+          onPress={() => this.props.navigation.navigate("CreateGoal", {userID: this.state.userID})}
+        />
+        <Button
+          title="view completed goal"
+          type="outline"
+          raised
+          onPress={() => this.props.navigation.navigate("CompleteGoal", {userID: this.state.userID, goalID: this.state.goalID})}
+        />
+        <Button
+          title="log out"
+          type="outline"
+          raised
           onPress={() => this.props.navigation.goBack()}
         />
-        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  boardEntry: {
+  screen: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignSelf: "flex-start",
-    margin: 5
   },
-  button: {
-    width: 100,
-    margin: 10
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 18,
+    fontWeight: 'bold',
+    backgroundColor: '#EEE',
   },
-  progressBox: {
-    backgroundColor: "#67E9AA",
-    width: 20,
-    height: 20,
-    margin: 5,
-    marginTop: 12
+  buttonStyle: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    justifyContent: 'flex-start'
+  },  
+  titleStyle: {
+    color: '#484848',
+    textAlign: 'left'
   },
-});
+})
+
+export default Home;

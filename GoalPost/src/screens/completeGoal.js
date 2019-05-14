@@ -3,19 +3,21 @@ import { Button, Image, StyleSheet, View, Text } from "react-native";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 
-export default class Completion extends React.Component {
+class CompleteGoal extends React.Component {
   static navigationOptions = {
-    title: "Completion"
+    title: "CompleteGoal"
+  };
+  state = {
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID")
   };
 
   render() {
-    const { navigation } = this.props;
-    const goalName = navigation.getParam("goalName", "NO-GOAL-NAME");
     return (
       <View style={baseStyles.screen}>
         <Text style={baseStyles.heading}>Congratulations!</Text>
         <Text style={baseStyles.text}>You've completed the goal&nbsp;
-          <Text style={{ fontWeight: "bold" }}>{goalName}</Text>
+          <Text style={{ fontWeight: "bold" }}>{this.state.goalID}</Text>
         !</Text>
 
         <Image
@@ -39,3 +41,4 @@ const styles = StyleSheet.create({
     margin: 20
   }
 });
+export default CompleteGoal;

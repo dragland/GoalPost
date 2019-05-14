@@ -1,21 +1,30 @@
 import React, { Component } from "react";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Start from "./src/screens/start";
+import Login from "./src/screens/login";
 import Home from "./src/screens/home";
+import ActiveGoal from "./src/screens/activeGoal";
 import CreateGoal from "./src/screens/createGoal";
-import Completion from "./src/screens/completion";
+import PendingGoal from "./src/screens/pendingGoal";
+import CompleteGoal from "./src/screens/completeGoal";
+
 const Project= createStackNavigator({
-  Start: {
-        screen: Start
-  },
-  Home: {
-  	screen: Home
-  },
-  CreateGoal: {
-  	screen: CreateGoal
-  },
-  Completion: {
-  	screen: Completion
-  }
+	Login: {
+		screen: Login
+	},
+	Home: {
+		screen: Home
+	},
+	ActiveGoal: {
+		screen: ActiveGoal
+	},
+	PendingGoal: {
+		screen: PendingGoal
+	},
+	CreateGoal: {
+		screen: CreateGoal
+	},
+	CompleteGoal: {
+		screen: CompleteGoal
+	}
 });
 export default createAppContainer(Project);

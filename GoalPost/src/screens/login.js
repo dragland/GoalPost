@@ -2,10 +2,14 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import Cloud from "../components/database";
 
-class Home extends React.Component {
+class Login extends React.Component {
   static navigationOptions = {
-    title: "Start"
+    title: "Login"
   };
+  state = {
+    userID: "undefined default userID"
+  };
+
   render() {
     // Cloud.test();
     return (
@@ -17,11 +21,11 @@ class Home extends React.Component {
         }}
       >
         <Button
-          title="Go to Create Goal screen"
-          onPress={() => this.props.navigation.navigate("CreateGoal")}
+          title="login"
+          onPress={() => this.props.navigation.navigate("Home", {userID: this.state.userID})}
         />
       </View>
     );
   }
 }
-export default Home;
+export default Login;

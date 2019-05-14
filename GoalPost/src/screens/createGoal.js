@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, StyleSheet, Switch, Text, TextInput, Picker } from "react-native";
+import { Button, View, StyleSheet, Switch, Text, TextInput, Picker, Alert} from "react-native";
 import { Input, CheckBox } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
@@ -11,6 +11,8 @@ class CreateGoal extends React.Component {
     title: "CreateGoal"
   };
   state = {
+    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    goalID: "undefined default goalID",
     isDateTimePicker1Visible: false,
     isDateTimePicker2Visible: false,
     isRepeatUnitPickerVisible: false,
@@ -149,9 +151,9 @@ class CreateGoal extends React.Component {
 
         <Button
           title="Create New Goal"
-          onPress={() => {
-            Cloud.addGoal("0", "0", this.state.goalName);
-            this.props.navigation.navigate("Home", {goalName: this.state.goalName});
+          onPress={ async () => {
+            let goalID = await Cloud.addGoal("test", "test_goal", ["root", "invited", "0"], [0, 1, 2], 5);
+            Alert.alert("created goal with ID: ", goalID);
           }}
         />
         <Button
@@ -187,5 +189,4 @@ const styles = StyleSheet.create({
     width: 10
   }
 });
-
 export default CreateGoal;
