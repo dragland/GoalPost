@@ -44,23 +44,42 @@ class dataBase {
 		else {
 			this.updateUser(userID, userName, userPic);
 		}
+		//TODO return user
 	}
 
 	async loadUser(userID) {
 		/* Called on every invocation of home screen in order to get user profile & list of goalIDs */
 		let user = await this.getUser(userID);
-		// for (g in user.pending_goals) {
-		// 	if (getGoal(g).task_times[0] < now) {
-		// 		deletePendingGoal(userID, g)
-		// 		removeUserFromGoal(userID, g);
+		// let now = new Date();
+		// let promices = [];
+
+		// user.pending_goals.forEach((g) => {
+		// 	let goal = await this.getGoal(g);
+		// 	let start = goal.task_times[0].toDate();
+		// 	if (start.getTime() < now.getTime()) {
+		// 		let write_1 = await this.deletePendingGoal(userID, g)
+		// 		let write_2 = await this.removeUserFromGoal(userID, g);
+		// 		promices.push(write_1);
+		// 		promices.push(write_2);
 		// 	}
-		// }
-		// for (g in user.active_goals) {
-		// 	if (getGoal(g).end_date < now) {
-		// 		completeGoal(userID, g);
+		// });
+
+		// let update = await Promise.all(promices);
+		// promices = [];
+		// let user = await this.getUser(userID);
+
+		// user.active_goals.forEach((g) => {
+		// 	let goal = await this.getGoal(g);
+		// 	let end = goal.task_times[goal.task_times.length-1].toDate();
+		// 	if (end.getTime() < now.getTime()) {
+		// 		let write = await this.completeGoal(userID, g);
+		// 		promices.push(write);
 		// 	}
-		// }
-		// user = getUser(userID);
+		// });
+
+		// let update = await Promise.all(promices);
+		// let updated_user = await this.getUser(userID);
+		// return updated_user;
 		return user;
 	}
 
@@ -77,7 +96,7 @@ class dataBase {
 		return goal;
 	}
 
-	checkInToTask(userID, goalID, present) {
+	async checkInToTask(userID, goalID, present) {
 		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
 		// completed = false;
 		// if (present) {
@@ -89,16 +108,19 @@ class dataBase {
 		// 	completeGoal(userID, goalID)
 		// }
 		// return completed;
+		// TODO return promice
 	}
 
-	acceptPendingGoal(userID, goalID) {
+	async acceptPendingGoal(userID, goalID) {
 		this.activatePendingGoal(userID, goalID);
 		this.deletePendingGoal(userID, goalID);
+		// TODO return promice
 	}
 
-	rejectPendingGoal(userID, goalID) {
+	async rejectPendingGoal(userID, goalID) {
 		this.deletePendingGoal(userID, goalID);
 		this.removeUserFromGoal(userID, goalID);
+		// TODO return promice
 	}
 
 	async addGoal(userID, goalName, friends, taskTimes, penalty) {
@@ -110,7 +132,8 @@ class dataBase {
 	}
 
 	async test() {
-		
+		// let u = await this.loadUser("dragland");
+		// Alert.alert(JSON.stringify(u.pending_goals));
 	}
 
 	/*
@@ -132,15 +155,16 @@ class dataBase {
 		return doc;
 	}
 
-	updateUser(userID, userName, userPic) {
+	async updateUser(userID, userName, userPic) {
 		let data = {
 			user_name : userName,
 			profile_pic : userPic
 		};
 		this.users.doc(userID).set(data, {merge: true});
+		// TODO return promice
 	}
 
-	createUser(userID, userName, userPic) {
+	async createUser(userID, userName, userPic) {
 		let data = {
 			user_name : userName,
 			profile_pic : userPic,
@@ -149,12 +173,14 @@ class dataBase {
 			completed_goals : []
 		};
 		this.users.doc(userID).set(data);
+		// TODO return promice
 	}
 
-	removeUserFromGoal(userID, goalID) {
+	async removeUserFromGoal(userID, goalID) {
 		this.goals.doc(goalID).update({
 			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
 		});
+		// TODO return promice
 	}
 
 	async completeGoal(userID, goalID) {
@@ -196,6 +222,7 @@ class dataBase {
 				pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 			});
 		}
+		// TODO return promice
 	}
 
 	async updateUserScore(userID, goalID) {
@@ -204,18 +231,21 @@ class dataBase {
 		this.goals.doc(goalID).update({
 			['user_score_map.' + userID]: score
 		});
+		// TODO return promice
 	}
 
-	activatePendingGoal(userID, goalID) {
+	async activatePendingGoal(userID, goalID) {
 		this.users.doc(userID).update({
 			active_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
+		// TODO return promice
 	}
 
-	deletePendingGoal(userID, goalID) {
+	async deletePendingGoal(userID, goalID) {
 		this.users.doc(userID).update({
 			pending_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
 		});
+		// TODO return promice
 	}
 }
 
