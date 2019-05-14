@@ -38,17 +38,18 @@ class dataBase {
 	async loginUser(userID, userName, userPic) {
 		/* Called once user logs in after authenticating */
 		let user = await this.checkIfUserExists(userID);
-		if (!user.exists) {
-			this.createUser(userID, userName, userPic);
+		if (user.exists) {
+			let ret = await this.updateUser(userID, userName, userPic);
+			return ret;
 		}
 		else {
-			this.updateUser(userID, userName, userPic);
+			let ret = await this.createUser(userID, userName, userPic);
+			return ret;
 		}
-		//TODO return user
 	}
 
-	async loadUser(userID) {
-		/* Called on every invocation of home screen in order to get user profile & list of goalIDs */
+	async loadUser(userID) {/* TODO */
+		/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
 		let user = await this.getUser(userID);
 		// let now = new Date();
 		// let promices = [];
@@ -58,7 +59,7 @@ class dataBase {
 		// 	let start = goal.task_times[0].toDate();
 		// 	if (start.getTime() < now.getTime()) {
 		// 		let write_1 = await this.deletePendingGoal(userID, g)
-		// 		let write_2 = await this.removeUserFromGoal(userID, g);
+		// 		let write_2 = await this.removeFromGoal(userID, g);
 		// 		promices.push(write_1);
 		// 		promices.push(write_2);
 		// 	}
@@ -92,7 +93,15 @@ class dataBase {
 		return goal;
 	}
 
-	async checkInToTask(userID, goalID, present) {
+	async addGoal(userID, goalName, friends, taskTimes, penalty) {/* TODO */
+		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
+		friends.forEach((f) => {
+			this.inviteToGoal(f, goal.id);
+		});
+		return goal.id;
+	}
+
+	async checkInToTask(userID, goalID, present) {/* TODO */
 		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
 		// completed = false;
 		// if (present) {
@@ -107,28 +116,19 @@ class dataBase {
 		// TODO return promice
 	}
 
-	async acceptPendingGoal(userID, goalID) {
+	async acceptPendingGoal(userID, goalID) {/* TODO */
 		this.activatePendingGoal(userID, goalID);
 		this.deletePendingGoal(userID, goalID);
 		// TODO return promice
 	}
 
-	async rejectPendingGoal(userID, goalID) {
+	async rejectPendingGoal(userID, goalID) {/* TODO */
 		this.deletePendingGoal(userID, goalID);
-		this.removeUserFromGoal(userID, goalID);
+		this.removeFromGoal(userID, goalID);
 		// TODO return promice
 	}
 
-	async addGoal(userID, goalName, friends, taskTimes, penalty) {
-		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
-		friends.forEach((f) => {
-			this.inviteToGoal(f, goal.id);
-		});
-		return goal.id;
-	}
-
 	async test() {
-		
 	}
 
 	/*
@@ -150,15 +150,6 @@ class dataBase {
 		return doc;
 	}
 
-	async updateUser(userID, userName, userPic) {
-		let data = {
-			user_name : userName,
-			profile_pic : userPic
-		};
-		this.users.doc(userID).set(data, {merge: true});
-		// TODO return promice
-	}
-
 	async createUser(userID, userName, userPic) {
 		let data = {
 			user_name : userName,
@@ -167,28 +158,20 @@ class dataBase {
 			active_goals : [],
 			completed_goals : []
 		};
-		this.users.doc(userID).set(data);
-		// TODO return promice
+		let ret = await this.users.doc(userID).set(data);
+		return ret;
 	}
 
-	async removeUserFromGoal(userID, goalID) {
-		this.goals.doc(goalID).update({
-			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
-		});
-		// TODO return promice
+	async updateUser(userID, userName, userPic) {
+		let data = {
+			user_name : userName,
+			profile_pic : userPic
+		};
+		let ret = await this.users.doc(userID).set(data, {merge: true});
+		return ret;
 	}
 
-	async completeGoal(userID, goalID) {
-		let write_1 = this.users.doc(userID).update({
-			active_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
-		});
-		let write_2 = this.users.doc(userID).update({
-			completed_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
-		});
-		return Promise.all([write_1, write_2]);
-	}
-
-	async createGoal(userID, goalName, friends, taskTimes, penalty) {
+	async createGoal(userID, goalName, friends, taskTimes, penalty) {/* TODO */
 		let data = {
 			goal_name : goalName,
 			user_score_map : {},
@@ -201,10 +184,11 @@ class dataBase {
 		});
 		let doc = await this.goals.add(data);
 		this.activatePendingGoal(userID, doc.id);
+		//todo wait for promice
 		return doc;
 	}
 
-	async inviteToGoal(userID, goalID) {
+	async inviteToGoal(userID, goalID) {/* TODO */
 		let user = await this.checkIfUserExists(userID);
 		if (!user.exists) {
 			let new_user = await this.createUser(userID, "", "");
@@ -220,7 +204,14 @@ class dataBase {
 		// TODO return promice
 	}
 
-	async updateUserScore(userID, goalID) {
+	async removeFromGoal(userID, goalID) {/* TODO */
+		this.goals.doc(goalID).update({
+			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
+		});
+		// TODO return promice
+	}
+
+	async updateUserScore(userID, goalID) {/* TODO */
 		let goal = await Cloud.getGoal(goalID);
 		let score = goal.user_score_map[userID] + goal.penalty;
 		this.goals.doc(goalID).update({
@@ -229,14 +220,24 @@ class dataBase {
 		// TODO return promice
 	}
 
-	async activatePendingGoal(userID, goalID) {
+	async completeGoal(userID, goalID) {
+		let write_1 = this.users.doc(userID).update({
+			active_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
+		});
+		let write_2 = this.users.doc(userID).update({
+			completed_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
+		});
+		return Promise.all([write_1, write_2]);
+	}
+
+	async activatePendingGoal(userID, goalID) {/* TODO */
 		this.users.doc(userID).update({
 			active_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
 		// TODO return promice
 	}
 
-	async deletePendingGoal(userID, goalID) {
+	async deletePendingGoal(userID, goalID) {/* TODO */
 		this.users.doc(userID).update({
 			pending_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
 		});
