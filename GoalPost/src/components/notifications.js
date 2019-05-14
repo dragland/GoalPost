@@ -32,8 +32,9 @@ class localNotificationManager {
       Output:
         succeeded: Bool, true if succeeded, false if failed
     */
+    var dates = [];
     for (i = 0; i < weekDays.length; i++) {
-      var curDayDate = this.dateOfNextDay(startDate,weekDays[i])
+      var curDayDate = this.dateOfNextDay(startDate,weekDays[i]);
       while (curDayDate.parse() < endDate.parse()) {
         //Set Notification for date
         // this.PushNotification.localNotificationSchedule({
@@ -41,9 +42,11 @@ class localNotificationManager {
         //   message: "My Notification Message", // (required)
         //   date: curDayDate // new Date(Date.now() + (10 * 1000)) // in 10 sec
         // });
-        curDayDate.setDate(curDayDate.getDate() + 7) //go to the next week
+        curDayDate.setDate(curDayDate.getDate() + 7); //go to the next week
+        dates.push(curDayDate);
       }
     }
+    return dates;
   }
 
   /*
