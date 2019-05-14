@@ -152,7 +152,7 @@ class CreateGoal extends React.Component {
         <Button
           title="Create New Goal"
           onPress={ async () => {
-            let goalID = await Cloud.addGoal("test", "test_goal", ["root", "invited", "0"], [0, 1, 2], 5);
+            let goalID = await Cloud.addGoal("test", "test_goal", ["root", "invited", "0"], [Date(), Date(), Date(), Date()], 5);
             Alert.alert("created goal with ID: ", goalID);
           }}
         />
