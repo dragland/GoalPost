@@ -67,9 +67,12 @@ class dataBase {
 	async loadGoal(userID, goalID) {
 		/* Called on every invocation of active, pending, & completed screens */
 		let goal = await this.getGoal(goalID);
-		// goal = getGoal(goalID);
-		// if (goal.end_date < now) {
-		// 	completeGoal(userID, g);
+		// let now = new Date();
+		// let end = goal.task_times[goal.task_times.length-1].toDate();
+		// if (end.getTime() < now.getTime()) {
+		// 	let write = await this.completeGoal(userID, goalID);
+		// 	let updated_goal = await this.getGoal(goalID);
+		// 	return updated_goal;
 		// }
 		return goal;
 	}
@@ -154,13 +157,14 @@ class dataBase {
 		});
 	}
 
-	completeGoal(userID, goalID) {
-		this.users.doc(userID).update({
+	async completeGoal(userID, goalID) {
+		let write_1 = this.users.doc(userID).update({
 			active_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
 		});
-		this.users.doc(userID).update({
+		let write_2 = this.users.doc(userID).update({
 			completed_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
+		return Promise.all([write_1, write_2]);
 	}
 
 	async createGoal(userID, goalName, friends, taskTimes, penalty) {
