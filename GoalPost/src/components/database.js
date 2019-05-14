@@ -86,13 +86,9 @@ class dataBase {
 	async loadGoal(userID, goalID) {
 		/* Called on every invocation of active, pending, & completed screens */
 		let goal = await this.getGoal(goalID);
-		// let now = new Date();
-		// let end = goal.task_times[goal.task_times.length-1].toDate();
-		// if (end.getTime() < now.getTime()) {
-		// 	let write = await this.completeGoal(userID, goalID);
-		// 	let updated_goal = await this.getGoal(goalID);
-		// 	return updated_goal;
-		// }
+		if (!(userID in goal.user_score_map)) {
+			return null;
+		}
 		return goal;
 	}
 
@@ -132,8 +128,7 @@ class dataBase {
 	}
 
 	async test() {
-		// let u = await this.loadUser("dragland");
-		// Alert.alert(JSON.stringify(u.pending_goals));
+		
 	}
 
 	/*
