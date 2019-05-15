@@ -5,6 +5,7 @@ import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import GoBackButton from "../components/goBackButton";
 import CenterImage from "../components/centerImage";
+import StandardButton from "../components/standardButton";
 
 class PendingGoal extends React.Component {
   static navigationOptions = {
@@ -57,35 +58,22 @@ class PendingGoal extends React.Component {
             Your friends {this.state.friendsList.join(" and ")} have already
             joined!
           </Text>
-          <Button
-            title="  ACCEPT GOAL  "
-            titleStyle={{ color: "#E97C44" }}
-            buttonStyle={{
-              borderColor: "#E97C44",
-              borderWidth: 1,
-              borderRadius: 25
-            }}
+          <StandardButton
+            title="Accept Goal"
             containerStyle={{ alignSelf: "center", marginTop: 30 }}
             onPress={() => {
               Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
               this.props.navigation.goBack();
             }}
-            type="clear"
+            orange
           />
-          <Button
-            title="  REJECT GOAL  "
-            titleStyle={{ color: "#666" }}
-            buttonStyle={{
-              borderColor: "#666",
-              borderWidth: 1,
-              borderRadius: 25
-            }}
+          <StandardButton
+            title="Reject Goal"
             containerStyle={{ alignSelf: "center", marginTop: 20 }}
             onPress={() => {
               Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
               this.props.navigation.goBack();
             }}
-            type="clear"
           />
         </View>
       </View>
