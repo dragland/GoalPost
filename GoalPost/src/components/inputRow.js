@@ -3,10 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default class InputRow extends Component {
   render() {
+    const header = this.props.header.toUpperCase();
+
     return (
       <View style={styles.inputRow}>
         <View style={styles.inputHeaderContainer}>
-          <Text style={styles.inputHeader}>{this.props.header}</Text>
+          <Text style={styles.inputHeader}>{header}</Text>
         </View>
         <View style={styles.inputTakerContainer}>
           {this.props.children}
@@ -21,19 +23,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    padding: 20
   },
   inputHeaderContainer: {
-    flex: 0.18
+    flex: 0.27
   },
   inputHeader: {
-    color: "#484848",
+    color: "#666",
+    fontSize: 16,
     fontWeight: "bold",
-    fontSize: 18,
-    lineHeight: 21
   },
   inputTakerContainer: {
-    flex: 0.82,
+    flex: 0.73,
     flexDirection: "row",
     alignItems: "flex-start"
   }

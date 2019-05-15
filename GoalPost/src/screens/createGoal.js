@@ -21,6 +21,7 @@ import NotificationManager from "../components/notifications";
 import RepeatCheckBox from "../components/repeatCheckBox";
 import InputRow from "../components/inputRow";
 import GoBackButton from "../components/goBackButton";
+import StandardButton from "../components/standardButton";
 import update from "immutability-helper";
 
 class CreateGoal extends React.Component {
@@ -108,19 +109,25 @@ class CreateGoal extends React.Component {
         <GoBackButton navigation={this.props.navigation} />
         <View
           style={{
-            flex: 0.9,
+            flex: 0.7,
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "flex-start"
+            justifyContent: "flex-start",
+            paddingHorizontal: 30
           }}
         >
           <InputRow header="Goal Name">
-            <Input placeholder="Gym Buddies" onChange={this.updateGoalName} />
+            <Input
+              placeholder="GYM BUDDIES"
+              inputStyle={styles.inputText}
+              onChange={this.updateGoalName}
+            />
           </InputRow>
 
           <InputRow header="Start Date">
             <Input
               value={this.state.startDate}
+              inputStyle={styles.inputText}
               onFocus={this.showDateTimePicker1}
             />
             <DateTimePicker
@@ -133,6 +140,7 @@ class CreateGoal extends React.Component {
           <InputRow header="End Date">
             <Input
               value={this.state.endDate}
+              inputStyle={styles.inputText}
               onFocus={this.showDateTimePicker2}
             />
             <DateTimePicker
@@ -159,21 +167,34 @@ class CreateGoal extends React.Component {
           </InputRow>
 
           <InputRow header="Cost/miss">
-            <Input placeholder="$5.00" />
+            <Input
+              placeholder="5.00 (USD)"
+              keyboardType="numeric"
+              inputStyle={styles.inputText}
+            />
           </InputRow>
 
           <InputRow header="Members">
-            <Input placeholder="Choose from FB" />
+            <Input placeholder="CHOOSE FROM FB" inputStyle={styles.inputText} />
           </InputRow>
 
           <InputRow header="Push notifs?">
             <Switch
               onValueChange={this.togglePushNotifs}
               value={this.state.enablePushNotifs}
+              thumbColor="#E97C44"
+              trackColor={{ false: null, true: "#f2b190" }}
             />
           </InputRow>
+        </View>
 
-          <Button title="Create New Goal" onPress={this.createNewGoal} />
+        <View style={{ flex: 0.2, paddingHorizontal: 30, alignSelf: "center" }}>
+          <StandardButton
+            title="Create New Goal"
+            containerStyle={{ alignSelf: "center", marginTop: 20 }}
+            onPress={this.createNewGoal}
+            orange
+          />
         </View>
       </View>
     );
@@ -181,25 +202,8 @@ class CreateGoal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  inputRow: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20
-  },
-  inputHeaderContainer: {
-    flex: 0.18
-  },
-  inputHeader: {
-    color: "#484848",
-    fontWeight: "bold",
-    fontSize: 18,
-    lineHeight: 21
-  },
-  inputTakerContainer: {
-    flex: 0.82,
-    flexDirection: "row",
-    alignItems: "flex-start"
+  inputText: {
+    fontSize: 16
   }
 });
 export default CreateGoal;

@@ -17,6 +17,7 @@ export default class StandardButton extends Component {
         }}
         containerStyle={this.props.containerStyle}
         onPress={this.props.onPress}
+        disabled={this.props.disabled}
         type="clear"
       />
     );

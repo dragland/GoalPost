@@ -14,9 +14,10 @@ const baseStyles = StyleSheet.create({
     justifyContent: "space-between"
   },
   heading: {
-    color: "#484848",
+    color: "#666",
     fontWeight: "bold",
-    fontSize: 36,
+    fontSize: 24,
+    textAlign: "center",
     lineHeight: 42,
     margin: 15
   },

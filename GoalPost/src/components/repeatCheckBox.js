@@ -9,11 +9,12 @@ export default class RepeatCheckBox extends Component {
         <CheckBox
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
+          checkedColor="#E97C44"
           containerStyle={styles.containerStyle}
           checked={this.props.checked}
           onIconPress={this.props.onIconPress}
         />
-        <Text style={{ color: "#444", fontWeight: "bold" }}>
+        <Text style={styles.text}>
           {this.props.title}
         </Text>
       </View>
@@ -25,6 +26,16 @@ const styles = StyleSheet.create({
   containerStyle: {
     justifyContent: "center",
     backgroundColor: "#FFF",
-    borderWidth: 0
+    borderColor: "#666",
+    borderWidth: 0,
+    padding: 0,
+    marginHorizontal: 0,
+    marginBottom: 0,
+    marginTop: 10
+  },
+  text: {
+    color: "#666",
+    fontSize: 16,
+    fontWeight: "bold",
   }
 });

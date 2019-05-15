@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StatusBar } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Cloud from "../components/database";
+import StandardButton from "../components/standardButton";
 
 class Login extends React.Component {
   static navigationOptions = {
@@ -27,11 +28,13 @@ class Login extends React.Component {
       >
         <StatusBar barStyle="dark-content" />
         <Input placeholder="Enter user ID here" onChange={this.selectUser} />
-        <Button
+        <StandardButton
           title="login"
+          containerStyle={{ alignSelf: "center", marginTop: 20 }}
           onPress={() => {
             this.props.navigation.navigate("Home", {userID: this.state.userID});
           }}
+          orange
         />
       </View>
     );
