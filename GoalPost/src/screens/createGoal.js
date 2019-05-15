@@ -20,6 +20,7 @@ import NotificationManager from "../components/notifications";
 // import custom components
 import RepeatCheckBox from "../components/repeatCheckBox";
 import InputRow from "../components/inputRow";
+import GoBackButton from "../components/goBackButton";
 import update from "immutability-helper";
 
 class CreateGoal extends React.Component {
@@ -103,71 +104,77 @@ class CreateGoal extends React.Component {
 
   render() {
     return (
-      <View style={baseStyles.screen}>
-        <InputRow header="Goal Name">
-          <Input placeholder="Gym Buddies" onChange={this.updateGoalName} />
-        </InputRow>
+      <View style={baseStyles.flatScreen}>
+        <GoBackButton navigation={this.props.navigation} />
+        <View
+          style={{
+            flex: 0.9,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start"
+          }}
+        >
+          <InputRow header="Goal Name">
+            <Input placeholder="Gym Buddies" onChange={this.updateGoalName} />
+          </InputRow>
 
-        <InputRow header="Start Date">
-          <Input
-            value={this.state.startDate}
-            onFocus={this.showDateTimePicker1}
-          />
-          <DateTimePicker
-            isVisible={this.state.isDateTimePicker1Visible}
-            onConfirm={this.handleStartDatePicked}
-            onCancel={this.hideDateTimePicker1}
-          />
-        </InputRow>
-
-        <InputRow header="End Date">
-          <Input
-            value={this.state.endDate}
-            onFocus={this.showDateTimePicker2}
-          />
-          <DateTimePicker
-            isVisible={this.state.isDateTimePicker2Visible}
-            onConfirm={this.handleEndDatePicked}
-            onCancel={this.hideDateTimePicker2}
-          />
-        </InputRow>
-
-        <InputRow header="Repeat Every">
-          {this.state.recurArray.map((item, i) => (
-            <RepeatCheckBox
-              title={item.title}
-              checked={item.checked}
-              onIconPress={() => {
-                this.setState({
-                  recurArray: update(this.state.recurArray, {
-                    [i]: { checked: { $set: !item.checked } }
-                  })
-                });
-              }}
+          <InputRow header="Start Date">
+            <Input
+              value={this.state.startDate}
+              onFocus={this.showDateTimePicker1}
             />
-          ))}
-        </InputRow>
+            <DateTimePicker
+              isVisible={this.state.isDateTimePicker1Visible}
+              onConfirm={this.handleStartDatePicked}
+              onCancel={this.hideDateTimePicker1}
+            />
+          </InputRow>
 
-        <InputRow header="Cost/miss">
-          <Input placeholder="$5.00" />
-        </InputRow>
+          <InputRow header="End Date">
+            <Input
+              value={this.state.endDate}
+              onFocus={this.showDateTimePicker2}
+            />
+            <DateTimePicker
+              isVisible={this.state.isDateTimePicker2Visible}
+              onConfirm={this.handleEndDatePicked}
+              onCancel={this.hideDateTimePicker2}
+            />
+          </InputRow>
 
-        <InputRow header="Members">
-          <Input placeholder="Choose from FB" />
-        </InputRow>
+          <InputRow header="Repeat Every">
+            {this.state.recurArray.map((item, i) => (
+              <RepeatCheckBox
+                title={item.title}
+                checked={item.checked}
+                onIconPress={() => {
+                  this.setState({
+                    recurArray: update(this.state.recurArray, {
+                      [i]: { checked: { $set: !item.checked } }
+                    })
+                  });
+                }}
+              />
+            ))}
+          </InputRow>
 
-        <InputRow header="Push notifs?">
-          <Switch
-            onValueChange={this.togglePushNotifs}
-            value={this.state.enablePushNotifs}
-          />
-        </InputRow>
+          <InputRow header="Cost/miss">
+            <Input placeholder="$5.00" />
+          </InputRow>
 
-        <Button title="Create New Goal" onPress={this.createNewGoal} />
-        <Button
-          title="Go Back"
-          onPress={() => this.props.navigation.goBack()}
-        />
+          <InputRow header="Members">
+            <Input placeholder="Choose from FB" />
+          </InputRow>
+
+          <InputRow header="Push notifs?">
+            <Switch
+              onValueChange={this.togglePushNotifs}
+              value={this.state.enablePushNotifs}
+            />
+          </InputRow>
+
+          <Button title="Create New Goal" onPress={this.createNewGoal} />
+        </View>
       </View>
     );
   }
