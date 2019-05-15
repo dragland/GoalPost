@@ -28,13 +28,10 @@ class CreateGoal extends React.Component {
     goalID: "undefined default goalID",
     isDateTimePicker1Visible: false,
     isDateTimePicker2Visible: false,
-    isRepeatUnitPickerVisible: false,
     enablePushNotifs: true,
     goalName: null,
     startDate: null,
     endDate: null,
-    recurRule: null, // do we need this?
-    recurFreq: 0, // do we need this?
     recurArray: [
       { title: "S", checked: false },
       { title: "M", checked: false },
@@ -62,13 +59,6 @@ class CreateGoal extends React.Component {
   hideDateTimePicker2 = () => {
     this.setState({ isDateTimePicker2Visible: false });
   };
-  showRepeatUnitPicker = () => {
-    this.setState({ isRepeatUnitPickerVisible: true });
-  };
-  hideRepeatUnitPicker = () => {
-    this.setState({ isRepeatUnitPickerVisible: false });
-  };
-
   handleStartDatePicked = startDate => {
     this.setState({ startDate: startDate.toLocaleDateString() });
     this.hideDateTimePicker1();
@@ -77,15 +67,22 @@ class CreateGoal extends React.Component {
     this.setState({ endDate: endDate.toLocaleDateString() });
     this.hideDateTimePicker2();
   };
+
   togglePushNotifs = bool => {
     this.setState({ enablePushNotifs: bool });
   };
-
-  repeatUnitChosen = timeUnit => {
-    this.setState({ recurRule: timeUnit });
-  };
-  repeatFreqChosen = freq => {
-    this.setState({ recurFreq: parseInt(freq, 10) });
+  createNewGoal = async () => {
+    let event = new Date();
+    let start = new Date(event.getTime() - 10 * 24 * 60 * 60 * 1000);
+    let end = new Date(event.getTime() + 10 * 24 * 60 * 60 * 1000);
+    let goalID = await Cloud.addGoal(
+      "test",
+      "new invited goal from test",
+      ["cherry", "davy"],
+      [start, event, end],
+      5
+    );
+    Alert.alert("created goal with ID: ", goalID);
   };
 
   render() {
@@ -150,22 +147,7 @@ class CreateGoal extends React.Component {
           />
         </InputRow>
 
-        <Button
-          title="Create New Goal"
-          onPress={async () => {
-            let event = new Date();
-            let start = new Date(event.getTime() - 10 * 24 * 60 * 60 * 1000);
-            let end = new Date(event.getTime() + 10 * 24 * 60 * 60 * 1000);
-            let goalID = await Cloud.addGoal(
-              "test",
-              "new invited goal from test",
-              ["cherry", "davy"],
-              [start, event, end],
-              5
-            );
-            Alert.alert("created goal with ID: ", goalID);
-          }}
-        />
+        <Button title="Create New Goal" onPress={this.createNewGoal} />
         <Button
           title="Go Back"
           onPress={() => this.props.navigation.goBack()}
