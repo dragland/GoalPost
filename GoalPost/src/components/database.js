@@ -122,10 +122,10 @@ class dataBase {
 		return Promise.all([ret_1, ret_2]);
 	}
 
-	async rejectPendingGoal(userID, goalID) {/* TODO */
-		this.deletePendingGoal(userID, goalID);
-		this.removeFromGoal(userID, goalID);
-		// TODO return promice
+	async rejectPendingGoal(userID, goalID) {
+		let ret_1 = this.deletePendingGoal(userID, goalID);
+		let ret_2 = this.removeFromGoal(userID, goalID);
+		return Promise.all([ret_1, ret_2]);
 	}
 
 	async test() {
@@ -204,11 +204,11 @@ class dataBase {
 		// TODO return promice
 	}
 
-	async removeFromGoal(userID, goalID) {/* TODO */
-		this.goals.doc(goalID).update({
+	async removeFromGoal(userID, goalID) {
+		let ret = this.goals.doc(goalID).update({
 			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
 		});
-		// TODO return promice
+		return ret;
 	}
 
 	async updateUserScore(userID, goalID) {/* TODO */
