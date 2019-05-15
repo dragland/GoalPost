@@ -66,10 +66,6 @@ class Home extends React.Component {
     );
   };
 
-  selectGoal = e => {
-    this.setState({ goalID: e.nativeEvent.text });
-  };
-
   async componentDidMount() {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "cherry");

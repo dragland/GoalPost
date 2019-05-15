@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, View, Text } from "react-native";
+import { View, Text } from "react-native";
+import { Button, Input } from "react-native-elements";
 import Cloud from "../components/database";
 
 class Login extends React.Component {
@@ -7,7 +8,11 @@ class Login extends React.Component {
     title: "Login"
   };
   state = {
-    userID: "cherry" // TODO change this after dev
+    userID: "undefined default userID"
+  };
+
+  selectUser = e => {
+    this.setState({ userID: e.nativeEvent.text });
   };
 
   render() {
@@ -20,9 +25,12 @@ class Login extends React.Component {
           justifyContent: "center"
         }}
       >
+        <Input placeholder="Enter user ID here" onChange={this.selectUser} />
         <Button
           title="login"
-          onPress={() => this.props.navigation.navigate("Home", {userID: this.state.userID})}
+          onPress={() => {
+            this.props.navigation.navigate("Home", {userID: this.state.userID});
+          }}
         />
       </View>
     );
