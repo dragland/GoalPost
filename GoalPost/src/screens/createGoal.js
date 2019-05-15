@@ -16,6 +16,7 @@ import Cloud from "../components/database";
 import RNCalendarEvents from "react-native-calendar-events";
 import NotificationManager from "../components/notifications";
 import RepeatCheckBox from "../components/repeatCheckBox";
+import update from "immutability-helper";
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
@@ -31,8 +32,17 @@ class CreateGoal extends React.Component {
     goalName: null,
     startDate: null,
     endDate: null,
-    recurRule: null,
-    recurFreq: 0
+    recurRule: null, // do we need this?
+    recurFreq: 0, // do we need this?
+    recurArray: [
+      { title: "S", value: 0, checked: false },
+      { title: "M", value: 1, checked: false },
+      { title: "T", value: 2, checked: false },
+      { title: "W", value: 3, checked: false },
+      { title: "Th", value: 4, checked: false },
+      { title: "F", value: 5, checked: false },
+      { title: "S", value: 6, checked: false }
+    ]
   };
 
   updateGoalName = e => {
@@ -128,13 +138,19 @@ class CreateGoal extends React.Component {
             <Text style={styles.inputHeader}>Repeat Every</Text>
           </View>
           <View style={styles.inputTakerContainer}>
-          <RepeatCheckBox checked={this.state.checked} title="S" />
-          <RepeatCheckBox checked={this.state.checked} title="M" />
-          <RepeatCheckBox checked={this.state.checked} title="T" />
-          <RepeatCheckBox checked={this.state.checked} title="W" />
-          <RepeatCheckBox checked={this.state.checked} title="Th" />
-          <RepeatCheckBox checked={this.state.checked} title="F" />
-          <RepeatCheckBox checked={this.state.checked} title="S" />
+            {this.state.recurArray.map((item, i) => (
+              <RepeatCheckBox
+                title={item.title}
+                checked={item.checked}
+                onIconPress={() => {
+                  this.setState({
+                    recurArray: update(this.state.recurArray, {
+                      [i]: { checked: { $set: !item.checked } }
+                    })
+                  });
+                }}
+              />
+            ))}
           </View>
         </View>
         <View style={styles.inputRow}>
@@ -170,9 +186,15 @@ class CreateGoal extends React.Component {
           title="Create New Goal"
           onPress={async () => {
             let event = new Date();
-            let start = new Date(event.getTime() - (10* 24*60*60*1000));
-            let end = new Date(event.getTime() + (10 * 24*60*60*1000));
-            let goalID = await Cloud.addGoal("test", "new invited goal from test", ["cherry", "davy"], [start, event, end], 5);
+            let start = new Date(event.getTime() - 10 * 24 * 60 * 60 * 1000);
+            let end = new Date(event.getTime() + 10 * 24 * 60 * 60 * 1000);
+            let goalID = await Cloud.addGoal(
+              "test",
+              "new invited goal from test",
+              ["cherry", "davy"],
+              [start, event, end],
+              5
+            );
             Alert.alert("created goal with ID: ", goalID);
           }}
         />
@@ -205,6 +227,6 @@ const styles = StyleSheet.create({
     flex: 0.82,
     flexDirection: "row",
     alignItems: "flex-start"
-  },
+  }
 });
 export default CreateGoal;

@@ -11,6 +11,7 @@ export default class RepeatCheckBox extends Component {
           uncheckedIcon="circle-o"
           containerStyle={styles.containerStyle}
           checked={this.props.checked}
+          onIconPress={this.props.onIconPress}
         />
         <Text style={{ color: "#444", fontWeight: "bold" }}>
           {this.props.title}
