@@ -60,7 +60,8 @@ class Home extends React.Component {
             });
           }
         }}
-        leftIcon=<Icon name="flag" type="font-awesome" color="#444" /> chevron
+        leftIcon=<Icon name="flag" type="font-awesome" color="#444" />
+        chevron
       />
     );
   };
@@ -91,41 +92,65 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
-        <Text style={baseStyles.heading2}>
-          Hi, {this.state.userName}!{"\n"}Here are your Goals
-        </Text>
-        <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
-        <ScrollView>
-          <SectionList
-            sections={[
-              { title: "Active Goals", data: this.state.active },
-              { title: "Pending Goals", data: this.state.pending },
-              { title: "Completed Goals", data: this.state.completed }
-            ]}
-            renderItem={this.renderItem}
-            renderSectionHeader={({ section }) => (
-              <Text style={styles.sectionHeader}>{section.title}</Text>
-            )}
-            keyExtractor={(item, index) => index}
+        <View style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flex: 0.8 }}>
+            <Text style={baseStyles.heading2}>
+              Hi, {this.state.userName}!{"\n"}Here are your Goals
+            </Text>
+          </View>
+          <Button
+            containerStyle={{
+              flex: 0.20,
+              flexDirection: "row",
+              justifyContent: "center",
+              margin: 10
+            }}
+            type="clear"
+            buttonStyle={{
+              backgroundColor: "#FFF",
+              borderRadius: 100,
+              shadowColor: "#000",
+              shadowOffset: { height: 15, width: 0 },
+              shadowOpacity: 1.0,
+              shadowRadius: 20,
+              elevation: 10
+            }}
+            icon=<Icon
+              name="plus"
+              type="material-community"
+              color="#444"
+              size={30}
+            />
+            onPress={() =>
+              this.props.navigation.navigate("CreateGoal", {
+                userID: this.state.userID
+              })
+            }
           />
-        </ScrollView>
+        </View>
+        <View style={{ flex: 0.83, borderTopWidth: 2, borderTopColor: '#444' }}>
+          <ScrollView>
+            <SectionList
+              sections={[
+                { title: "Active Goals", data: this.state.active },
+                { title: "Pending Goals", data: this.state.pending },
+                { title: "Completed Goals", data: this.state.completed }
+              ]}
+              renderItem={this.renderItem}
+              renderSectionHeader={({ section }) => (
+                <Text style={styles.sectionHeader}>{section.title}</Text>
+              )}
+              keyExtractor={(item, index) => index}
+            />
+          </ScrollView>
 
-        <Button
-          title="create a goal"
-          type="outline"
-          raised
-          onPress={() =>
-            this.props.navigation.navigate("CreateGoal", {
-              userID: this.state.userID
-            })
-          }
-        />
-        <Button
-          title="log out"
-          type="outline"
-          raised
-          onPress={() => this.props.navigation.goBack()}
-        />
+          <Button
+            title="log out"
+            type="outline"
+            raised
+            onPress={() => this.props.navigation.goBack()}
+          />
+        </View>
       </View>
     );
   }
