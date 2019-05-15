@@ -24,7 +24,13 @@ const baseStyles = StyleSheet.create({
   text: {
     color: "#484848",
     fontSize: 18,
-    lineHeight: 21
+    textAlign: "center"
+  },
+  highlight: {
+    color: "#E97C44",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });
 

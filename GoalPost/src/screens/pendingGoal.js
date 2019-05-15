@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, View, Text } from "react-native";
+import { Alert, Dimensions, Image, View, Text } from "react-native";
+import { Button, Icon } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 
@@ -8,38 +9,114 @@ class PendingGoal extends React.Component {
     title: "PendingGoal"
   };
   state = {
-    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
-    goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID")
+    userID: "undefined default userID",
+    goalID: "undefined default goalID",
+    goalName: "None",
+    friendsList: []
   };
+
+  async componentDidMount() {
+    const { navigation } = this.props;
+    const userID = navigation.getParam("userID", "ERROR UNDEFINED USERID");
+    const goalID = navigation.getParam("goalID", "ERROR UNDEFINED GOALID");
+
+    const goal = await Cloud.loadGoal(userID, goalID);
+    const scoreMap = goal.user_score_map; // map of format {'userID': score}
+    const friendsList = Object.keys(scoreMap);
+
+    this.setState({
+      userID: userID,
+      goalID: goalID,
+      goalName: goal.goal_name,
+      friendsList: friendsList
+    });
+  }
 
   render() {
     return (
       <View
         style={{
           flex: 1,
-          alignItems: "center",
-          justifyContent: "center"
+          width: Dimensions.get("window").width,
+          alignItems: "flex-start",
+          justifyContent: "space-between"
         }}
       >
-        <Text style={baseStyles.text}>You are invited to join <Text style={{ fontWeight: "bold" }}>{this.state.goalID}</Text></Text>
-        <Button
-          title="accept goal"
-          onPress={() => {
-            Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
-            this.props.navigation.goBack();
+        <View
+          style={{
+            flex: 0.1,
+            paddingHorizontal: 20,
+            paddingVertical: 10
           }}
-        />
-        <Button
-          title="reject goal"
-          onPress={() => {
-            Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
-            this.props.navigation.goBack();
+        >
+          <Button
+            title="GO BACK"
+            titleStyle={{ color: "#666" }}
+            onPress={() => this.props.navigation.goBack()}
+            type="clear"
+          />
+        </View>
+        <View
+          style={{
+            flex: 0.5,
+            alignItems: "flex-end",
+            alignSelf: "stretch",
+            paddingHorizontal: 50,
+            paddingTop: 50
           }}
-        />
-        <Button
-          title="go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
+        >
+          <Image
+            style={{ flex: 1, alignSelf: "stretch", width: "auto" }}
+            source={require("../../images/ginger-cat-message-sent.png")}
+            resizeMode={"contain"}
+          />
+        </View>
+        <View
+          style={{
+            flex: 0.4,
+            paddingTop: 10,
+            paddingBottom: 40,
+            paddingHorizontal: 30
+          }}
+        >
+          <Text style={baseStyles.text}>
+            {" "}
+            You've been invited to join the Goal{" "}
+            <Text style={baseStyles.highlight}>{this.state.goalName}</Text>.
+            Your friends {this.state.friendsList.join(" and ")} have already
+            joined!
+          </Text>
+          <Button
+            title="  ACCEPT GOAL  "
+            titleStyle={{ color: "#E97C44" }}
+            buttonStyle={{
+              borderColor: "#E97C44",
+              borderWidth: 1,
+              borderRadius: 25
+            }}
+            containerStyle={{ alignSelf: "center", marginTop: 30 }}
+            onPress={() => {
+              Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
+              this.props.navigation.goBack();
+            }}
+            type="clear"
+          />
+          <Button
+            title="  REJECT GOAL  "
+            titleStyle={{ color: "#666" }}
+            buttonStyle={{
+              borderColor: "#666",
+              borderWidth: 1,
+              borderRadius: 25
+            }}
+            containerStyle={{ alignSelf: "center", marginTop: 20 }}
+            onPress={() => {
+              Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
+              this.props.navigation.goBack();
+            }}
+            type="clear"
+          />
+        </View>
       </View>
     );
   }

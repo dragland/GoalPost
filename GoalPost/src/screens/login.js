@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Cloud from "../components/database";
 
@@ -25,6 +25,7 @@ class Login extends React.Component {
           justifyContent: "center"
         }}
       >
+        <StatusBar barStyle="dark-content" />
         <Input placeholder="Enter user ID here" onChange={this.selectUser} />
         <Button
           title="login"
