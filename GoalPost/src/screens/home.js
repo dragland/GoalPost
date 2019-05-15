@@ -1,6 +1,13 @@
 import React from "react";
-import { Alert, SectionList, StyleSheet, View, Text } from "react-native";
-import { Button, Input } from "react-native-elements";
+import {
+  Alert,
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  View,
+  Text
+} from "react-native";
+import { Button, Input, Icon, ListItem } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 
@@ -20,9 +27,10 @@ class Home extends React.Component {
 
   getGoalNames = async (userID, list) => {
     var goalList = list.map(async goalID => {
-      const goal = await Cloud.getGoal(goalID);
+      const goal = await Cloud.loadGoal(userID, goalID);
       const goal_name = goal.goal_name;
-      return { goalID: goalID, goalName: goal_name };
+      const num_tasks = goal.task_times.length;
+      return { goalID: goalID, goalName: goal_name, numTasks: num_tasks };
     });
 
     var output = await Promise.all(goalList);
@@ -31,11 +39,9 @@ class Home extends React.Component {
 
   renderItem = ({ item, index, section: { title, data } }) => {
     return (
-      <Button
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.titleStyle}
+      <ListItem
         title={item.goalName}
-        type="clear"
+        subtitle={"You have completed this task " + item.numTasks + " times!"}
         onPress={() => {
           if (title == "Active Goals") {
             this.props.navigation.navigate("ActiveGoal", {
@@ -54,6 +60,7 @@ class Home extends React.Component {
             });
           }
         }}
+        leftIcon=<Icon name="flag" type="font-awesome" color="#444" /> chevron
       />
     );
   };
@@ -64,10 +71,9 @@ class Home extends React.Component {
 
   async componentDidMount() {
     const { navigation } = this.props;
-    const userID = navigation.getParam("userID", "test");
-    // TODO change from getUser to loadUser, also set up navigation from login screen
+    const userID = navigation.getParam("userID", "cherry");
 
-    const user = await Cloud.getUser(userID);
+    const user = await Cloud.loadUser(userID);
     const active = await this.getGoalNames(userID, user.active_goals);
     const pending = await this.getGoalNames(userID, user.pending_goals);
     const completed = await this.getGoalNames(userID, user.completed_goals);
@@ -89,18 +95,20 @@ class Home extends React.Component {
           Hi, {this.state.userName}!{"\n"}Here are your Goals
         </Text>
         <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
-        <SectionList
-          sections={[
-            { title: "Active Goals", data: this.state.active },
-            { title: "Pending Goals", data: this.state.pending },
-            { title: "Completed Goals", data: this.state.completed }
-          ]}
-          renderItem={this.renderItem}
-          renderSectionHeader={({ section }) => (
-            <Text style={styles.sectionHeader}>{section.title}</Text>
-          )}
-          keyExtractor={(item, index) => index}
-        />
+        <ScrollView>
+          <SectionList
+            sections={[
+              { title: "Active Goals", data: this.state.active },
+              { title: "Pending Goals", data: this.state.pending },
+              { title: "Completed Goals", data: this.state.completed }
+            ]}
+            renderItem={this.renderItem}
+            renderSectionHeader={({ section }) => (
+              <Text style={styles.sectionHeader}>{section.title}</Text>
+            )}
+            keyExtractor={(item, index) => index}
+          />
+        </ScrollView>
 
         <Button
           title="create a goal"
