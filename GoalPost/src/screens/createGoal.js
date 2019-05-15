@@ -113,11 +113,8 @@ class CreateGoal extends React.Component {
           </View>
         </View>
         <View style={styles.inputRow}>
-          <CheckBox title='S' style={styles.dayCheckBox} checked={this.state.checked} />
+          <CheckBox title='S' containerStyle={styles.checkBoxStyle} checked={this.state.checked} />
           <CheckBox title='M' style={styles.dayCheckBox} checked={this.state.checked} />
-          <CheckBox title='T' style={styles.dayCheckBox} checked={this.state.checked} />
-          <CheckBox title='W' style={styles.dayCheckBox} checked={this.state.checked} />
-          <CheckBox title='Th' style={styles.dayCheckBox} checked={this.state.checked} />
           <CheckBox title='F' style={styles.dayCheckBox} checked={this.state.checked} />
           <CheckBox title='S' style={styles.dayCheckBox} checked={this.state.checked} />
         </View>
@@ -189,8 +186,9 @@ const styles = StyleSheet.create({
     flex: 0.6,
     alignItems: "flex-start"
   },
-  dayCheckBox: {
-    width: 10
-  }
+  checkBoxStyle: {
+    flex: 1,
+    flexDirection: "column"
+  },
 });
 export default CreateGoal;
