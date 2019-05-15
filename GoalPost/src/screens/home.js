@@ -89,15 +89,20 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
-        <View style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}
+        >
           <View style={{ flex: 0.8 }}>
             <Text style={baseStyles.heading2}>
               Hi, {this.state.userName}!{"\n"}Here are your Goals
             </Text>
           </View>
-          <CreateGoalButton userID={this.state.userID} navigation={this.props.navigation} />
+          <CreateGoalButton
+            userID={this.state.userID}
+            navigation={this.props.navigation}
+          />
         </View>
-        <View style={{ flex: 0.83, borderTopWidth: 2, borderTopColor: '#444' }}>
+        <View style={{ flex: 0.83, borderTopWidth: 2, borderTopColor: "#444" }}>
           <ScrollView>
             <SectionList
               sections={[
