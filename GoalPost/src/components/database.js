@@ -93,11 +93,10 @@ class dataBase {
 		return goal;
 	}
 
-	async addGoal(userID, goalName, friends, taskTimes, penalty) {/* TODO */
+	async addGoal(userID, goalName, friends, taskTimes, penalty) {
 		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goal.id);
-			// await this.inviteToGoal(f, goal.id);
 		});
 		return goal.id;
 	}
