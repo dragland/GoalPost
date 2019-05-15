@@ -39,11 +39,11 @@ class dataBase {
 		/* Called once user logs in after authenticating */
 		let user = await this.checkIfUserExists(userID);
 		if (user.exists) {
-			let ret = await this.updateUser(userID, userName, userPic);
+			let ret = this.updateUser(userID, userName, userPic);
 			return ret;
 		}
 		else {
-			let ret = await this.createUser(userID, userName, userPic);
+			let ret = this.createUser(userID, userName, userPic);
 			return ret;
 		}
 	}
@@ -142,12 +142,11 @@ class dataBase {
 
 	async getGoal(goalID) {
 		let doc = await this.goals.doc(goalID).get();
-		let output = FireStoreParser(doc.data());
-                return output;
+		return FireStoreParser(doc.data());
 	}
 
 	async checkIfUserExists(userID) {
-		let doc = await this.users.doc(userID).get();
+		let doc = this.users.doc(userID).get();
 		return doc;
 	}
 
@@ -159,7 +158,7 @@ class dataBase {
 			active_goals : [],
 			completed_goals : []
 		};
-		let ret = await this.users.doc(userID).set(data);
+		let ret = this.users.doc(userID).set(data);
 		return ret;
 	}
 
@@ -168,7 +167,7 @@ class dataBase {
 			user_name : userName,
 			profile_pic : userPic
 		};
-		let ret = await this.users.doc(userID).set(data, {merge: true});
+		let ret = this.users.doc(userID).set(data, {merge: true});
 		return ret;
 	}
 
