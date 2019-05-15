@@ -65,10 +65,6 @@ class Home extends React.Component {
     );
   };
 
-  selectGoal = e => {
-    this.setState({ goalID: e.nativeEvent.text });
-  };
-
   async componentDidMount() {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "cherry");
@@ -94,7 +90,6 @@ class Home extends React.Component {
         <Text style={baseStyles.heading2}>
           Hi, {this.state.userName}!{"\n"}Here are your Goals
         </Text>
-        <Input placeholder="Enter goal ID here" onChange={this.selectGoal} />
         <ScrollView>
           <SectionList
             sections={[
