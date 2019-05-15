@@ -97,6 +97,7 @@ class dataBase {
 		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goal.id);
+			// await this.inviteToGoal(f, goal.id);
 		});
 		return goal.id;
 	}
@@ -105,7 +106,7 @@ class dataBase {
 		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
 		// completed = false;
 		// if (present) {
-		// 	updateUserScore(userID, goalID);
+		// 	await updateUserScore(userID, goalID);
 		// }
 		// goal = getGoal(goalID);
 		// if (goal.task_times[-1] <= now) {
@@ -171,7 +172,7 @@ class dataBase {
 		return ret;
 	}
 
-	async createGoal(userID, goalName, friends, taskTimes, penalty) {/* TODO */
+	async createGoal(userID, goalName, friends, taskTimes, penalty) {
 		let data = {
 			goal_name : goalName,
 			user_score_map : {},
@@ -183,25 +184,25 @@ class dataBase {
 			data.user_score_map[f] = 0;
 		});
 		let doc = await this.goals.add(data);
-		this.activatePendingGoal(userID, doc.id);
-		//todo wait for promice
+		await this.activatePendingGoal(userID, doc.id);
 		return doc;
 	}
 
-	async inviteToGoal(userID, goalID) {/* TODO */
+	async inviteToGoal(userID, goalID) {
 		let user = await this.checkIfUserExists(userID);
-		if (!user.exists) {
-			let new_user = await this.createUser(userID, "", "");
-			this.users.doc(userID).update({
+		if (user.exists) {
+			let ret = this.users.doc(userID).update({
 				pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 			});
+			return ret;
 		}
 		else {
-			this.users.doc(userID).update({
+			let new_user = await this.createUser(userID, "", "");
+			let ret = this.users.doc(userID).update({
 				pending_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 			});
+			return ret;
 		}
-		// TODO return promice
 	}
 
 	async removeFromGoal(userID, goalID) {
@@ -211,13 +212,13 @@ class dataBase {
 		return ret;
 	}
 
-	async updateUserScore(userID, goalID) {/* TODO */
+	async updateUserScore(userID, goalID) {
 		let goal = await Cloud.getGoal(goalID);
 		let score = goal.user_score_map[userID] + goal.penalty;
-		this.goals.doc(goalID).update({
+		let ret = this.goals.doc(goalID).update({
 			['user_score_map.' + userID]: score
 		});
-		// TODO return promice
+		return ret;
 	}
 
 	async completeGoal(userID, goalID) {
