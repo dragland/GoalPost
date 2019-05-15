@@ -116,10 +116,10 @@ class dataBase {
 		// TODO return promice
 	}
 
-	async acceptPendingGoal(userID, goalID) {/* TODO */
-		this.activatePendingGoal(userID, goalID);
-		this.deletePendingGoal(userID, goalID);
-		// TODO return promice
+	async acceptPendingGoal(userID, goalID) {
+		let ret_1 = this.activatePendingGoal(userID, goalID);
+		let ret_2 = this.deletePendingGoal(userID, goalID);
+		return Promise.all([ret_1, ret_2]);
 	}
 
 	async rejectPendingGoal(userID, goalID) {/* TODO */
@@ -222,27 +222,27 @@ class dataBase {
 	}
 
 	async completeGoal(userID, goalID) {
-		let write_1 = this.users.doc(userID).update({
+		let ret_1 = this.users.doc(userID).update({
 			active_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
 		});
-		let write_2 = this.users.doc(userID).update({
+		let ret_2 = this.users.doc(userID).update({
 			completed_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
-		return Promise.all([write_1, write_2]);
+		return Promise.all([ret_1, ret_2]);
 	}
 
-	async activatePendingGoal(userID, goalID) {/* TODO */
-		this.users.doc(userID).update({
+	async activatePendingGoal(userID, goalID) {
+		let ret = this.users.doc(userID).update({
 			active_goals: firebase.firestore.FieldValue.arrayUnion(goalID)
 		});
-		// TODO return promice
+		return ret;
 	}
 
-	async deletePendingGoal(userID, goalID) {/* TODO */
-		this.users.doc(userID).update({
+	async deletePendingGoal(userID, goalID) {
+		let ret = this.users.doc(userID).update({
 			pending_goals: firebase.firestore.FieldValue.arrayRemove(goalID)
 		});
-		// TODO return promice
+		return ret;
 	}
 }
 
