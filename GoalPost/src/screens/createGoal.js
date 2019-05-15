@@ -12,9 +12,12 @@ import {
 import { Input, CheckBox } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
+
+// import custom functions
 import Cloud from "../components/database";
-import RNCalendarEvents from "react-native-calendar-events";
 import NotificationManager from "../components/notifications";
+
+// import custom components
 import RepeatCheckBox from "../components/repeatCheckBox";
 import InputRow from "../components/inputRow";
 import update from "immutability-helper";
@@ -72,14 +75,27 @@ class CreateGoal extends React.Component {
     this.setState({ enablePushNotifs: bool });
   };
   createNewGoal = async () => {
-    let event = new Date();
-    let start = new Date(event.getTime() - 10 * 24 * 60 * 60 * 1000);
-    let end = new Date(event.getTime() + 10 * 24 * 60 * 60 * 1000);
-    let goalID = await Cloud.addGoal(
-      "test",
-      "new invited goal from test",
+    // retrieves weekday array of type [0, 1, 5, ...] from state
+    var weekdays = this.state.recurArray
+      .map((item, i) => ({
+        checked: item.checked,
+        index: i
+      }))
+      .filter(item => item.checked)
+      .map(item => item.index);
+
+    var taskTimes = NotificationManager.scheduleNotifications(
+      this.state.startDate,
+      this.state.endDate,
+      weekdays
+    );
+
+    // USE AS: Cloud.addGoal(userID, goalName, friends, taskTimes, penalty);
+    var goalID = await Cloud.addGoal(
+      this.state.userID,
+      this.state.goalName,
       ["cherry", "davy"],
-      [start, event, end],
+      taskTimes,
       5
     );
     Alert.alert("created goal with ID: ", goalID);
