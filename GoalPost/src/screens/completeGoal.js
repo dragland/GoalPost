@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Image, StyleSheet, View, Text } from "react-native";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
+import GoBackButton from "../components/goBackButton";
+import CenterImage from "../components/centerImage";
 
 class CompleteGoal extends React.Component {
   static navigationOptions = {
@@ -14,31 +16,28 @@ class CompleteGoal extends React.Component {
 
   render() {
     return (
-      <View style={baseStyles.screen}>
-        <Text style={baseStyles.heading}>Congratulations!</Text>
-        <Text style={baseStyles.text}>You've completed the goal&nbsp;
-          <Text style={{ fontWeight: "bold" }}>{this.state.goalID}</Text>
-        !</Text>
-
-        <Image
-          style={styles.image}
-          source={require('../../images/trophy.png')}
+      <View style={baseStyles.flatScreen}>
+        <GoBackButton navigation={this.props.navigation} />
+        <CenterImage
+          flex={0.7}
+          image={require("../../images/ginger-cat-track-statistics.png")}
         />
-
-        <Button
-          title="Go Back"
-          onPress={() => this.props.navigation.goBack()}
-        />
+        <View
+          style={{
+            flex: 0.2,
+            paddingTop: 10,
+            paddingBottom: 40,
+            paddingHorizontal: 30
+          }}
+        >
+          <Text style={baseStyles.text}>
+            Congratulations!{"\n"}You've completed the goal{" "}
+            <Text style={baseStyles.highlight}>{this.state.goalID}</Text>
+          </Text>
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  image: {
-    height: 150,
-    width: 150,
-    margin: 20
-  }
-});
 export default CompleteGoal;

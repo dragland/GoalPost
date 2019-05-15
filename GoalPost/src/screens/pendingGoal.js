@@ -1,8 +1,10 @@
 import React from "react";
-import { Alert, Dimensions, Image, View, Text } from "react-native";
+import { Alert, Image, View, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
+import GoBackButton from "../components/goBackButton";
+import CenterImage from "../components/centerImage";
 
 class PendingGoal extends React.Component {
   static navigationOptions = {
@@ -34,43 +36,12 @@ class PendingGoal extends React.Component {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          width: Dimensions.get("window").width,
-          alignItems: "flex-start",
-          justifyContent: "space-between"
-        }}
-      >
-        <View
-          style={{
-            flex: 0.1,
-            paddingHorizontal: 20,
-            paddingVertical: 10
-          }}
-        >
-          <Button
-            title="GO BACK"
-            titleStyle={{ color: "#666" }}
-            onPress={() => this.props.navigation.goBack()}
-            type="clear"
-          />
-        </View>
-        <View
-          style={{
-            flex: 0.5,
-            alignItems: "flex-end",
-            alignSelf: "stretch",
-            paddingHorizontal: 50,
-            paddingTop: 50
-          }}
-        >
-          <Image
-            style={{ flex: 1, alignSelf: "stretch", width: "auto" }}
-            source={require("../../images/ginger-cat-message-sent.png")}
-            resizeMode={"contain"}
-          />
-        </View>
+      <View style={baseStyles.flatScreen}>
+        <GoBackButton navigation={this.props.navigation} />
+        <CenterImage
+          flex={0.5}
+          image={require("../../images/ginger-cat-message-sent.png")}
+        />
         <View
           style={{
             flex: 0.4,

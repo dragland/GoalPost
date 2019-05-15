@@ -1,4 +1,4 @@
-import React, { StyleSheet } from "react-native"
+import React, { Dimensions, StyleSheet } from "react-native";
 
 const baseStyles = StyleSheet.create({
   screen: {
@@ -6,6 +6,12 @@ const baseStyles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start"
+  },
+  flatScreen: {
+    flex: 1,
+    width: Dimensions.get("window").width,
+    alignItems: "flex-start",
+    justifyContent: "space-between"
   },
   heading: {
     color: "#484848",
