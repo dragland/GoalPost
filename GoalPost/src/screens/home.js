@@ -10,6 +10,7 @@ import {
 import { Button, Input, Icon, ListItem } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
+import CreateGoalButton from "../components/createGoalButton";
 
 class Home extends React.Component {
   static navigationOptions = {
@@ -94,35 +95,7 @@ class Home extends React.Component {
               Hi, {this.state.userName}!{"\n"}Here are your Goals
             </Text>
           </View>
-          <Button
-            containerStyle={{
-              flex: 0.20,
-              flexDirection: "row",
-              justifyContent: "center",
-              margin: 10
-            }}
-            type="clear"
-            buttonStyle={{
-              backgroundColor: "#FFF",
-              borderRadius: 100,
-              shadowColor: "#000",
-              shadowOffset: { height: 15, width: 0 },
-              shadowOpacity: 1.0,
-              shadowRadius: 20,
-              elevation: 10
-            }}
-            icon=<Icon
-              name="plus"
-              type="material-community"
-              color="#444"
-              size={30}
-            />
-            onPress={() =>
-              this.props.navigation.navigate("CreateGoal", {
-                userID: this.state.userID
-              })
-            }
-          />
+          <CreateGoalButton userID={this.state.userID} navigation={this.props.navigation} />
         </View>
         <View style={{ flex: 0.83, borderTopWidth: 2, borderTopColor: '#444' }}>
           <ScrollView>
