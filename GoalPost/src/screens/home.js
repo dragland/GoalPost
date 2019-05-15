@@ -39,6 +39,7 @@ class Home extends React.Component {
   };
 
   renderItem = ({ item, index, section: { title, data } }) => {
+    const color = title == "Pending Goals" ? "#666" : "#E97C44";
     return (
       <ListItem
         title={item.goalName}
@@ -61,7 +62,7 @@ class Home extends React.Component {
             });
           }
         }}
-        leftIcon=<Icon name="flag" type="font-awesome" color="#444" />
+        leftIcon=<Icon name="flag" type="font-awesome" color={color} />
         chevron
       />
     );
@@ -102,7 +103,15 @@ class Home extends React.Component {
             navigation={this.props.navigation}
           />
         </View>
-        <View style={{ flex: 0.83, borderTopWidth: 2, borderTopColor: "#444" }}>
+        <View
+          style={{
+            flex: 0.83,
+            borderTopWidth: 2,
+            borderTopColor: "#444",
+            borderBottomWidth: 4,
+            borderBottomColor: "#DDD"
+          }}
+        >
           <ScrollView>
             <SectionList
               sections={[
@@ -117,14 +126,15 @@ class Home extends React.Component {
               keyExtractor={(item, index) => index}
             />
           </ScrollView>
+        </View>
 
           <Button
-            title="log out"
-            type="outline"
-            raised
+            title="LOG OUT"
+            type="clear"
+            titleStyle={{ color: "#666" }}
+            containerStyle={{ marginTop: 10, marginBottom: 20 }}
             onPress={() => this.props.navigation.goBack()}
           />
-        </View>
       </View>
     );
   }
