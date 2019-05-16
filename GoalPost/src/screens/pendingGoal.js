@@ -24,8 +24,8 @@ class PendingGoal extends React.Component {
     const goalID = navigation.getParam("goalID", "ERROR UNDEFINED GOALID");
 
     const goal = await Cloud.loadGoal(userID, goalID);
-    const scoreMap = goal.user_score_map; // map of format {'userID': score}
-    const friendsList = Object.keys(scoreMap);
+    const checkinMap = goal.user_logs; // map of userID to array of states (-1 = unfilled, 0 = failed, 1 = checked in) in the format {'userID': [bools]]}
+    const friendsList = Object.keys(checkinMap);
 
     this.setState({
       userID: userID,

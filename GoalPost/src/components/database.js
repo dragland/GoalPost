@@ -50,31 +50,32 @@ class dataBase {
 
 	async loadUser(userID) {
 		/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
-		// let user = await this.getUser(userID);
-		// promices = [];
-		// let now = new Date();
+		let user = await this.getUser(userID);
+		promices = [];
+		let now = new Date();
 
-		// for (let g in user.pending_goals) {
-		// 	let goal = await this.getGoal(g);
-		// 	let start = goal.event_times[0].toDate();
-		// 	if (start.getTime() < now.getTime()) {
-		// 		let ret = this.rejectPendingGoal(userID, g);
-		// 		promices.push(ret);
-		// 	}
-			
-		// }
+		for (let i in user.pending_goals) {
+			let goalId = user.pending_goals[i];
+			let goal = await this.getGoal(goalId);
+			let start = goal.event_times[0].toDate();
+			if (start.getTime() < now.getTime()) {
+				let ret = this.rejectPendingGoal(userID, goalId);
+				promices.push(ret);
+			}
+		}
 
-		// for (let g in user.active_goals) {
-		// 	let goal = await this.getGoal(g);
-		// 	let end = goal.event_times[goal.event_times.length-1].toDate();
-		// 	end.setHours(24,0,0,0);
-		// 	if (end.getTime() < now.getTime()) {
-		// 		let ret = this.completeGoal(userID, g);
-		// 		promices.push(ret);
-		// 	}
-		// }
+		for (let i in user.active_goals) {
+			let goalId = user.active_goals[i];
+			let goal = await this.getGoal(goalId);
+			let end = goal.event_times[goal.event_times.length-1].toDate();
+			end.setHours(24,0,0,0);
+			if (end.getTime() < now.getTime()) {
+				let ret = this.completeGoal(userID, goalId);
+				promices.push(ret);
+			}
+		}
 
-		// await Promise.all(promices);
+		await Promise.all(promices);
 		let updated_user = await this.getUser(userID);
 		return updated_user;
 	}
@@ -89,6 +90,7 @@ class dataBase {
 	}
 
 	async addGoal(userID, goalName, friends, eventTimes, penalty) {
+		/* Called when creating a new goal, with the eventTimes being an array of date objects specifying each individual event that exists for the goal */
 		let goalID = await this.createGoal(userID, goalName, friends, eventTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goalID);
@@ -97,6 +99,7 @@ class dataBase {
 	}
 
 	async checkInToEvent(userID, goalID, eventIndex, present) {
+		/* Called only during window of specific event, and index of that event from eventTimes is passed down */
 		let goal = await this.getGoal(goalID);
 		logs = goal.user_logs[userID];
 		logs[eventIndex] = (present) ? 1 : 0;
@@ -119,25 +122,7 @@ class dataBase {
 	}
 
 	async test() {
-		/* Initialize default users */
-		// this.loginUser("davy", "Davy Ragland", "https://profile.com/pic.jpg");
-		// this.loginUser("cherry", "Cherry Zou", "https://profile.com/pic.jpg");
-		// this.loginUser("jesus", "Jesus Cervantes", "https://profile.com/pic.jpg");
-		// this.loginUser("cam", "Cam Thouati", "https://profile.com/pic.jpg");
 
-		/* Initialize default goals */
-		// let now = new Date();
-		// let start = new Date(now.getTime() + (2* 24 * 60 * 60 * 1000));
-		// let event_1 = new Date(now.getTime() + (3* 24 * 60 * 60 * 1000));
-		// let event_2 = new Date(now.getTime() + (4* 24 * 60 * 60 * 1000));
-		// let end = new Date(now.getTime() + (5* 24 * 60 * 60 * 1000));
-		// let eventTimes = [start, event_1, event_2, end];
-
-		// this.addGoal("davy", "Davy's Goal #1", ["cherry", "jesus", "cam"], eventTimes, 5);
-		// this.addGoal("cherry", "Cherry's Goal #1", ["davy", "jesus", "cam"], eventTimes, 5);
-		// this.addGoal("cherry", "Cherry's Goal #2", ["davy", "jesus", "cam"], eventTimes, 5);
-
-		/* Initialize default conditions*/
 	}
 
 	/*
@@ -187,11 +172,14 @@ class dataBase {
 			user_logs : {},
 			penalty : penalty
 		}
+		
 		var logs = Array(eventTimes.length).fill(-1);
 		data.user_logs[userID] = logs;
+
 		friends.forEach((f) => {
 			data.user_logs[f] = logs;
 		});
+
 		let doc = await this.goals.add(data);
 		await this.activatePendingGoal(userID, doc.id);
 		return doc.id;
