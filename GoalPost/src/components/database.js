@@ -19,8 +19,8 @@ class dataBase {
 
 		db.goals[goalID] : {
 			goal_name : "",
-			event_times : [],
-			user_logs : {user : []},
+			event_times : [date],
+			user_logs : {user : [bool]},
 			penalty : 0
 		};
 	*/
@@ -114,25 +114,26 @@ class dataBase {
 	}
 
 	async addGoal(userID, goalName, friends, eventTimes, penalty) {
-		let goal = await this.createGoal(userID, goalName, friends, eventTimes, penalty);
+		let goalID = await this.createGoal(userID, goalName, friends, eventTimes, penalty);
 		friends.forEach((f) => {
-			this.inviteToGoal(f, goal.id);
+			this.inviteToGoal(f, goalID);
 		});
-		return goal.id;
+		return goalID;
 	}
 
-	async checkInToTask(userID, goalID, present) { /*TODO */
-		// let goal = await Cloud.getGoal(goalID);
-		// let score = goal.user_score_map[userID] + goal.penalty;
-		// let ret = this.goals.doc(goalID).update({
-		// 	['user_score_map.' + userID]: score
-		// });
-		// return ret;
+	async checkInToEvent(userID, goalID, eventIndex, present) {
+		let goal = await this.getGoal(goalID);
+		logs = goal.user_logs[userID];
+		logs[eventIndex] = (present) ? 1 : 0;
+		let ret = this.goals.doc(goalID).update({
+			['user_logs.' + userID]: logs
+		});
+		return ret;
 	}
 
 	async acceptPendingGoal(userID, goalID) {
-		let ret_1 = this.activatePendingGoal(userID, goalID);
-		let ret_2 = this.deletePendingGoal(userID, goalID);
+		let ret_1 = this.deletePendingGoal(userID, goalID);
+		let ret_2 = this.activatePendingGoal(userID, goalID);
 		return Promise.all([ret_1, ret_2]);
 	}
 
@@ -143,13 +144,7 @@ class dataBase {
 	}
 
 	async test() {
-		// var start = new Date();
-		// let event = new Date(start.getTime() + (24 * 60 * 60 * 1000));
-		// let end = new Date(start.getTime() + (2* 24 * 60 * 60 * 1000));
-		// var goalID = await this.addGoal("test", "debug goal", ["root"], [start, event, end], 5);
-		// Alert.alert("created goal with ID: ", goalID);
-
-		this.checkInToTask("root", "WxdZveziL4FKk7JAHW2k", true);
+		
 	}
 
 	/*
@@ -199,14 +194,12 @@ class dataBase {
 			user_logs : {},
 			penalty : penalty
 		}
-		var checkins = Array(eventTimes.length).fill(null);
-		data.user_logs[userID] = checkins;
-		friends.forEach((f) => {
-			data.user_logs[f] = checkins;
-		});
+		var logs = Array(eventTimes.length).fill(-1);
+		data.user_logs[userID] = logs;
+		friends.forEach((f) => {data.user_logs[f] = logs;});
 		let doc = await this.goals.add(data);
 		await this.activatePendingGoal(userID, doc.id);
-		return doc;
+		return doc.id;
 	}
 
 	async inviteToGoal(userID, goalID) {
