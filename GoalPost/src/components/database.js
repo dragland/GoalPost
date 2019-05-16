@@ -19,8 +19,8 @@ class dataBase {
 
 		db.goals[goalID] : {
 			goal_name : "",
-			user_score_map : {users : scores},
-			task_times : [],
+			event_times : [],
+			user_logs : {user : []},
 			penalty : 0
 		};
 	*/
@@ -51,12 +51,32 @@ class dataBase {
 	async loadUser(userID) {/* TODO */
 		/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
 		let user = await this.getUser(userID);
+		
+		/*
+		get user
+		for each pending_goals:
+			if event_times[0] < now:
+				rejectPendingGoal(userID, goalID)
+		wait for updates
+		for each active_goals:
+			end = [-1].set
+			if end_date < now:
+				completeGoal()
+		wait for updates
+		return user
+		*/
+
+
+		// let end = new Date(eventTimes[eventTimes.length-1]);
+		// data.end_date.setHours(24,0,0,0);
+
+
 		// let now = new Date();
 		// let promices = [];
 
 		// user.pending_goals.forEach((g) => {
 		// 	let goal = await this.getGoal(g);
-		// 	let start = goal.task_times[0].toDate();
+		// 	let start = goal.event_times[0].toDate();
 		// 	if (start.getTime() < now.getTime()) {
 		// 		let write_1 = await this.deletePendingGoal(userID, g)
 		// 		let write_2 = await this.removeFromGoal(userID, g);
@@ -71,7 +91,7 @@ class dataBase {
 
 		// user.active_goals.forEach((g) => {
 		// 	let goal = await this.getGoal(g);
-		// 	let end = goal.task_times[goal.task_times.length-1].toDate();
+		// 	let end = goal.event_times[goal.event_times.length-1].toDate();
 		// 	if (end.getTime() < now.getTime()) {
 		// 		let write = await this.completeGoal(userID, g);
 		// 		promices.push(write);
@@ -87,33 +107,27 @@ class dataBase {
 	async loadGoal(userID, goalID) {
 		/* Called on every invocation of active, pending, & completed screens */
 		let goal = await this.getGoal(goalID);
-		if (!(userID in goal.user_score_map)) {
+		if (!(userID in goal.user_logs)) {
 			return null;
 		}
 		return goal;
 	}
 
-	async addGoal(userID, goalName, friends, taskTimes, penalty) {
-		let goal = await this.createGoal(userID, goalName, friends, taskTimes, penalty);
+	async addGoal(userID, goalName, friends, eventTimes, penalty) {
+		let goal = await this.createGoal(userID, goalName, friends, eventTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goal.id);
 		});
 		return goal.id;
 	}
 
-	async checkInToTask(userID, goalID, present) {/* TODO */
-		// /* Called on every invocation of a task check-in, and returns true if that was the last check-in */
-		// completed = false;
-		// if (present) {
-		// 	await updateUserScore(userID, goalID);
-		// }
-		// goal = getGoal(goalID);
-		// if (goal.task_times[-1] <= now) {
-		// 	completed = true;
-		// 	completeGoal(userID, goalID)
-		// }
-		// return completed;
-		// TODO return promice
+	async checkInToTask(userID, goalID, present) { /*TODO */
+		// let goal = await Cloud.getGoal(goalID);
+		// let score = goal.user_score_map[userID] + goal.penalty;
+		// let ret = this.goals.doc(goalID).update({
+		// 	['user_score_map.' + userID]: score
+		// });
+		// return ret;
 	}
 
 	async acceptPendingGoal(userID, goalID) {
@@ -129,6 +143,13 @@ class dataBase {
 	}
 
 	async test() {
+		// var start = new Date();
+		// let event = new Date(start.getTime() + (24 * 60 * 60 * 1000));
+		// let end = new Date(start.getTime() + (2* 24 * 60 * 60 * 1000));
+		// var goalID = await this.addGoal("test", "debug goal", ["root"], [start, event, end], 5);
+		// Alert.alert("created goal with ID: ", goalID);
+
+		this.checkInToTask("root", "WxdZveziL4FKk7JAHW2k", true);
 	}
 
 	/*
@@ -171,16 +192,17 @@ class dataBase {
 		return ret;
 	}
 
-	async createGoal(userID, goalName, friends, taskTimes, penalty) {
+	async createGoal(userID, goalName, friends, eventTimes, penalty) {
 		let data = {
 			goal_name : goalName,
-			user_score_map : {},
-			task_times : taskTimes,
+			event_times : eventTimes,
+			user_logs : {},
 			penalty : penalty
 		}
-		data.user_score_map[userID] = 0;
+		var checkins = Array(eventTimes.length).fill(null);
+		data.user_logs[userID] = checkins;
 		friends.forEach((f) => {
-			data.user_score_map[f] = 0;
+			data.user_logs[f] = checkins;
 		});
 		let doc = await this.goals.add(data);
 		await this.activatePendingGoal(userID, doc.id);
@@ -206,16 +228,7 @@ class dataBase {
 
 	async removeFromGoal(userID, goalID) {
 		let ret = this.goals.doc(goalID).update({
-			['user_score_map.' + userID]: firebase.firestore.FieldValue.delete()
-		});
-		return ret;
-	}
-
-	async updateUserScore(userID, goalID) {
-		let goal = await Cloud.getGoal(goalID);
-		let score = goal.user_score_map[userID] + goal.penalty;
-		let ret = this.goals.doc(goalID).update({
-			['user_score_map.' + userID]: score
+			['user_logs.' + userID]: firebase.firestore.FieldValue.delete()
 		});
 		return ret;
 	}
