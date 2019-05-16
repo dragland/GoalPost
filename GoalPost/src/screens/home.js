@@ -30,7 +30,7 @@ class Home extends React.Component {
     var goalList = list.map(async goalID => {
       const goal = await Cloud.loadGoal(userID, goalID);
       const goal_name = goal.goal_name;
-      const num_tasks = goal.task_times.length;
+      const num_tasks = goal.event_times.length;
       return { goalID: goalID, goalName: goal_name, numTasks: num_tasks };
     });
 
