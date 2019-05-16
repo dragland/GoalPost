@@ -17,7 +17,6 @@ class Login extends React.Component {
   };
 
   render() {
-    // Cloud.test();
     return (
       <View
         style={{

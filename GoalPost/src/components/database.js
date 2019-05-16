@@ -48,60 +48,33 @@ class dataBase {
 		}
 	}
 
-	async loadUser(userID) {/* TODO */
+	async loadUser(userID) {
 		/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
 		let user = await this.getUser(userID);
-		
-		/*
-		get user
-		for each pending_goals:
-			if event_times[0] < now:
-				rejectPendingGoal(userID, goalID)
-		wait for updates
-		for each active_goals:
-			end = [-1].set
-			if end_date < now:
-				completeGoal()
-		wait for updates
-		return user
-		*/
+		promices = [];
 
+		user.pending_goals.forEach((g) => {
+			let goal = await this.getGoal(g);
+			let start = goal.event_times[0].toDate();
+			if (start.getTime() < now.getTime()) {
+				let ret = await this.rejectPendingGoal(userID, g);
+				promices.push(ret);
+			}
+		});
 
-		// let end = new Date(eventTimes[eventTimes.length-1]);
-		// data.end_date.setHours(24,0,0,0);
+		user.active_goals.forEach((g) => {
+			let goal = await this.getGoal(g);
+			let end = goal.event_times[goal.event_times.length-1].toDate();
+			end.setHours(24,0,0,0);
+			if (end.getTime() < now.getTime()) {
+				let ret = await this.completeGoal(userID, g);
+				promices.push(ret);
+			}
+		});
 
-
-		// let now = new Date();
-		// let promices = [];
-
-		// user.pending_goals.forEach((g) => {
-		// 	let goal = await this.getGoal(g);
-		// 	let start = goal.event_times[0].toDate();
-		// 	if (start.getTime() < now.getTime()) {
-		// 		let write_1 = await this.deletePendingGoal(userID, g)
-		// 		let write_2 = await this.removeFromGoal(userID, g);
-		// 		promices.push(write_1);
-		// 		promices.push(write_2);
-		// 	}
-		// });
-
-		// let update = await Promise.all(promices);
-		// promices = [];
-		// let user = await this.getUser(userID);
-
-		// user.active_goals.forEach((g) => {
-		// 	let goal = await this.getGoal(g);
-		// 	let end = goal.event_times[goal.event_times.length-1].toDate();
-		// 	if (end.getTime() < now.getTime()) {
-		// 		let write = await this.completeGoal(userID, g);
-		// 		promices.push(write);
-		// 	}
-		// });
-
-		// let update = await Promise.all(promices);
-		// let updated_user = await this.getUser(userID);
-		// return updated_user;
-		return user;
+		await Promise.all(promices);
+		let updated_user = await this.getUser(userID);
+		return updated_user;
 	}
 
 	async loadGoal(userID, goalID) {
@@ -144,7 +117,7 @@ class dataBase {
 	}
 
 	async test() {
-		
+
 	}
 
 	/*
@@ -196,7 +169,9 @@ class dataBase {
 		}
 		var logs = Array(eventTimes.length).fill(-1);
 		data.user_logs[userID] = logs;
-		friends.forEach((f) => {data.user_logs[f] = logs;});
+		friends.forEach((f) => {
+			data.user_logs[f] = logs;
+		});
 		let doc = await this.goals.add(data);
 		await this.activatePendingGoal(userID, doc.id);
 		return doc.id;
