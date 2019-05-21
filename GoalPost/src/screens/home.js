@@ -53,7 +53,8 @@ class Home extends React.Component {
           } else if (title == "Pending Goals") {
             this.props.navigation.navigate("PendingGoal", {
               userID: this.state.userID,
-              goalID: item.goalID
+              goalID: item.goalID,
+              refresh: this.componentDidMount.bind(this)
             });
           } else if (title == "Completed Goals") {
             this.props.navigation.navigate("CompleteGoal", {

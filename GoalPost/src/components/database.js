@@ -122,7 +122,6 @@ class dataBase {
 	}
 
 	async test() {
-
 	}
 
 	/*

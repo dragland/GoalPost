@@ -63,6 +63,7 @@ class PendingGoal extends React.Component {
             containerStyle={{ alignSelf: "center", marginTop: 30 }}
             onPress={() => {
               Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
+              this.props.navigation.state.params.refresh();
               this.props.navigation.goBack();
             }}
             orange
@@ -72,6 +73,7 @@ class PendingGoal extends React.Component {
             containerStyle={{ alignSelf: "center", marginTop: 20 }}
             onPress={() => {
               Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
+              this.props.navigation.state.params.refresh();
               this.props.navigation.goBack();
             }}
           />
