@@ -15,9 +15,15 @@ export default class StandardButton extends Component {
           borderWidth: 1,
           borderRadius: 25
         }}
+        disabled={this.props.disabled}
+        disabledStyle={{ 
+          borderWidth: 0 
+        }}
+        disabledTitleStyle={{
+          color: "#BBB"
+        }}
         containerStyle={this.props.containerStyle}
         onPress={this.props.onPress}
-        disabled={this.props.disabled}
         type="clear"
       />
     );

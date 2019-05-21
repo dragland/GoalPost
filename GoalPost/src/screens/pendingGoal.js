@@ -55,8 +55,7 @@ class PendingGoal extends React.Component {
             {" "}
             You've been invited to join the Goal{" "}
             <Text style={baseStyles.highlight}>{this.state.goalName}</Text>.
-            Your friends {this.state.friendsList.join(" and ")} have already
-            joined!
+            Join your friends now!
           </Text>
           <StandardButton
             title="Accept Goal"
