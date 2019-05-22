@@ -272,12 +272,15 @@ class CreateGoal extends React.Component {
                 uniqueKey="userID"
                 displayKey="user_name"
                 hideTags
+                hideSubmitButton
                 ref={(component) => { this.multiSelect = component }}
                 onSelectedItemsChange={this.selectFriend}
                 selectedItems={members}
                 selectText="Search Friends..."
                 searchInputPlaceholderText="Search Friends..."
-                submitButtonText="Done"
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
               />
               <View>
                 {this.multiSelect && this.multiSelect.getSelectedItemsExt(members)}
