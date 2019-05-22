@@ -9,23 +9,26 @@ GoalPost is a social app that incentivizes users to help reach their goals throu
 [View design specifications here.](DesignSpec.md)
   
 # Team Members
-Member | Photo
---- | ---
-Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150">
-Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150">
-Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150">
-Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150">
+Member | Photo | Contributions
+--- | --- | ---
+Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150"> | <ul><li>project design & architecture</li><li>backend API design & architecture</li><li>state & data management</li><li>navigation control flow </li><li>data pipelining</li><li>backend database operations</li><li>transaction management</li><li>documentation</li></ul>
+Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150"> | <ul><li>user experience design & architecture</li><li>screen prototyping</li><li>user interface design, styling, & implementation</li><li>data management</li><li>input validation & edge case handling<li>navigational flow</li></ul>
+Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150"> | <ul><li>needfinding</li><li>event management</li><li>notification integration</li><li>goal creation flow</li><li>user testing</li></ul>
+Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150"> | <ul><li>facebook integration for logging in & inviting friends</li></ul>
+
 
 # Team Skills
 Member | Skills | Personal Traits | Desired Growth | Weaknesses
 --- | --- | --- | --- | ---
-Jesus Cervantes | AI/ML, Backend, Google Cloud, Python, Algorithms, C++ | Loud, energetic, 5'8" | Iterated development, larger system architecture | Software, shiny objects, Front end development 
 Davy Ragland | Systems Engineering, Software Architecture, Product lifecycle, Aesthetic, Python, C++, Web, LaTeX, Computer Vision, Data parsing | Nice cheekbones, dislikes authority, 6'0" | Human Centered Design, Project Management, Interface Design, Marketing | lack of foresight, Math, ML, AI, spelling
-Cam Thouati de Tazoult | C++, Java, Blockchain, RDBMS, React | short | backend, mobile app development, vertical | ML, high shelves 
 Cherry Zou | AI/ML, Web, Back-end, Needfinding | Organized, cooperative, motivated | System design, Front-end | Mobile dev, impatient
+Jesus Cervantes | AI/ML, Backend, Google Cloud, Python, Algorithms, C++ | Loud, energetic, 5'8" | Iterated development, larger system architecture | Software, shiny objects, Front end development 
+Cam Thouati de Tazoult | C++, Java, Blockchain, RDBMS, React | short | backend, mobile app development, vertical | ML, high shelves 
 
 # Team Communication
-* Facebook Messenger
+* [Facebook Messenger](https://messenger.com/)
+* [Github Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
+* [SGM Worksheet](https://docs.google.com/forms/d/e/1FAIpQLSe49pDjWoUHOBvtWoyHSNWlqCWJRjpt51CC1fbS5Mw-2UFhNg/viewform?usp=sf_link)
 * @stanford Email
     * <cerjesus@stanford.edu>
     * <dragland@stanford.edu>
