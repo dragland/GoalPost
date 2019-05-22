@@ -249,13 +249,21 @@ class CreateGoal extends React.Component {
           </InputRow>
 
           <InputRow header="Members">
-            <Button title="Add friends" onPress={this.toggleModal} />
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
+              <View style={styles.inputView}>
+                <Text style={styles.inputText}>
+                  {JSON.stringify(this.state.members)}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </InputRow>
 
           <Modal isVisible={this.state.isModalVisible} 
             onBackButtonPress={() => {
                 this.toggleModal();
-                Alert.alert(JSON.stringify(this.state.members));
+              }}
+            onBackdropPress={() => {
+                this.toggleModal();
               }}
           >
             <View style={{ flex: 1 }}>
@@ -274,10 +282,6 @@ class CreateGoal extends React.Component {
               <View>
                 {this.multiSelect && this.multiSelect.getSelectedItemsExt(members)}
               </View>
-              <Button title="close" onPress={() => {
-                this.toggleModal();
-                Alert.alert(JSON.stringify(this.state.members));
-              }} />
             </View>
           </Modal>
 
