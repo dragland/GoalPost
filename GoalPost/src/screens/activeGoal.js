@@ -176,21 +176,21 @@ const styles = StyleSheet.create({
     margin: 5
   },
   progressBox1: {
-    backgroundColor: "#E97C44",
+    backgroundColor: "#2CAAFF",
     width: 160,
     height: 15,
     margin: 5,
     marginRight: 15
   },
   progressBox2: {
-    backgroundColor: "#E97C44",
+    backgroundColor: "#2CAAFF",
     width: 120,
     height: 15,
     margin: 5,
     marginRight: 15
   },
   progressBox3: {
-    backgroundColor: "#E97C44",
+    backgroundColor: "#2CAAFF",
     width: 80,
     height: 15,
     margin: 5,

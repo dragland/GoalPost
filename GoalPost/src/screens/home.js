@@ -47,7 +47,7 @@ class Home extends React.Component {
   };
 
   renderItem = ({ item, index, section: { title, data } }) => {
-    const color = title == "Pending Goals" ? "#666" : "#E97C44";
+    const color = title == "Pending Goals" ? "#666" : "#2CAAFF";
     return (
       <ListItem
         title={item.goalName}
