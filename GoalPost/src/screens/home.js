@@ -8,6 +8,7 @@ import {
   Text
 } from "react-native";
 import { Button, Input, Icon, ListItem } from "react-native-elements";
+import { NavigationEvents } from "react-navigation";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import CreateGoalButton from "../components/createGoalButton";
@@ -76,9 +77,9 @@ class Home extends React.Component {
     );
   };
 
-  async componentDidMount() {
+  async populateGoalLists() {
     const { navigation } = this.props;
-    const userID = navigation.getParam("userID", "cherry");
+    const userID = navigation.getParam("userID", "undefined default userID");
 
     const user = await Cloud.loadUser(userID);
     const active = await this.getGoalNames(userID, user.active_goals);
@@ -98,9 +99,8 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.screen}>
-        <View
-          style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}
-        >
+        <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
+        <View style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}>
           <View style={{ flex: 0.8 }}>
             <Text style={baseStyles.heading2}>
               Hi, {this.state.userName}!{"\n"}Here are your Goals

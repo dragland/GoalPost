@@ -117,7 +117,6 @@ class CreateGoal extends React.Component {
       this.state.time
     );
 
-    // USE AS: Cloud.addGoal(userID, goalName, friends, eventTimes, penalty);
     var goalID = await Cloud.addGoal(
       this.state.userID,
       this.state.goalName,
