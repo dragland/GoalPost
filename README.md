@@ -6,7 +6,9 @@
  
 # Project Synopsis
 GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition. For example, if a group of friends wants to go to the gym 3 times a week for the rest of the quarter, they would enter that into the app, and if anybody gets lazy, that person would get charged a couple dollars which goes to a common pool. At the end of the goal period, the pool can be split between everybody for a nice dinner or donated to charity, incentivizing individuals to stick to their original goal posts through reminders and friendly competition.
-[View design specifications here.](DesignSpec.md)
+
+# Documentation
+[Project Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
   
 # Team Members
 Member | Photo | Contributions
@@ -27,7 +29,6 @@ Cam Thouati de Tazoult | C++, Java, Blockchain, RDBMS, React | short | backend, 
 
 # Team Communication
 * [Facebook Messenger](https://messenger.com/)
-* [Github Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
 * [SGM Worksheet](https://docs.google.com/forms/d/e/1FAIpQLSe49pDjWoUHOBvtWoyHSNWlqCWJRjpt51CC1fbS5Mw-2UFhNg/viewform?usp=sf_link)
 * @stanford Email
     * <cerjesus@stanford.edu>
