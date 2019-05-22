@@ -23,6 +23,8 @@ import InputRow from "../components/inputRow";
 import GoBackButton from "../components/goBackButton";
 import StandardButton from "../components/standardButton";
 import update from "immutability-helper";
+import Modal from "react-native-modal";
+import MultiSelect from 'react-native-multiple-select';
 
 class CreateGoal extends React.Component {
   static navigationOptions = {
@@ -47,7 +49,9 @@ class CreateGoal extends React.Component {
       { title: "Th", checked: false },
       { title: "F", checked: false },
       { title: "S", checked: false }
-    ]
+    ],
+    isModalVisible: false,
+    invitedFriends: []
   };
 
   updateGoalName = e => {
@@ -89,6 +93,12 @@ class CreateGoal extends React.Component {
     this.setState({ time: time });
     this.hideTimePicker();
   };
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+  selectFriend = e => {
+    this.setState({ invitedFriends: e });
+  };
 
   createNewGoal = async () => {
     // retrieves weekday array of type [0, 1, 5, ...] from state
@@ -119,6 +129,24 @@ class CreateGoal extends React.Component {
   };
 
   render() {
+    /* TODO @Cam replace this with your friends list from the Graph API */
+    const { invitedFriends } = this.state;
+    let friends = [
+      {
+        userID: "davy",
+        user_name: "Davy Ragland",
+      }, {
+        userID: "cherry",
+        user_name: "Cherry Zou",
+      }, {
+        userID: "jesus",
+        user_name: "Jesus Cervantes",
+      }, {
+        userID: "cam",
+        user_name: "Cam Thouati",
+      }
+    ];
+
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} />
@@ -223,8 +251,38 @@ class CreateGoal extends React.Component {
           </InputRow>
 
           <InputRow header="Members">
-            <Input placeholder="CHOOSE FROM FB" inputStyle={styles.inputText} />
+            <Button title="Add friends" onPress={this.toggleModal} />
           </InputRow>
+
+          <Modal isVisible={this.state.isModalVisible} 
+            onBackButtonPress={() => {
+                this.toggleModal();
+                Alert.alert(JSON.stringify(this.state.invitedFriends));
+              }}
+          >
+            <View style={{ flex: 1 }}>
+              <MultiSelect
+                items = {friends}
+                uniqueKey="userID"
+                displayKey="user_name"
+                hideTags
+                ref={(component) => { this.multiSelect = component }}
+                onSelectedItemsChange={this.selectFriend}
+                selectedItems={invitedFriends}
+                selectText="Search Friends..."
+                searchInputPlaceholderText="Search Friends..."
+                submitButtonText="Done"
+              />
+              <View>
+                {this.multiSelect && this.multiSelect.getSelectedItemsExt(invitedFriends)}
+              </View>
+              <Button title="close" onPress={() => {
+                this.toggleModal();
+                Alert.alert(JSON.stringify(this.state.invitedFriends));
+              }} />
+            </View>
+          </Modal>
+
         </View>
 
         <View style={{ flex: 0.2, paddingHorizontal: 30, alignSelf: "center" }}>
