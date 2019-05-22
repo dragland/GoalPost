@@ -50,8 +50,7 @@ class CreateGoal extends React.Component {
       { title: "F", checked: false },
       { title: "S", checked: false }
     ],
-    isModalVisible: false,
-    invitedFriends: []
+    isModalVisible: false
   };
 
   updateGoalName = e => {
@@ -97,7 +96,7 @@ class CreateGoal extends React.Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
   selectFriend = e => {
-    this.setState({ invitedFriends: e });
+    this.setState({ members: e });
   };
 
   createNewGoal = async () => {
@@ -129,7 +128,7 @@ class CreateGoal extends React.Component {
 
   render() {
     /* TODO @Cam replace this with your friends list from the Graph API */
-    const { invitedFriends } = this.state;
+    const { members } = this.state;
     let friends = [
       {
         userID: "davy",
@@ -256,7 +255,7 @@ class CreateGoal extends React.Component {
           <Modal isVisible={this.state.isModalVisible} 
             onBackButtonPress={() => {
                 this.toggleModal();
-                Alert.alert(JSON.stringify(this.state.invitedFriends));
+                Alert.alert(JSON.stringify(this.state.members));
               }}
           >
             <View style={{ flex: 1 }}>
@@ -267,17 +266,17 @@ class CreateGoal extends React.Component {
                 hideTags
                 ref={(component) => { this.multiSelect = component }}
                 onSelectedItemsChange={this.selectFriend}
-                selectedItems={invitedFriends}
+                selectedItems={members}
                 selectText="Search Friends..."
                 searchInputPlaceholderText="Search Friends..."
                 submitButtonText="Done"
               />
               <View>
-                {this.multiSelect && this.multiSelect.getSelectedItemsExt(invitedFriends)}
+                {this.multiSelect && this.multiSelect.getSelectedItemsExt(members)}
               </View>
               <Button title="close" onPress={() => {
                 this.toggleModal();
-                Alert.alert(JSON.stringify(this.state.invitedFriends));
+                Alert.alert(JSON.stringify(this.state.members));
               }} />
             </View>
           </Modal>
