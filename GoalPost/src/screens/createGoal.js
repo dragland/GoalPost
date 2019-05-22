@@ -253,7 +253,12 @@ class CreateGoal extends React.Component {
             <Button title="Add friends" onPress={this.toggleModal} />
           </InputRow>
 
-          <Modal isVisible={this.state.isModalVisible}>
+          <Modal isVisible={this.state.isModalVisible} 
+            onBackButtonPress={() => {
+                this.toggleModal();
+                Alert.alert(JSON.stringify(this.state.invitedFriends));
+              }}
+          >
             <View style={{ flex: 1 }}>
               <MultiSelect
                 items = {friends}
