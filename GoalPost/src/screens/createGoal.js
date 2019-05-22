@@ -103,16 +103,17 @@ class CreateGoal extends React.Component {
     var eventTimes = NotificationManager.scheduleNotifications(
       this.state.startDate,
       this.state.endDate,
-      weekdays
+      weekdays,
+      this.state.time
     );
 
     // USE AS: Cloud.addGoal(userID, goalName, friends, eventTimes, penalty);
     var goalID = await Cloud.addGoal(
       this.state.userID,
       this.state.goalName,
-      ["cam", "jesus"],
+      this.state.members,
       eventTimes,
-      5
+      this.state.cost
     );
     Alert.alert("sucessfully created goal with ID: ", goalID);
   };

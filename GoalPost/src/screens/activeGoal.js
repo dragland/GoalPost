@@ -13,18 +13,61 @@ class ActiveGoal extends React.Component {
   state = {
     userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
     goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID"),
+    eventIndex: -1,
     yesNoDisabled: false
   };
 
-  registerYes = () => {
+  getEventIndex = async () => {
+    const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
+    const event_times = goal.event_times;
+
+    var eventIndex = -1;
+    const today = new Date();
+    for (var i = 0; i < event_times.length; i++) {
+      const date = event_times[i].toDate(); // time at which event opens for check in
+      var midnight = new Date(date.getTime());
+      midnight.setHours(23);
+      midnight.setMinutes(59);
+      midnight.setSeconds(59);
+      midnight.setMilliseconds(999);
+
+      if (today >= date && today <= midnight) {
+        eventIndex = i;
+        break; // found proper date
+      }
+    }
+
+    const user_logs = goal.user_logs[this.state.userID];
+    const disable = eventIndex == -1 || user_logs[eventIndex] > -1;
+    return { eventIndex: eventIndex, disable: disable };
+  };
+
+  registerYes = async () => {
     this.setState({ yesNoDisabled: true });
+    await Cloud.checkInToEvent(
+      this.state.userID,
+      this.state.goalID,
+      this.state.eventIndex,
+      true
+    );
     Alert.alert("Keep up the good work!");
   };
 
-  registerNo = () => {
+  registerNo = async () => {
     this.setState({ yesNoDisabled: true });
+    await Cloud.checkInToEvent(
+      this.state.userID,
+      this.state.goalID,
+      this.state.eventIndex,
+      false
+    );
     Alert.alert("You have chosen...poorly.");
   };
+
+  async componentDidMount() {
+    var { eventIndex, disable } = await this.getEventIndex();
+    this.setState({ eventIndex: eventIndex, yesNoDisabled: disable });
+  }
 
   render() {
     return (
