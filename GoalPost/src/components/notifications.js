@@ -1,4 +1,18 @@
+
+
 class localNotificationManager {
+
+  constructor() {
+    this.PushNotification = require('react-native-push-notification');
+    this.PushNotification.configure({
+        onNotification: function(notification) {
+            console.log( 'NOTIFICATION:', notification );
+            // process the notification
+        },
+        popInitialNotification: true,
+        requestPermissions: true,
+    });
+  }
   /*
     Function to schedule notifications on device for the events.
     Input:
@@ -20,6 +34,16 @@ class localNotificationManager {
       var day = currDate.getDay();
       if (weekDays.includes(day)) {
         currDate = this.setTimeOfDay(currDate, hour, mins, 0, 0);
+            this.PushNotification.localNotificationSchedule({
+              largeIcon: "ic_launcher",
+              smallIcon: "ic_notification",
+              color: "#24a4ff",
+              title: "Hi user_name, make sure to check in!",
+              message: "Did you make it to your event today for goal_name?",
+              playSound: false,
+              actions: '["Yes", "No"]',
+              date: currDate
+          });
         dates.push(currDate);
       }
 
