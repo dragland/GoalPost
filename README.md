@@ -31,7 +31,7 @@ Cam Thouati de Tazoult | C++, Java, Blockchain, RDBMS, React | short | backend, 
 * [Facebook Messenger](https://messenger.com/)
 * [SGM Worksheet](https://docs.google.com/forms/d/e/1FAIpQLSe49pDjWoUHOBvtWoyHSNWlqCWJRjpt51CC1fbS5Mw-2UFhNg/viewform?usp=sf_link)
 * @stanford Email
-    * <cerjesus@stanford.edu>
     * <dragland@stanford.edu>
-    * <cameron8@stanford.edu>
     * <cherryz@stanford.edu>
+    * <cerjesus@stanford.edu>
+    * <cameron8@stanford.edu>
