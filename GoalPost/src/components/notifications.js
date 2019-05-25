@@ -47,11 +47,11 @@ class localNotificationManager {
 
   // For users who accept a pending goal.
   scheduleNotifications(goalId) {
-    var goal = Cloud.getGoal(goalId)
-    var eventTimes = goal.event_times
-    var goalName = goal.goal_name
+    var goal = Cloud.getGoal(goalId);
+    var eventTimes = goal.event_times;
+    var goalName = goal.goal_name;
     for (var ind = 0; ind < eventTimes.length; ind++) {
-      var currDate = eventTimes[ind]
+      var currDate = eventTimes[ind];
       this.PushNotification.localNotificationSchedule({
         largeIcon: "ic_launcher",
         smallIcon: "ic_notification",
