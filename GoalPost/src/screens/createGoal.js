@@ -109,7 +109,7 @@ class CreateGoal extends React.Component {
       .filter(item => item.checked)
       .map(item => item.index);
 
-    var eventTimes = NotificationManager.scheduleNotifications(
+    var eventTimes = NotificationManager.getEventTimes(
       this.state.startDate,
       this.state.endDate,
       weekdays,
@@ -123,6 +123,7 @@ class CreateGoal extends React.Component {
       eventTimes,
       this.state.cost
     );
+    NotificationManager.scheduleNotifications(goalID)
     Alert.alert("sucessfully created goal with ID: ", goalID);
   };
 
@@ -258,7 +259,7 @@ class CreateGoal extends React.Component {
             </TouchableWithoutFeedback>
           </InputRow>
 
-          <Modal isVisible={this.state.isModalVisible} 
+          <Modal isVisible={this.state.isModalVisible}
             onBackButtonPress={() => {
                 this.toggleModal();
               }}
