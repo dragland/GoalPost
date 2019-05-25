@@ -1,4 +1,4 @@
-
+import Cloud from "./database";
 
 class localNotificationManager {
 
@@ -23,7 +23,7 @@ class localNotificationManager {
     Output:
       succeeded: Bool, true if succeeded, false if failed
   */
-  scheduleNotifications(startDate, endDate, weekDays, time) {
+  getEventTimes(startDate, endDate, weekDays, time) {
     const hour = time.getHours();
     const mins = time.getMinutes();
     endDate = this.setTimeOfDay(endDate, 23, 59, 59, 999);
@@ -34,16 +34,6 @@ class localNotificationManager {
       var day = currDate.getDay();
       if (weekDays.includes(day)) {
         currDate = this.setTimeOfDay(currDate, hour, mins, 0, 0);
-            this.PushNotification.localNotificationSchedule({
-              largeIcon: "ic_launcher",
-              smallIcon: "ic_notification",
-              color: "#24a4ff",
-              title: "Hi user_name, make sure to check in!",
-              message: "Did you make it to your event today for goal_name?",
-              playSound: false,
-              actions: '["Yes", "No"]',
-              date: currDate
-          });
         dates.push(currDate);
       }
 
@@ -53,6 +43,26 @@ class localNotificationManager {
     }
 
     return dates;
+  }
+
+  // For users who accept a pending goal.
+  scheduleNotifications(goalId) {
+    var goal = Cloud.getGoal(goalId)
+    var eventTimes = goal.event_times
+    var goalName = goal.goal_name
+    for (var ind = 0; ind < eventTimes.length; ind++) {
+      var currDate = eventTimes[ind]
+      this.PushNotification.localNotificationSchedule({
+        largeIcon: "ic_launcher",
+        smallIcon: "ic_notification",
+        color: "#24a4ff",
+        title: "Hi user_name, make sure to check in!",
+        message: "Did you make it to your event today for ${goalName}?",
+        playSound: false,
+        actions: '["Yes", "No"]',
+        date: currDate
+      });
+    }
   }
 
   setTimeOfDay(date, hours, mins, secs, millis) {
