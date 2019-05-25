@@ -6,6 +6,7 @@ import Cloud from "../components/database";
 import GoBackButton from "../components/goBackButton";
 import CenterImage from "../components/centerImage";
 import StandardButton from "../components/standardButton";
+import NotificationManager from "../components/notifications";
 
 class PendingGoal extends React.Component {
   static navigationOptions = {
@@ -62,6 +63,7 @@ class PendingGoal extends React.Component {
             containerStyle={{ alignSelf: "center", marginTop: 30 }}
             onPress={() => {
               Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
+              NotificationManager.scheduleNotifications(this.state.goalID);
               this.props.navigation.state.params.refresh();
               this.props.navigation.goBack();
             }}
