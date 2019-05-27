@@ -1,4 +1,5 @@
 import Cloud from "./database";
+import {Alert} from "react-native";
 
 class localNotificationManager {
 
@@ -13,6 +14,7 @@ class localNotificationManager {
         requestPermissions: true,
     });
   }
+
   /*
     Function to schedule notifications on device for the events.
     Input:
@@ -45,19 +47,19 @@ class localNotificationManager {
     return dates;
   }
 
-  // For users who accept a pending goal.
-  scheduleNotifications(goalId) {
-    var goal = Cloud.getGoal(goalId);
-    var eventTimes = goal.event_times;
-    var goalName = goal.goal_name;
-    for (var ind = 0; ind < eventTimes.length; ind++) {
-      var currDate = eventTimes[ind];
+  // For users who create a goal or accept a pending goal.
+  async scheduleNotifications(goalId) {
+    let goal = await Cloud.getGoal(goalId);
+    let eventTimes = goal.event_times;
+    let goalName = goal.goal_name;
+    for (let ind = 0; ind < eventTimes.length; ind++) {
+      let currDate = eventTimes[ind].toDate();
       this.PushNotification.localNotificationSchedule({
         largeIcon: "ic_launcher",
         smallIcon: "ic_notification",
         color: "#24a4ff",
         title: "Hi user_name, make sure to check in!",
-        message: "Did you make it to your event today for ${goalName}?",
+        message: "Did you make it to your event today for " + goalName + "?",
         playSound: false,
         actions: '["Yes", "No"]',
         date: currDate
