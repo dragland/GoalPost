@@ -1,11 +1,13 @@
 # GoalPost
 
-<img src="logo.png" width="150">
+<img src="https://github.com/StanfordCS194/GoalPost/raw/master/logo.png" width="150">
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  
-# Project Synopsis
-GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition. For example, if a group of friends wants to go to the gym 3 times a week for the rest of the quarter, they would enter that into the app, and if anybody gets lazy, that person would get charged a couple dollars which goes to a common pool. At the end of the goal period, the pool can be split between everybody for a nice dinner or donated to charity, incentivizing individuals to stick to their original goal posts through reminders and friendly competition.
+ # Project Synopsis
+GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition. 
+
+For example, if a group of friends wanted to go to the gym every week until summer and hold each other accountable, they would be able to configure this goal through our app and also invite their friends. Then, at each event during the goal, users would check in using the app, facilitating group accountability. As an extra incentive, when a user fails to check in, they will get charged a penalty which goes into a central pot. At the end of the goal, the pot gets split evenly, incentivizing users to maximize their goal completion through fostering a culture of collaborative competition.
 
 # Documentation
 [Project Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
