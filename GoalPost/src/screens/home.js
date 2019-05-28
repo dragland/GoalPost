@@ -108,6 +108,7 @@ class Home extends React.Component {
           </View>
           <CreateGoalButton
             userID={this.state.userID}
+            userName={this.state.userName}
             navigation={this.props.navigation}
           />
         </View>

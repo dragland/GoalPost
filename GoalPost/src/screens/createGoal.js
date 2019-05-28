@@ -32,6 +32,7 @@ class CreateGoal extends React.Component {
   };
   state = {
     userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
+    userName: this.props.navigation.getParam("userName", "ERROR UNDEFINED USERNAME"),
     goalID: "undefined default goalID",
     isDatePicker1Visible: false,
     isDatePicker2Visible: false,
@@ -124,7 +125,7 @@ class CreateGoal extends React.Component {
       this.state.cost
     );
     Alert.alert("successfully created goal with ID: ", goalID);
-    await NotificationManager.scheduleNotifications(goalID);
+    await NotificationManager.scheduleNotifications(this.state.userName, goalID);
   };
 
   render() {

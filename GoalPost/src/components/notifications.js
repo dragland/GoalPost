@@ -1,5 +1,4 @@
 import Cloud from "./database";
-import {Alert} from "react-native";
 
 class localNotificationManager {
 
@@ -48,8 +47,8 @@ class localNotificationManager {
   }
 
   // For users who create a goal or accept a pending goal.
-  async scheduleNotifications(goalId) {
-    let goal = await Cloud.getGoal(goalId);
+  async scheduleNotifications(userName, goalID) {
+    let goal = await Cloud.getGoal(goalID);
     let eventTimes = goal.event_times;
     let goalName = goal.goal_name;
     for (let ind = 0; ind < eventTimes.length; ind++) {
@@ -58,8 +57,8 @@ class localNotificationManager {
         largeIcon: "ic_launcher",
         smallIcon: "ic_notification",
         color: "#24a4ff",
-        title: "Hi user_name, make sure to check in!",
-        message: "Did you make it to your event today for " + goalName + "?",
+        title: "Hi " + userName + ", make sure to check in!",
+        message: "Did you make it to your event today for \"" + goalName + "\"?",
         playSound: false,
         actions: '["Yes", "No"]',
         date: currDate
