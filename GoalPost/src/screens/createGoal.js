@@ -229,6 +229,7 @@ class CreateGoal extends React.Component {
             {this.state.recurArray.map((item, i) => (
               <RepeatCheckBox
                 title={item.title}
+                key={i}
                 checked={item.checked}
                 onIconPress={() => {
                   this.setState({
