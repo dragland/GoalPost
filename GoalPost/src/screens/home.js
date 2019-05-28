@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Button, Input, Icon, ListItem } from "react-native-elements";
 import { NavigationEvents } from "react-navigation";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import CreateGoalButton from "../components/createGoalButton";
@@ -24,7 +25,8 @@ class Home extends React.Component {
     profilePic: "None",
     active: [],
     completed: [],
-    pending: []
+    pending: [],
+    spinner: true
   };
 
   getGoalNames = async (userID, list) => {
@@ -43,11 +45,11 @@ class Home extends React.Component {
     });
 
     var output = await Promise.all(goalList);
-    return output;
+    return output.reverse();
   };
 
   renderItem = ({ item, index, section: { title, data } }) => {
-    const color = title == "Pending Goals" ? "#666" : "#2CAAFF";
+    const color = title == "Pending Invites" ? "#666" : "#2CAAFF";
     return (
       <ListItem
         title={item.goalName}
@@ -58,7 +60,7 @@ class Home extends React.Component {
               userID: this.state.userID,
               goalID: item.goalID
             });
-          } else if (title == "Pending Goals") {
+          } else if (title == "Pending Invites") {
             this.props.navigation.navigate("PendingGoal", {
               userID: this.state.userID,
               userName: this.state.userName,
@@ -93,11 +95,20 @@ class Home extends React.Component {
       profilePic: user.profile_pic,
       active: active,
       pending: pending,
-      completed: completed
+      completed: completed,
+      spinner: false
     });
   }
 
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={styles.screen}>
         <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
@@ -126,7 +137,7 @@ class Home extends React.Component {
             <SectionList
               sections={[
                 { title: "Active Goals", data: this.state.active },
-                { title: "Pending Goals", data: this.state.pending },
+                { title: "Pending Invites", data: this.state.pending },
                 { title: "Completed Goals", data: this.state.completed }
               ]}
               renderItem={this.renderItem}
