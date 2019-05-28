@@ -33,7 +33,7 @@ class localNotificationManager {
     for (var currDate = startDate; currDate <= endDate; ) {
 
       var day = currDate.getDay();
-      if (weekDays.includes(day)) {
+      if (weekDays.includes(day) || (currDate == startDate) || (currDate == endDate)) {
         currDate = this.setTimeOfDay(currDate, hour, mins, 0, 0);
         dates.push(currDate);
       }
