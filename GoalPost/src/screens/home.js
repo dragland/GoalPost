@@ -61,6 +61,7 @@ class Home extends React.Component {
           } else if (title == "Pending Goals") {
             this.props.navigation.navigate("PendingGoal", {
               userID: this.state.userID,
+              userName: this.state.userName,
               goalID: item.goalID,
               refresh: this.componentDidMount.bind(this)
             });

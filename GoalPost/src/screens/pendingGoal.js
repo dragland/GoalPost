@@ -15,6 +15,7 @@ class PendingGoal extends React.Component {
   state = {
     userID: "undefined default userID",
     goalID: "undefined default goalID",
+    userName: "None",
     goalName: "None",
     friendsList: []
   };
@@ -22,6 +23,7 @@ class PendingGoal extends React.Component {
   async componentDidMount() {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "ERROR UNDEFINED USERID");
+    const userName = navigation.getParam("userName", "ERROR UNDEFINED USERNAME");
     const goalID = navigation.getParam("goalID", "ERROR UNDEFINED GOALID");
 
     const goal = await Cloud.loadGoal(userID, goalID);
@@ -30,11 +32,25 @@ class PendingGoal extends React.Component {
 
     this.setState({
       userID: userID,
+      userName: userName,
       goalID: goalID,
       goalName: goal.goal_name,
       friendsList: friendsList
     });
   }
+
+  acceptGoal = async () => {
+    await Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
+    NotificationManager.scheduleNotifications(this.state.userName, this.state.goalID);
+    this.props.navigation.state.params.refresh();
+    this.props.navigation.goBack();
+  };  
+
+  rejectGoal = async () => {
+    await Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
+    this.props.navigation.state.params.refresh();
+    this.props.navigation.goBack();
+  };  
 
   render() {
     return (
@@ -61,22 +77,13 @@ class PendingGoal extends React.Component {
           <StandardButton
             title="Accept Goal"
             containerStyle={{ alignSelf: "center", marginTop: 30 }}
-            onPress={() => {
-              Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
-              // NotificationManager.scheduleNotifications(this.state.goalID);
-              this.props.navigation.state.params.refresh();
-              this.props.navigation.goBack();
-            }}
+            onPress={this.acceptGoal}
             orange
           />
           <StandardButton
             title="Reject Goal"
             containerStyle={{ alignSelf: "center", marginTop: 20 }}
-            onPress={() => {
-              Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
-              this.props.navigation.state.params.refresh();
-              this.props.navigation.goBack();
-            }}
+            onPress={this.rejectGoal}
           />
         </View>
       </View>

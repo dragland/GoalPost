@@ -124,8 +124,8 @@ class CreateGoal extends React.Component {
       eventTimes,
       this.state.cost
     );
-    Alert.alert("successfully created goal with ID: ", goalID);
     await NotificationManager.scheduleNotifications(this.state.userName, goalID);
+    Alert.alert("successfully created goal with ID: ", goalID);
   };
 
   render() {
