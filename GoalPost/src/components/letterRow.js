@@ -6,7 +6,7 @@ export default class LetterRow extends Component {
     return (
       <View style={styles.letterRow}>
         <View style={{ flex: 0.3, marginRight: 15 }}>
-          <Text style={styles.letterQ}>{this.props.header}{"   "}&middot;</Text>
+          <Text style={styles.letterQ}>{this.props.header}{"  "}&middot;</Text>
         </View>
         <View style={{ flex: 0.7 }}>
           {this.props.children}
