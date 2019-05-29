@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Alert,
+  RefreshControl,
   ScrollView,
   SectionList,
   StyleSheet,
@@ -26,7 +27,8 @@ class Home extends React.Component {
     active: [],
     completed: [],
     pending: [],
-    spinner: true
+    spinner: true,
+    refreshing: false
   };
 
   getGoalNames = async (userID, list) => {
@@ -100,6 +102,13 @@ class Home extends React.Component {
     });
   }
 
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    this.populateGoalLists().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   componentDidMount() {
     setInterval(() => {
       this.setState({ spinner: false });
@@ -139,7 +148,10 @@ class Home extends React.Component {
             borderBottomColor: "#DDD"
           }}
         >
-          <ScrollView>
+          <ScrollView
+            refreshControl={ 
+              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+          }>
             <SectionList
               sections={[
                 { title: "Active Goals", data: this.state.active },

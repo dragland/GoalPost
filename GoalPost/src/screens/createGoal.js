@@ -308,9 +308,8 @@ class CreateGoal extends React.Component {
                 this.state.startDate &&
                 this.state.endDate &&
                 this.state.time &&
-                this.state.cost &&
-                this.state.members
-              ) // TODO change to members.length >= 0
+                this.state.cost
+              )
             }
             orange
           />
