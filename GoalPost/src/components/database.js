@@ -4,27 +4,6 @@ import {Alert} from "react-native";
 
 class dataBase {
 
-	/* User database object
-
-		db.users[userID] : {
-			user_name : "",
-			profile_pic : "",
-			pending_goals : [],
-			active_goals : [],
-			completed_goals : []
-		};
-	*/
-
-	/* Goal database object
-
-		db.goals[goalID] : {
-			goal_name : "",
-			event_times : [date],
-			user_logs : {user : [bool]},
-			penalty : 0
-		};
-	*/
-
 	/* Called once on initialization */
 	constructor() {
 		this.users = firebase.firestore().collection('users');
@@ -35,8 +14,8 @@ class dataBase {
 		**************************************************
 		API for internal use within application
 	*/
+	/* Called once user logs in after authenticating */
 	async loginUser(userID, userName, userPic) {
-		/* Called once user logs in after authenticating */
 		let user = await this.checkIfUserExists(userID);
 		if (user.exists) {
 			let ret = this.updateUser(userID, userName, userPic);
@@ -48,8 +27,8 @@ class dataBase {
 		}
 	}
 
+	/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
 	async loadUser(userID) {
-		/* Called on every invocation of home screen in order to get user profile & lists of goalIDs */
 		let user = await this.getUser(userID);
 		promices = [];
 		let now = new Date();
@@ -80,8 +59,8 @@ class dataBase {
 		return updated_user;
 	}
 
+	/* Called on every invocation of active, pending, & completed screens */
 	async loadGoal(userID, goalID) {
-		/* Called on every invocation of active, pending, & completed screens */
 		let goal = await this.getGoal(goalID);
 		if (!(userID in goal.user_logs)) {
 			return null;
@@ -89,8 +68,8 @@ class dataBase {
 		return goal;
 	}
 
+	/* Called when creating a new goal, with the eventTimes being an array of date objects specifying each individual event that exists for the goal */
 	async addGoal(userID, goalName, friends, eventTimes, penalty) {
-		/* Called when creating a new goal, with the eventTimes being an array of date objects specifying each individual event that exists for the goal */
 		let goalID = await this.createGoal(userID, goalName, friends, eventTimes, penalty);
 		friends.forEach((f) => {
 			this.inviteToGoal(f, goalID);
@@ -98,8 +77,8 @@ class dataBase {
 		return goalID;
 	}
 
+	/* Called only during window of specific event, and index of that event from eventTimes is passed down */
 	async checkInToEvent(userID, goalID, eventIndex, present) {
-		/* Called only during window of specific event, and index of that event from eventTimes is passed down */
 		let goal = await this.getGoal(goalID);
 		logs = goal.user_logs[userID];
 		logs[eventIndex] = (present) ? 1 : 0;
@@ -109,19 +88,18 @@ class dataBase {
 		return ret;
 	}
 
+	/* Called in order to synchronize goal and user objects when dealing with a new invited goal*/
 	async acceptPendingGoal(userID, goalID) {
 		let ret_1 = this.deletePendingGoal(userID, goalID);
 		let ret_2 = this.activatePendingGoal(userID, goalID);
 		return Promise.all([ret_1, ret_2]);
 	}
 
+	/* Called in order to synchronize goal and user objects when dealing with a new invited goal*/
 	async rejectPendingGoal(userID, goalID) {
 		let ret_1 = this.deletePendingGoal(userID, goalID);
 		let ret_2 = this.removeFromGoal(userID, goalID);
 		return Promise.all([ret_1, ret_2]);
-	}
-
-	async test() {
 	}
 
 	/*

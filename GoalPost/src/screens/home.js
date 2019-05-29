@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Alert,
+  RefreshControl,
   ScrollView,
   SectionList,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
 } from "react-native";
 import { Button, Input, Icon, ListItem } from "react-native-elements";
 import { NavigationEvents } from "react-navigation";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import CreateGoalButton from "../components/createGoalButton";
@@ -21,7 +23,9 @@ class Home extends React.Component {
     profilePic: "None",
     active: [],
     completed: [],
-    pending: []
+    pending: [],
+    spinner: true,
+    refreshing: false
   };
 
 
@@ -45,11 +49,11 @@ class Home extends React.Component {
     });
 
     var output = await Promise.all(goalList);
-    return output;
+    return output.reverse();
   };
 
   renderItem = ({ item, index, section: { title, data } }) => {
-    const color = title == "Pending Goals" ? "#666" : "#2CAAFF";
+    const color = title == "Pending Invites" ? "#666" : "#2CAAFF";
     return (
       <ListItem
         title={item.goalName}
@@ -60,9 +64,10 @@ class Home extends React.Component {
               userID: this.state.userID,
               goalID: item.goalID
             });
-          } else if (title == "Pending Goals") {
+          } else if (title == "Pending Invites") {
             this.props.navigation.navigate("PendingGoal", {
               userID: this.state.userID,
+              userName: this.state.userName,
               goalID: item.goalID,
               refresh: this.componentDidMount.bind(this)
             });
@@ -98,13 +103,35 @@ class Home extends React.Component {
       profilePic: user.profile_pic,
       active: active,
       pending: pending,
-      completed: completed
+      completed: completed,
+      spinner: false
     });
 
     
   }
 
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    this.populateGoalLists().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ spinner: false });
+    }, 5000); // experiment with this
+  }
+
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={styles.screen}>
         <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
@@ -116,6 +143,7 @@ class Home extends React.Component {
           </View>
           <CreateGoalButton
             userID={this.state.userID}
+            userName={this.state.userName}
             navigation={this.props.navigation}
           />
         </View>
@@ -128,11 +156,14 @@ class Home extends React.Component {
             borderBottomColor: "#DDD"
           }}
         >
-          <ScrollView>
+          <ScrollView
+            refreshControl={ 
+              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+          }>
             <SectionList
               sections={[
                 { title: "Active Goals", data: this.state.active },
-                { title: "Pending Goals", data: this.state.pending },
+                { title: "Pending Invites", data: this.state.pending },
                 { title: "Completed Goals", data: this.state.completed }
               ]}
               renderItem={this.renderItem}
