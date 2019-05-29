@@ -22,7 +22,6 @@ export default class Login extends React.Component {
     async login() {
         const profile = await facebookService.fetchProfile();
         const login = await Cloud.loginUser(profile.id, profile.name, profile.avatar);
-        alert(profile.avatar);
         this.props.navigation.navigate("Home", {userID: profile.id});
     }
 }
