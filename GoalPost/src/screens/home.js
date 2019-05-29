@@ -100,6 +100,12 @@ class Home extends React.Component {
     });
   }
 
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ spinner: false });
+    }, 5000); // experiment with this
+  }
+
   render() {
     if (this.state.spinner) {
       return (

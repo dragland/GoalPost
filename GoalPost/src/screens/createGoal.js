@@ -126,6 +126,8 @@ class CreateGoal extends React.Component {
     );
     await NotificationManager.scheduleNotifications(this.state.userName, goalID);
     Alert.alert("successfully created goal with ID: ", goalID);
+
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -206,7 +208,7 @@ class CreateGoal extends React.Component {
             />
           </InputRow>
 
-          <InputRow header="Task Time">
+          <InputRow header="Notifs Time">
             <TouchableWithoutFeedback onPress={this.showTimePicker}>
               <View style={styles.inputView}>
                 <Text style={styles.inputText}>
@@ -255,21 +257,18 @@ class CreateGoal extends React.Component {
             <TouchableWithoutFeedback onPress={this.toggleModal}>
               <View style={styles.inputView}>
                 <Text style={styles.inputText}>
-                  {JSON.stringify(this.state.members)}
+                  { this.state.members.length > 0 ? 
+                      this.state.members.join(", ") : "" }
                 </Text>
               </View>
             </TouchableWithoutFeedback>
           </InputRow>
 
           <Modal isVisible={this.state.isModalVisible}
-            onBackButtonPress={() => {
-                this.toggleModal();
-              }}
-            onBackdropPress={() => {
-                this.toggleModal();
-              }}
+            onBackButtonPress={this.toggleModal}
+            onBackdropPress={this.toggleModal}
           >
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.7 }}>
               <MultiSelect
                 items = {friends}
                 uniqueKey="userID"
@@ -281,9 +280,14 @@ class CreateGoal extends React.Component {
                 selectedItems={members}
                 selectText="Search Friends..."
                 searchInputPlaceholderText="Search Friends..."
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
+                tagRemoveIconColor="#666"
+                tagBorderColor="#666"
+                tagTextColor="#666"
+                styleMainWrapper={{ borderRadius: 20, backgroundColor: '#FFF', padding: 10 }}
+                styleDropdownMenuSubsection={{ borderWidth: 0, borderColor: '#FFF' }}
+                styleListContainer={{ paddingTop: 10 }}
+                styleTextDropdown={{ fontSize: 16 }}
+                styleTextDropdownSelected={{ fontSize: 16 }}
               />
               <View>
                 {this.multiSelect && this.multiSelect.getSelectedItemsExt(members)}
@@ -329,6 +333,6 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 16,
     color: "#000"
-  }
+  },
 });
 export default CreateGoal;
