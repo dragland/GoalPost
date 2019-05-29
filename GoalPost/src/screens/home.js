@@ -12,12 +12,9 @@ import { NavigationEvents } from "react-navigation";
 import baseStyles from "../../styles/baseStyles";
 import Cloud from "../components/database";
 import CreateGoalButton from "../components/createGoalButton";
+import {facebookService} from '../services/FacebookService';
 
 class Home extends React.Component {
-  static navigationOptions = {
-    title: "Home"
-  };
-
   state = {
     userID: "undefined default userID",
     userName: "None",
@@ -25,6 +22,11 @@ class Home extends React.Component {
     active: [],
     completed: [],
     pending: []
+  };
+
+
+  static navigationOptions = {
+    title: "Home"
   };
 
   getGoalNames = async (userID, list) => {
@@ -77,6 +79,10 @@ class Home extends React.Component {
     );
   };
 
+  logout() {
+    this.props.navigation.navigate("Login");
+  }
+
   async populateGoalLists() {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "undefined default userID");
@@ -94,6 +100,8 @@ class Home extends React.Component {
       pending: pending,
       completed: completed
     });
+
+    
   }
 
   render() {
@@ -136,13 +144,12 @@ class Home extends React.Component {
           </ScrollView>
         </View>
 
-          <Button
-            title="LOG OUT"
-            type="clear"
-            titleStyle={{ color: "#666" }}
-            containerStyle={{ marginTop: 10, marginBottom: 20 }}
-            onPress={() => this.props.navigation.goBack()}
-          />
+        <View style={styles.container}>
+          {facebookService.makeLogoutButton(() => {
+              this.logout();
+          })}
+        </View>
+
       </View>
     );
   }

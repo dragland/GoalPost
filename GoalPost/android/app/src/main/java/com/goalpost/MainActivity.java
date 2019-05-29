@@ -1,5 +1,6 @@
 package com.goalpost;
 
+import android.content.Intent;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -32,4 +33,10 @@ public class MainActivity extends ReactActivity {
 		CalendarEventsPackage.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+      super.onActivityResult(requestCode, resultCode, data);
+      MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+    }
 }

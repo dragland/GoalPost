@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoalPost</string>
+    <string name="facebook_app_id">398491127405021</string>
+    <string name="fb_login_protocol_scheme">fb398491127405021</string>
 </resources>

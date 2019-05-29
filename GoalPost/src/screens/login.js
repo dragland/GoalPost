@@ -1,42 +1,37 @@
 import React from "react";
-import { View, Text, StatusBar } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { Button, View, Text, StyleSheet } from "react-native";
 import Cloud from "../components/database";
-import StandardButton from "../components/standardButton";
+import {facebookService} from '../services/FacebookService';
 
-class Login extends React.Component {
-  static navigationOptions = {
-    title: "Login"
-  };
-  state = {
-    userID: "undefined default userID"
-  };
+export default class Login extends React.Component {
 
-  selectUser = e => {
-    this.setState({ userID: e.nativeEvent.text });
-  };
+    static navigationOptions = {
+        title: "Login"
+    };
 
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <StatusBar barStyle="dark-content" />
-        <Input placeholder="Enter user ID here" onChange={this.selectUser} />
-        <StandardButton
-          title="login"
-          containerStyle={{ alignSelf: "center", marginTop: 20 }}
-          onPress={() => {
-            this.props.navigation.navigate("Home", {userID: this.state.userID});
-          }}
-          orange
-        />
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                {facebookService.makeLoginButton((accessToken) => {
+                    this.login()
+                })}
+            </View>
+        )
+    }
+
+    async login() {
+        const profile = await facebookService.fetchProfile();
+        const login = await Cloud.loginUser(profile.id, profile.name, profile.avatar);
+        alert(profile.avatar);
+        this.props.navigation.navigate("Home", {userID: profile.id});
+    }
 }
-export default Login;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    }
+})
