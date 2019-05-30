@@ -30,8 +30,7 @@ export default class Login extends React.Component {
         if (error) {
           alert(error);
         } else {
-          const r = await Cloud.loginUser(result.id, result.name, result.avatar);
-          //alert(r);
+          const r = await Cloud.loginUser(result.id, result.name, "");
           this.callNav(result);
         }
       });
