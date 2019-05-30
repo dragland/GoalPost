@@ -13,11 +13,13 @@ class FacebookService {
       <LoginButton
         readPermissions={["public_profile"]}
         onLoginFinished={(error, result) => {
+          alert('finished login');
           if (error) {
             console.log(error);
           } else if (result.isCancelled) {
             console.log("result cancelled!!!");
           } else {
+            callback();
             AccessToken.getCurrentAccessToken()
               .then(data => {
                 callback(data.accessToken);

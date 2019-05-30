@@ -2,7 +2,8 @@ import React from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
 import Cloud from "../components/database";
 import { facebookService } from "../services/FacebookService";
-import { AccessToken } from "react-native-fbsdk";
+import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
+import { NavigationEvents } from "react-navigation";
 
 export default class Login extends React.Component {
   static navigationOptions = {
@@ -10,39 +11,43 @@ export default class Login extends React.Component {
   };
 
   state = {
-    accessToken: null
+    loggedIn: false
   };
 
-  async componentDidMount() {
-    AccessToken.getCurrentAccessToken().then(data => {
-      if (data) {
-        this.setState({ accessToken: data.accessToken });
-      }
-    });
+  startTimer = () => {
+    this.interval = setInterval(this.login, 1000);
+  }
+
+  callNav = (profile) => {
+    clearInterval(this.interval);
+    this.props.navigation.navigate("Home", { userID: profile.id });
+  }
+
+  login = async () => {
+    const token = await AccessToken.getCurrentAccessToken();
+    if (token) {
+      const infoRequest = new GraphRequest('/me', null, async (error, result) => {
+        if (error) {
+          alert(error);
+        } else {
+          const r = await Cloud.loginUser(result.id, result.name, result.avatar);
+          //alert(r);
+          this.callNav(result);
+        }
+      });
+      new GraphRequestManager().addRequest(infoRequest).start();
+    }
   }
 
   render() {
-    if (this.state.accessToken != null) {
-      this.login();
-    }
     return (
       <View style={styles.container}>
-        {facebookService.makeLoginButton(accessToken => {
-          this.login();
-        })}
+        <NavigationEvents onDidFocus={this.startTimer} />
+        <LoginButton readPermissions={["public_profile"]} />
       </View>
     );
   }
 
-  async login() {
-    const profile = await facebookService.fetchProfile();
-    const login = await Cloud.loginUser(
-      profile.id,
-      profile.name,
-      profile.avatar
-    );
-    this.props.navigation.navigate("Home", { userID: profile.id });
-  }
 }
 
 const styles = StyleSheet.create({

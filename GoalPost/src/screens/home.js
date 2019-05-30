@@ -91,7 +91,12 @@ class Home extends React.Component {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "undefined default userID");
 
-    const user = await Cloud.loadUser(userID);
+    try {
+      const user = await Cloud.loadUser(userID);
+    } catch (e) {
+      alert(e);
+    }
+
     const active = await this.getGoalNames(userID, user.active_goals);
     const pending = await this.getGoalNames(userID, user.pending_goals);
     const completed = await this.getGoalNames(userID, user.completed_goals);
