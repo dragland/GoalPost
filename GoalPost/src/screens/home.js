@@ -17,7 +17,7 @@ import CreateGoalButton from "../components/createGoalButton";
 import {facebookService} from '../services/FacebookService';
 
 class Home extends React.Component {
-  state = {
+  state = { 
     userID: "undefined default userID",
     userName: "None",
     profilePic: "None",
@@ -27,7 +27,6 @@ class Home extends React.Component {
     spinner: true,
     refreshing: false
   };
-
 
   static navigationOptions = {
     title: "Home"
@@ -106,8 +105,6 @@ class Home extends React.Component {
       completed: completed,
       spinner: false
     });
-
-    
   }
 
   onRefresh = () => {
@@ -140,6 +137,7 @@ class Home extends React.Component {
             <Text style={baseStyles.heading2}>
               Hi, {this.state.userName}!{"\n"}Here are your Goals
             </Text>
+            <Text>{this.state.userID} {this.state.userName}</Text>
           </View>
           <CreateGoalButton
             userID={this.state.userID}
