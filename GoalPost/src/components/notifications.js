@@ -27,10 +27,9 @@ class localNotificationManager {
     let end = new Date(endDate);
     start.setHours(time.getHours(), time.getMinutes(), 0, 0);
     end.setHours(time.getHours(), time.getMinutes(), 0, 0);
-    dates = [];
+    let dates = [];
     for (let curr = new Date(start); curr <= end;) {
-      if (
-        (curr.toDateString() === start.toDateString()) 
+      if ((curr.toDateString() === start.toDateString()) 
         || weekDays.includes(curr.getDay()) 
         || (curr.toDateString() === end.toDateString())) {
         dates.push(new Date(curr));
