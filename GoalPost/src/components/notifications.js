@@ -21,28 +21,22 @@ class localNotificationManager {
       endDate: Date string of the end date/time
       weekDays: List of ints in range [0,6] where 0 : Sunday, 1 : Monday, etc.
       time: Date string of the time for notifications
-    Output:
-      succeeded: Bool, true if succeeded, false if failed
   */
   getEventTimes(startDate, endDate, weekDays, time) {
-    const hour = time.getHours();
-    const mins = time.getMinutes();
-    endDate = this.setTimeOfDay(endDate, 23, 59, 59, 999);
-
-    var dates = [];
-    for (var currDate = startDate; currDate <= endDate; ) {
-
-      var day = currDate.getDay();
-      if (weekDays.includes(day) || (currDate === startDate) || (currDate === endDate)) {
-        currDate = this.setTimeOfDay(currDate, hour, mins, 0, 0);
-        dates.push(currDate);
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    start.setHours(time.getHours(), time.getMinutes(), 0, 0);
+    end.setHours(time.getHours(), time.getMinutes(), 0, 0);
+    dates = [];
+    for (let curr = new Date(start); curr <= end;) {
+      if (
+        (curr.toDateString() === start.toDateString()) 
+        || weekDays.includes(curr.getDay()) 
+        || (curr.toDateString() === end.toDateString())) {
+        dates.push(new Date(curr));
       }
-
-      var nextDate = new Date();
-      nextDate.setDate(currDate.getDate() + 1);
-      currDate = nextDate;
+      curr.setDate(curr.getDate() + 1);
     }
-
     return dates;
   }
 
@@ -64,16 +58,6 @@ class localNotificationManager {
         date: currDate
       });
     }
-  }
-
-  setTimeOfDay(date, hours, mins, secs, millis) {
-    var output = new Date();
-    output.setDate(date.getDate());
-    output.setHours(hours);
-    output.setMinutes(mins);
-    output.setSeconds(secs);
-    output.setMilliseconds(millis);
-    return output;
   }
 }
 

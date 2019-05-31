@@ -47,7 +47,7 @@ class dataBase {
 			let goalId = user.active_goals[i];
 			let goal = await this.getGoal(goalId);
 			let end = goal.event_times[goal.event_times.length-1].toDate();
-			end.setHours(24,0,0,0);
+			end.setHours(23,59,59,9999);
 			if (end.getTime() < now.getTime()) {
 				let ret = this.completeGoal(userID, goalId);
 				promices.push(ret);
