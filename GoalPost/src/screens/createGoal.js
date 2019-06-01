@@ -52,8 +52,23 @@ class CreateGoal extends React.Component {
       { title: "F", checked: false },
       { title: "S", checked: false }
     ],
+    userList: [],
     isModalVisible: false
   };
+
+  async componentDidMount() {
+    const users = await Cloud.loadUserList(this.state.userID);
+    let friends = [];
+    for (key in users) {
+      if (key != this.state.userID) {
+        friends.push({userID: key, user_name: users[key]});
+      }
+    }
+    /* @Cam TODO here add ur profile lookup for rest of userIDs & make sure to push objs same format as above*/
+    this.setState({
+      userList: friends
+    });
+  }
 
   updateGoalName = e => {
     this.setState({ goalName: e.nativeEvent.text });
@@ -132,23 +147,8 @@ class CreateGoal extends React.Component {
   };
 
   render() {
-    /* TODO @Cam replace this with your friends list from the Graph API */
     const { members } = this.state;
-    let friends = [
-      {
-        userID: "davy",
-        user_name: "Davy Ragland",
-      }, {
-        userID: "cherry",
-        user_name: "Cherry Zou",
-      }, {
-        userID: "jesus",
-        user_name: "Jesus Cervantes",
-      }, {
-        userID: "cam",
-        user_name: "Cam Thouati",
-      }
-    ];
+    const { userList } = this.state;
 
     return (
       <View style={baseStyles.flatScreen}>
@@ -271,7 +271,7 @@ class CreateGoal extends React.Component {
           >
             <View style={{ flex: 0.7 }}>
               <MultiSelect
-                items = {friends}
+                items={userList}
                 uniqueKey="userID"
                 displayKey="user_name"
                 hideTags

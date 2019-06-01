@@ -103,7 +103,7 @@ class dataBase {
 	}
 
 	/* Called when a list of all users is required*/
-	async loadUserList() {
+	async loadUserList(userID) {
 		let users = {};
 		let docs = await this.users.get();
 		docs.forEach((doc) => {
