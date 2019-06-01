@@ -40,8 +40,8 @@ class localNotificationManager {
   }
 
   // For users who create a goal or accept a pending goal.
-  async scheduleNotifications(userName, goalID) {
-    let goal = await Cloud.getGoal(goalID);
+  async scheduleNotifications(userID, userName, goalID) {
+    let goal = await Cloud.loadGoal(userID, goalID);
     let eventTimes = goal.event_times;
     let goalName = goal.goal_name;
     for (let ind = 0; ind < eventTimes.length; ind++) {

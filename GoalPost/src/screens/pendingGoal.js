@@ -58,6 +58,7 @@ class PendingGoal extends React.Component {
   acceptGoal = async () => {
     await Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
     NotificationManager.scheduleNotifications(
+      this.state.userID,
       this.state.userName,
       this.state.goalID
     );
