@@ -53,17 +53,14 @@ class CreateGoal extends React.Component {
       { title: "S", checked: false }
     ],
     userMap: {},
-    userList: [],
     isModalVisible: false
   };
 
   async componentDidMount() {
     const users = await Cloud.loadUserList(this.state.userID);
     /* @Cam TODO append to users each userid who is an inviteable friend with users[userid] = "userName" */
-    let list = this.createUserList(users);
     this.setState({
-      userMap: users,
-      userList: list
+      userMap: users
     });
   }
 
@@ -155,7 +152,8 @@ class CreateGoal extends React.Component {
 
   render() {
     const { members } = this.state;
-    const { userList } = this.state;
+    const { userMap } = this.state;
+    let items = this.createUserList(userMap);
 
     return (
       <View style={baseStyles.flatScreen}>
@@ -278,7 +276,7 @@ class CreateGoal extends React.Component {
           >
             <View style={{ flex: 0.7 }}>
               <MultiSelect
-                items={userList}
+                items={items}
                 uniqueKey="userID"
                 displayKey="user_name"
                 hideTags
