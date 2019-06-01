@@ -23,7 +23,8 @@ class PendingGoal extends React.Component {
     startDate: "",
     endDate: "",
     members: [],
-    penalty: 0
+    penalty: 0,
+    userMap: {}
   };
 
   async componentDidMount() {
@@ -43,6 +44,8 @@ class PendingGoal extends React.Component {
     const startDate = event_times[0].toDate().toDateString();
     const endDate = event_times[event_times.length - 1].toDate().toDateString();
 
+    const users = await Cloud.loadUsersMap(this.state.userID);
+
     this.setState({
       userID: userID,
       userName: userName,
@@ -51,7 +54,8 @@ class PendingGoal extends React.Component {
       startDate: startDate,
       endDate: endDate,
       members: members,
-      penalty: goal.penalty
+      penalty: goal.penalty,
+      userMap: users
     });
   }
 
@@ -81,23 +85,25 @@ class PendingGoal extends React.Component {
       members.splice(i, 1);
     }
 
-    if (members.length == 1) {
+    let friends = members.map(e => this.state.userMap[e].user_name);
+
+    if (friends.length == 1) {
       // one other member -- the creator
-      return "Your friend " + members[0] + " wants you to join now!";
-    } else if (members.length == 2) {
+      return "Your friend " + friends[0] + " wants you to join now!";
+    } else if (friends.length == 2) {
       // one other invitee
       return (
         "Your friends " +
-        members.join(" and ") +
+        friends.join(" and ") +
         " are also invited. Don't be the last to join!"
       );
     }
     // else 2+ other invitees
     return (
       "Your friends " +
-      members.slice(0, -1).join(", ") +
+      friends.slice(0, -1).join(", ") +
       ", and " +
-      members[members.length - 1] +
+      friends[friends.length - 1] +
       " are also invited. Don't be the last to join!"
     );
   };
