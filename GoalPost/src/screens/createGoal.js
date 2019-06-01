@@ -52,22 +52,29 @@ class CreateGoal extends React.Component {
       { title: "F", checked: false },
       { title: "S", checked: false }
     ],
+    userMap: {},
     userList: [],
     isModalVisible: false
   };
 
   async componentDidMount() {
     const users = await Cloud.loadUserList(this.state.userID);
-    let friends = [];
-    for (key in users) {
-      if (key != this.state.userID) {
-        friends.push({userID: key, user_name: users[key]});
+    /* @Cam TODO append to users each userid who is an inviteable friend with users[userid] = "userName" */
+    let list = this.createUserList(users);
+    this.setState({
+      userMap: users,
+      userList: list
+    });
+  }
+
+  createUserList = (map) => {
+    let l = [];
+    for (k in map) {
+      if (k != this.state.userID) {
+        l.push({userID: k, user_name: map[k]});
       }
     }
-    /* @Cam TODO here add ur profile lookup for rest of userIDs & make sure to push objs same format as above*/
-    this.setState({
-      userList: friends
-    });
+    return l;
   }
 
   updateGoalName = e => {
@@ -259,7 +266,7 @@ class CreateGoal extends React.Component {
               <View style={styles.inputView}>
                 <Text style={styles.inputText}>
                   { this.state.members.length > 0 ? 
-                      this.state.members.join(", ") : "" }
+                      this.state.members.map(e => this.state.userMap[e]).join(", ") : "" }
                 </Text>
               </View>
             </TouchableWithoutFeedback>
