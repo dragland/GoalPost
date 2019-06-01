@@ -138,7 +138,6 @@ class Home extends React.Component {
             <Text style={baseStyles.heading2}>
               Hi, {this.state.userName}!{"\n"}Here are your Goals
             </Text>
-            <Text>{this.state.userID} {this.state.userName}</Text>
           </View>
           <CreateGoalButton
             userID={this.state.userID}
