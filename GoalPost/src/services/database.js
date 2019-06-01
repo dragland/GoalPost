@@ -102,8 +102,8 @@ class dataBase {
 		return Promise.all([ret_1, ret_2]);
 	}
 
-	/* Called when a list of all users is required*/
-	async loadUserList(userID) {
+	/* Called when a map of all userIDs to user names is required*/
+	async loadUserMap(userID) {
 		let users = {};
 		let docs = await this.users.get();
 		docs.forEach((doc) => {

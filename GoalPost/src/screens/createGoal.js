@@ -57,7 +57,7 @@ class CreateGoal extends React.Component {
   };
 
   async componentDidMount() {
-    const users = await Cloud.loadUserList(this.state.userID);
+    const users = await Cloud.loadUserMap(this.state.userID);
     /* @Cam TODO append to users each userid who is an inviteable friend with users[userid] = "userName" */
     this.setState({
       userMap: users
