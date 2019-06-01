@@ -103,11 +103,15 @@ class dataBase {
 	}
 
 	/* Called when a map of all userIDs to user names is required*/
-	async loadUserMap(userID) {
+	async loadUsersMap(userID) {
 		let users = {};
 		let docs = await this.users.get();
 		docs.forEach((doc) => {
-			users[doc.id] = FireStoreParser(doc.data()).user_name;
+			let user = FireStoreParser(doc.data());
+			users[doc.id] = {
+				user_name: user.user_name,
+				profile_pic: user.profile_pic
+			}
 		});
 		return users;
 	}

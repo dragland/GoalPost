@@ -57,8 +57,8 @@ class CreateGoal extends React.Component {
   };
 
   async componentDidMount() {
-    const users = await Cloud.loadUserMap(this.state.userID);
-    /* @Cam TODO append to users each userid who is an inviteable friend with users[userid] = "userName" */
+    const users = await Cloud.loadUsersMap(this.state.userID);
+    /* @Cam TODO append to users each userid who is an inviteable friend with users[userid] = {user_name:TDOO, profile_pic:TODO} */
     this.setState({
       userMap: users
     });
@@ -68,7 +68,7 @@ class CreateGoal extends React.Component {
     let l = [];
     for (k in map) {
       if (k != this.state.userID) {
-        l.push({userID: k, user_name: map[k]});
+        l.push({userID: k, user_name: map[k].user_name});
       }
     }
     return l;
@@ -264,7 +264,7 @@ class CreateGoal extends React.Component {
               <View style={styles.inputView}>
                 <Text style={styles.inputText}>
                   { this.state.members.length > 0 ? 
-                      this.state.members.map(e => this.state.userMap[e]).join(", ") : "" }
+                      this.state.members.map(e => this.state.userMap[e].user_name).join(", ") : "" }
                 </Text>
               </View>
             </TouchableWithoutFeedback>
