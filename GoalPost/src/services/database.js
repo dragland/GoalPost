@@ -221,5 +221,4 @@ class dataBase {
 	}
 }
 
-const Cloud = new dataBase();
-export default Cloud;
+export const Cloud = new dataBase();

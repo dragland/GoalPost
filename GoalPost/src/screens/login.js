@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
-import Cloud from "../components/database";
-import { facebookService } from "../services/FacebookService";
 import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
 import { NavigationEvents } from "react-navigation";
+
+import { Cloud } from "../services/database";
+import { facebookService } from "../services/FacebookService";
 
 export default class Login extends React.Component {
   static navigationOptions = {

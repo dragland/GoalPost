@@ -12,9 +12,10 @@ import { Button, Input, Icon, ListItem } from "react-native-elements";
 import { NavigationEvents } from "react-navigation";
 import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
-import Cloud from "../components/database";
 import CreateGoalButton from "../components/createGoalButton";
-import {facebookService} from '../services/FacebookService';
+
+import { Cloud } from "../services/database";
+import { facebookService } from '../services/FacebookService';
 
 class Home extends React.Component {
   state = { 

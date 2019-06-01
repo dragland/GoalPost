@@ -13,10 +13,6 @@ import { Input, CheckBox } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import baseStyles from "../../styles/baseStyles";
 
-// import custom functions
-import Cloud from "../components/database";
-import NotificationManager from "../components/notifications";
-
 // import custom components
 import RepeatCheckBox from "../components/repeatCheckBox";
 import InputRow from "../components/inputRow";
@@ -25,6 +21,11 @@ import StandardButton from "../components/standardButton";
 import update from "immutability-helper";
 import Modal from "react-native-modal";
 import MultiSelect from 'react-native-multiple-select';
+
+// import custom functions
+import { Cloud } from "../services/database";
+import { facebookService } from '../services/FacebookService';
+import { NotificationManager } from "../services/notifications";
 
 class CreateGoal extends React.Component {
   static navigationOptions = {

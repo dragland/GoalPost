@@ -2,12 +2,14 @@ import React from "react";
 import { Alert, Image, View, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
-import Cloud from "../components/database";
 import GoBackButton from "../components/goBackButton";
 import CenterImage from "../components/centerImage";
 import StandardButton from "../components/standardButton";
-import NotificationManager from "../components/notifications";
 import LetterRow from "../components/letterRow";
+
+import { Cloud } from "../services/database";
+import { facebookService } from '../services/FacebookService';
+import { NotificationManager } from "../services/notifications";
 
 class PendingGoal extends React.Component {
   static navigationOptions = {

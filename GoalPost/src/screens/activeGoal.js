@@ -2,10 +2,12 @@ import React from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import { Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
-import Cloud from "../components/database";
 import GoBackButton from "../components/goBackButton";
 import StandardButton from "../components/standardButton";
 import Leaderboard from "../components/leaderboard";
+
+import { Cloud } from "../services/database";
+import { facebookService } from '../services/FacebookService';
 
 class ActiveGoal extends React.Component {
   static navigationOptions = {

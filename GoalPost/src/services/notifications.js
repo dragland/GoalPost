@@ -1,4 +1,4 @@
-import Cloud from "./database";
+import { Cloud } from "./database";
 
 class localNotificationManager {
 
@@ -60,5 +60,4 @@ class localNotificationManager {
   }
 }
 
-const NotificationManager = new localNotificationManager();
-export default NotificationManager;
+export const NotificationManager = new localNotificationManager();
