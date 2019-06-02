@@ -41,10 +41,7 @@ class goalManager {
 		return dates;
 	}
 
-	async getEventIndex(userID, goalID) {
-		const goal = await Cloud.loadGoal(userID, goalID);
-		const event_times = goal.event_times;
-
+	getEventIndex(userID, event_times, user_logs) {
 		var eventIndex = -1;
 		const today = new Date();
 		for (var i = 0; i < event_times.length; i++) {
@@ -58,11 +55,10 @@ class goalManager {
 			}
 		}
 
-		const user_logs = goal.user_logs[userID];
-		const disable = eventIndex == -1 || user_logs[eventIndex] > -1;
+		const log = user_logs[userID];
+		const disable = (eventIndex == -1) || (log[eventIndex] > -1);
 		return { eventIndex: eventIndex, disable: disable };
 	};
-
 
 	formatUserList(map, userID) {
 		let l = [];

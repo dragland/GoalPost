@@ -44,7 +44,8 @@ class ActiveGoal extends React.Component {
   };
 
   async componentDidMount() {
-    var { eventIndex, disable } = await GoalManager.getEventIndex(this.state.userID, this.state.goalID);
+    const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
+    var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
     this.setState({ eventIndex: eventIndex, yesNoDisabled: disable });
   }
 
