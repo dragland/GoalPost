@@ -153,8 +153,24 @@ class goalManager {
 		return count * penalty;
 	}
 
-	getCashOutMap(userID, user_logs, penalty) {
+	getCashOutMap(userID, userLogs, penalty) {
 		let order = this.getSortedUsers(userLogs, penalty);
+		let pot = getTotalPot(userLogs, penalty);
+		if (pot === 0) {
+			//return congrats you all did the thing weeeeee
+		}
+		if (userID === order[0].userID) {
+			// return everybody else owes u so much :()
+		}
+		else {
+			let score = getUserScore(userID, userLogs, penalty);
+			if (score >= 0) {
+				// return order[0].userID owes you *score
+			}
+			else {
+				// return please pay order[0].userID -1*score
+			}
+		}
 	}
 }
 
