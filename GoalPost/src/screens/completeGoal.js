@@ -7,14 +7,15 @@ import Leaderboard from "../components/leaderboard";
 
 import { Cloud } from "../services/database";
 import { facebookService } from '../services/FacebookService';
+import { GoalManager } from '../services/goalManagement';
 
 class CompleteGoal extends React.Component {
   static navigationOptions = {
     title: "CompleteGoal"
   };
   state = {
-    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
-    goalID: this.props.navigation.getParam("goalID", "ERROR UNDEFINED GOALID")
+    userID: this.props.navigation.getParam("userID", ""),
+    goalID: this.props.navigation.getParam("goalID", "")
   };
 
   render() {

@@ -16,12 +16,13 @@ import CreateGoalButton from "../components/createGoalButton";
 
 import { Cloud } from "../services/database";
 import { facebookService } from '../services/FacebookService';
+import { GoalManager } from '../services/goalManagement';
 
 class Home extends React.Component {
   state = { 
-    userID: "undefined default userID",
-    userName: "None",
-    profilePic: "None",
+    userID: "",
+    userName: "",
+    profilePic: "",
     active: [],
     completed: [],
     pending: [],
@@ -31,25 +32,6 @@ class Home extends React.Component {
 
   static navigationOptions = {
     title: "Home"
-  };
-
-  getGoalNames = async (userID, list) => {
-    var goalList = list.map(async goalID => {
-      const goal = await Cloud.loadGoal(userID, goalID);
-      const goal_name = goal.goal_name;
-
-      var num_completed_tasks = 0;
-      const arr = goal.user_logs[userID]
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i] == 1) {
-          num_completed_tasks++;
-        }
-      }
-      return { goalID: goalID, goalName: goal_name, numTasks: num_completed_tasks };
-    });
-
-    var output = await Promise.all(goalList);
-    return output.reverse();
   };
 
   renderItem = ({ item, index, section: { title, data } }) => {
@@ -90,12 +72,12 @@ class Home extends React.Component {
 
   async populateGoalLists() {
     const { navigation } = this.props;
-    const userID = navigation.getParam("userID", "undefined default userID");
+    const userID = navigation.getParam("userID", "");
 
     const user = await Cloud.loadUser(userID);
-    const active = await this.getGoalNames(userID, user.active_goals);
-    const pending = await this.getGoalNames(userID, user.pending_goals);
-    const completed = await this.getGoalNames(userID, user.completed_goals);
+    const active = await GoalManager.getGoalNames(userID, user.active_goals);
+    const pending = await GoalManager.getGoalNames(userID, user.pending_goals);
+    const completed = await GoalManager.getGoalNames(userID, user.completed_goals);
 
     this.setState({
       userID: userID,

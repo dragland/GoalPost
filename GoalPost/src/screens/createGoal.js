@@ -25,6 +25,7 @@ import MultiSelect from 'react-native-multiple-select';
 // import custom functions
 import { Cloud } from "../services/database";
 import { facebookService } from '../services/FacebookService';
+import { GoalManager } from '../services/goalManagement';
 import { NotificationManager } from "../services/notifications";
 
 class CreateGoal extends React.Component {
@@ -32,9 +33,9 @@ class CreateGoal extends React.Component {
     title: "CreateGoal"
   };
   state = {
-    userID: this.props.navigation.getParam("userID", "ERROR UNDEFINED USERID"),
-    userName: this.props.navigation.getParam("userName", "ERROR UNDEFINED USERNAME"),
-    goalID: "undefined default goalID",
+    userID: this.props.navigation.getParam("userID", ""),
+    userName: this.props.navigation.getParam("userName", ""),
+    goalID: "",
     isDatePicker1Visible: false,
     isDatePicker2Visible: false,
     goalName: null,
@@ -62,16 +63,6 @@ class CreateGoal extends React.Component {
     this.setState({
       userMap: users
     });
-  }
-
-  createUserList = (map) => {
-    let l = [];
-    for (k in map) {
-      if (k != this.state.userID) {
-        l.push({userID: k, user_name: map[k].user_name});
-      }
-    }
-    return l;
   }
 
   updateGoalName = e => {
@@ -130,7 +121,7 @@ class CreateGoal extends React.Component {
       .filter(item => item.checked)
       .map(item => item.index);
 
-    var eventTimes = NotificationManager.getEventTimes(
+    var eventTimes = GoalManager.getEventTimes(
       this.state.startDate,
       this.state.endDate,
       weekdays,
@@ -153,7 +144,7 @@ class CreateGoal extends React.Component {
   render() {
     const { members } = this.state;
     const { userMap } = this.state;
-    let items = this.createUserList(userMap);
+    let items = GoalManager.formatUserList(userMap, this.state.userID);
 
     return (
       <View style={baseStyles.flatScreen}>

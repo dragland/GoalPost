@@ -9,6 +9,7 @@ import LetterRow from "../components/letterRow";
 
 import { Cloud } from "../services/database";
 import { facebookService } from '../services/FacebookService';
+import { GoalManager } from '../services/goalManagement';
 import { NotificationManager } from "../services/notifications";
 
 class PendingGoal extends React.Component {
@@ -16,10 +17,10 @@ class PendingGoal extends React.Component {
     title: "PendingGoal"
   };
   state = {
-    userID: "undefined default userID",
-    goalID: "undefined default goalID",
-    userName: "None",
-    goalName: "None",
+    userID: "",
+    goalID: "",
+    userName: "",
+    goalName: "",
     startDate: "",
     endDate: "",
     members: [],
@@ -29,12 +30,9 @@ class PendingGoal extends React.Component {
 
   async componentDidMount() {
     const { navigation } = this.props;
-    const userID = navigation.getParam("userID", "ERROR UNDEFINED USERID");
-    const userName = navigation.getParam(
-      "userName",
-      "ERROR UNDEFINED USERNAME"
-    );
-    const goalID = navigation.getParam("goalID", "ERROR UNDEFINED GOALID");
+    const userID = navigation.getParam("userID", "");
+    const userName = navigation.getParam("userName", "");
+    const goalID = navigation.getParam("goalID", "");
 
     const goal = await Cloud.loadGoal(userID, goalID);
     const checkinMap = goal.user_logs; // map of userID to array of states (-1 = unfilled, 0 = failed, 1 = checked in) in the format {'userID': [bools]]}
@@ -76,38 +74,6 @@ class PendingGoal extends React.Component {
     this.props.navigation.goBack();
   };
 
-  getFriendsText = () => {
-    var { members } = this.state;
-
-    // remove self from list
-    var i = members.indexOf(this.state.userID);
-    if (i > -1) {
-      members.splice(i, 1);
-    }
-
-    let friends = members.map(e => this.state.userMap[e].user_name);
-
-    if (friends.length == 1) {
-      // one other member -- the creator
-      return "Your friend " + friends[0] + " wants you to join now!";
-    } else if (friends.length == 2) {
-      // one other invitee
-      return (
-        "Your friends " +
-        friends.join(" and ") +
-        " are also invited. Don't be the last to join!"
-      );
-    }
-    // else 2+ other invitees
-    return (
-      "Your friends " +
-      friends.slice(0, -1).join(", ") +
-      ", and " +
-      friends[friends.length - 1] +
-      " are also invited. Don't be the last to join!"
-    );
-  };
-
   render() {
     return (
       <View style={baseStyles.flatScreen}>
@@ -131,7 +97,7 @@ class PendingGoal extends React.Component {
             </Text>
           </LetterRow>
           <LetterRow header="who">
-            <Text style={styles.letterA}>{this.getFriendsText()}</Text>
+            <Text style={styles.letterA}>{GoalManager.getFriendsText(this.state.members, this.state.userID, this.state.userMap)}</Text>
           </LetterRow>
         </View>
         <View

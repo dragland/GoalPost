@@ -14,31 +14,6 @@ class localNotificationManager {
     });
   }
 
-  /*
-    Function to schedule notifications on device for the events.
-    Input:
-      startDate: Date string of the start date/time
-      endDate: Date string of the end date/time
-      weekDays: List of ints in range [0,6] where 0 : Sunday, 1 : Monday, etc.
-      time: Date string of the time for notifications
-  */
-  getEventTimes(startDate, endDate, weekDays, time) {
-    let start = new Date(startDate);
-    let end = new Date(endDate);
-    start.setHours(time.getHours(), time.getMinutes(), 0, 0);
-    end.setHours(time.getHours(), time.getMinutes(), 0, 0);
-    let dates = [];
-    for (let curr = new Date(start); curr <= end;) {
-      if ((curr.toDateString() === start.toDateString()) 
-        || weekDays.includes(curr.getDay()) 
-        || (curr.toDateString() === end.toDateString())) {
-        dates.push(new Date(curr));
-      }
-      curr.setDate(curr.getDate() + 1);
-    }
-    return dates;
-  }
-
   // For users who create a goal or accept a pending goal.
   async scheduleNotifications(userID, userName, goalID) {
     let goal = await Cloud.loadGoal(userID, goalID);

@@ -16,7 +16,7 @@ export default class Login extends React.Component {
   };
 
   startTimer = () => {
-    this.interval = setInterval(this.login, 1000);
+    this.interval = setInterval(this.login, 100);
   }
 
   callNav = (profile) => {
@@ -31,7 +31,7 @@ export default class Login extends React.Component {
         if (error) {
           alert(error);
         } else {
-          const r = await Cloud.loginUser(result.id, result.name, "");
+          const r = await Cloud.loginUser(result.id, result.name, "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/upside-down-face_1f643.png");
           this.callNav(result);
         }
       });
