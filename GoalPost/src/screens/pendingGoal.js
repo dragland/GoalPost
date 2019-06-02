@@ -19,7 +19,6 @@ class PendingGoal extends React.Component {
   state = {
     userID: "",
     goalID: "",
-    userName: "",
     goalName: "",
     startDate: "",
     endDate: "",
@@ -31,7 +30,6 @@ class PendingGoal extends React.Component {
   async componentDidMount() {
     const { navigation } = this.props;
     const userID = navigation.getParam("userID", "");
-    const userName = navigation.getParam("userName", "");
     const goalID = navigation.getParam("goalID", "");
 
     const goal = await Cloud.loadGoal(userID, goalID);
@@ -46,7 +44,6 @@ class PendingGoal extends React.Component {
 
     this.setState({
       userID: userID,
-      userName: userName,
       goalID: goalID,
       goalName: goal.goal_name,
       startDate: startDate,
@@ -61,7 +58,7 @@ class PendingGoal extends React.Component {
     await Cloud.acceptPendingGoal(this.state.userID, this.state.goalID);
     NotificationManager.scheduleNotifications(
       this.state.userID,
-      this.state.userName,
+      this.state.userMap[this.state.userID].user_name,
       this.state.goalID
     );
     this.props.navigation.state.params.refresh();

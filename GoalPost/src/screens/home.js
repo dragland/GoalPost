@@ -49,7 +49,6 @@ class Home extends React.Component {
           } else if (title == "Pending Invites") {
             this.props.navigation.navigate("PendingGoal", {
               userID: this.state.userID,
-              userName: this.state.userName,
               goalID: item.goalID,
               refresh: this.componentDidMount.bind(this)
             });
@@ -123,7 +122,6 @@ class Home extends React.Component {
           </View>
           <CreateGoalButton
             userID={this.state.userID}
-            userName={this.state.userName}
             navigation={this.props.navigation}
           />
         </View>

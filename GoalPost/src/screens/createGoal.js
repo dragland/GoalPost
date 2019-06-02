@@ -34,7 +34,6 @@ class CreateGoal extends React.Component {
   };
   state = {
     userID: this.props.navigation.getParam("userID", ""),
-    userName: this.props.navigation.getParam("userName", ""),
     goalID: "",
     isDatePicker1Visible: false,
     isDatePicker2Visible: false,
@@ -135,7 +134,7 @@ class CreateGoal extends React.Component {
       eventTimes,
       this.state.cost
     );
-    await NotificationManager.scheduleNotifications(this.state.userID, this.state.userName, goalID);
+    await NotificationManager.scheduleNotifications(this.state.userID, this.state.userMap[this.state.userID].user_name, goalID);
     Alert.alert("successfully created goal with ID: ", goalID);
 
     this.props.navigation.goBack();

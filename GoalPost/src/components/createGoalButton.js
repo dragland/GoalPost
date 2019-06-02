@@ -29,8 +29,7 @@ export default class CreateGoalButton extends Component {
         />
         onPress={() =>
           this.props.navigation.navigate("CreateGoal", {
-            userID: this.props.userID,
-            userName: this.props.userName
+            userID: this.props.userID
           })
         }
       />
