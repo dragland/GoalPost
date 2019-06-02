@@ -100,17 +100,42 @@ class goalManager {
 		);
 	};
 
-	getuserProgress(userID, userLogs) {
+	getUserProgress(userID, userLogs) {
 		let done = 0;
 		let total = userLogs[userID].length;
 		for (let i = 0; i < total; i++) {
-			if (userLogs[userID][i] === 1) {done++;}
+			if (userLogs[userID][i] === 1) {
+				done++;
+			}
 		}
 		return ((done/total) * 100).toFixed(2);
 	}
 
 	getUserScore(userID, userLogs, penalty) {
-		// ((length of event_times) - (num of entries == 1)) * penalty;
+		let score = 0;
+		for (let i = 0; i < userLogs[userID].length; i++) {
+			let dif = 0;
+			if (userLogs[userID][i] === 1) {
+				dif = penalty;
+			}
+			if (userLogs[userID][i] === 0) {
+				dif = -1 * penalty;
+			}
+			score += dif;
+		}
+		return score;
+	}
+
+	getTotalPot(userLogs, penalty) {
+		let count = 0;
+		Object.keys(userLogs).forEach((u) => {
+			for (let i = 0; i < userLogs[u].length; i++) {
+				if (userLogs[u][i] === 0) {
+					count++;
+				}
+			}
+		});
+		return count * penalty;
 	}
 
 	getCashOutMap(user_logs) {
