@@ -17,6 +17,7 @@ class ActiveGoal extends React.Component {
   state = {
     userID: this.props.navigation.getParam("userID", ""),
     goalID: this.props.navigation.getParam("goalID", ""),
+    userMap: {},
     eventIndex: -1,
     yesNoDisabled: false
   };
@@ -45,8 +46,17 @@ class ActiveGoal extends React.Component {
 
   async componentDidMount() {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
+    const users = await Cloud.loadUsersMap(this.state.userID);
     var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
-    this.setState({ eventIndex: eventIndex, yesNoDisabled: disable });
+
+    //TODO JUST TESTING LMAO SORRY
+    Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getuserProgress(this.state.userID, goal.user_logs)) + "%");
+
+    this.setState({
+      eventIndex: eventIndex,
+      yesNoDisabled: disable,
+      userMap: users
+    });
   }
 
   render() {

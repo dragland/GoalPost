@@ -41,11 +41,11 @@ class goalManager {
 		return dates;
 	}
 
-	getEventIndex(userID, event_times, user_logs) {
+	getEventIndex(userID, eventTimes, userLogs) {
 		var eventIndex = -1;
 		const today = new Date();
-		for (var i = 0; i < event_times.length; i++) {
-			const date = event_times[i].toDate(); // time at which event opens for check in
+		for (var i = 0; i < eventTimes.length; i++) {
+			const date = eventTimes[i].toDate(); // time at which event opens for check in
 			var midnight = new Date(date.getTime());
 			midnight.setHours(23,59,59,9999);
 
@@ -55,7 +55,7 @@ class goalManager {
 			}
 		}
 
-		const log = user_logs[userID];
+		const log = userLogs[userID];
 		const disable = (eventIndex == -1) || (log[eventIndex] > -1);
 		return { eventIndex: eventIndex, disable: disable };
 	};
@@ -99,6 +99,23 @@ class goalManager {
 			" are also invited. Don't be the last to join!"
 		);
 	};
+
+	getuserProgress(userID, userLogs) {
+		let done = 0;
+		let total = userLogs[userID].length;
+		for (let i = 0; i < total; i++) {
+			if (userLogs[userID][i] === 1) {done++;}
+		}
+		return ((done/total) * 100).toFixed(2);
+	}
+
+	getUserScore(userID, userLogs, penalty) {
+		// ((length of event_times) - (num of entries == 1)) * penalty;
+	}
+
+	getCashOutMap(user_logs) {
+
+	}
 }
 
 export const GoalManager = new goalManager();
