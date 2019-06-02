@@ -15,7 +15,7 @@ export default class Leaderboard extends Component {
           <Avatar
             size="medium"
             rounded
-            source={require("../../images/davy.jpg")}
+            source={require("../../res/davy.jpg")}
           />
           <View style={[styles.progressBox, { width: 160}]} />
           <Text style={baseStyles.text}>+$15.00</Text>
@@ -25,7 +25,7 @@ export default class Leaderboard extends Component {
           <Avatar
             size="medium"
             rounded
-            source={require("../../images/cam.jpg")}
+            source={require("../../res/cam.jpg")}
           />
           <View style={[styles.progressBox, { width: 120}]} />
           <Text style={baseStyles.text}>-$5.00</Text>
@@ -35,7 +35,7 @@ export default class Leaderboard extends Component {
           <Avatar
             size="medium"
             rounded
-            source={require("../../images/jesus.jpg")}
+            source={require("../../res/jesus.jpg")}
           />
           <View style={[styles.progressBox, { width: 120}]} />
           <Text style={baseStyles.text}>-$5.00</Text>
@@ -45,7 +45,7 @@ export default class Leaderboard extends Component {
           <Avatar
             size="medium"
             rounded
-            source={require("../../images/cherry.jpg")}
+            source={require("../../res/cherry.jpg")}
           />
           <View style={[styles.progressBox, { width: 80}]} />
           <Text style={baseStyles.text}>-$15.00</Text>
