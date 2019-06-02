@@ -129,9 +129,11 @@ class goalManager {
 	getSortedUsers(userLogs, penalty) {
 		let l = [];
 		Object.keys(userLogs).forEach((u) => {
+			let p = this.getUserProgress(u, userLogs);
 			let s = this.getUserScore(u, userLogs, penalty);
 			l.push({
 				userID: u,
+				progress: p,
 				score: s
 			});
 		});
