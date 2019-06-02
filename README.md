@@ -18,7 +18,7 @@ Member | Photo | Contributions
 Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150"> | <ul><li>project design & architecture</li><li>backend API design & architecture</li><li>state & data management</li><li>navigation control flow </li><li>data pipelining</li><li>backend database operations</li><li>transaction management</li><li>documentation</li></ul>
 Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150"> | <ul><li>user experience design & architecture</li><li>screen prototyping</li><li>user interface design, styling, & implementation</li><li>data management</li><li>data pipelining</li><li>input validation & edge case handling<li>navigational flow</li></ul>
 Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150"> | <ul><li>needfinding</li><li>event management</li><li>notification integration</li><li>goal creation flow</li><li>user testing</li></ul>
-Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150"> | <ul><li>facebook integration for logging in & inviting friends</li></ul>
+Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150"> | <ul><li>facebook integration for logging unique user login</li><li>authentication flow & state management</li><li>facebook graph interfacing for inviting friends to goals</li></ul>
 
 
 # Team Skills
