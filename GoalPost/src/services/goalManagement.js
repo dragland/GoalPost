@@ -126,6 +126,21 @@ class goalManager {
 		return score;
 	}
 
+	getSortedUsers(userLogs, penalty) {
+		let l = [];
+		Object.keys(userLogs).forEach((u) => {
+			let s = this.getUserScore(u, userLogs, penalty);
+			l.push({
+				userID: u,
+				score: s
+			});
+		});
+		l.sort(function(a, b) {
+			return a.score - b.score;
+		});
+		return l.reverse();
+	}
+
 	getTotalPot(userLogs, penalty) {
 		let count = 0;
 		Object.keys(userLogs).forEach((u) => {
@@ -138,8 +153,8 @@ class goalManager {
 		return count * penalty;
 	}
 
-	getCashOutMap(user_logs) {
-
+	getCashOutMap(userID, user_logs, penalty) {
+		let order = this.getSortedUsers(userLogs, penalty);
 	}
 }
 
