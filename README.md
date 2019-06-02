@@ -1,6 +1,6 @@
 # GoalPost
 
-<img src="https://github.com/StanfordCS194/GoalPost/raw/master/logo.png" width="150">
+<img src="https://github.com/StanfordCS194/GoalPost/raw/master/wiki/logo.png" width="150">
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  
