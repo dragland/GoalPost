@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, Alert } from "react-native";
 import Routes from "./routes";
 import FBSDK from "react-native-fbsdk";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
+import PushNotificationAndroid from 'react-native-push-notification'
+
 //const App = () => <Routes/>
 const { AccessToken } = FBSDK;
 
@@ -28,6 +30,24 @@ export default class App extends Component {
         console.log(error);
       });
   }
+  
+// Jesus work, Cherry don't delit pls
+//   componentWillMount() {
+//     (function() {
+//       // Register all the valid actions for notifications here and add the action handler for each action
+//       PushNotificationAndroid.registerNotificationActions(['Yes','No']);
+//       DeviceEventEmitter.addListener('notificationActionReceived', function(action){
+//         Alert.alert('Notification action received: ' + action);
+//         const info = JSON.parse(action.dataJSON);
+//         if (info.action == 'Accept') {
+//           // Do work pertaining to Accept action here
+//         } else if (info.action == 'Reject') {
+//           // Do work pertaining to Reject action here
+//         }
+//         // Add all the required actions handlers
+//       });
+//     })(); 
+//   }
 
   render() {
     return <Routes/>;
