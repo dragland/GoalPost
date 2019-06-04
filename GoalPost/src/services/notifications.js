@@ -25,8 +25,8 @@ class localNotificationManager {
         largeIcon: "ic_launcher",
         smallIcon: "ic_notification",
         color: "#24a4ff",
-        title: "Hi " + userName + ", make sure to check in!",
-        message: "Did you make it to your event today for \"" + goalName + "\"?",
+        title: "Hi " + userName.split(" ")[0] + ", make sure to check in!",
+        message: "Did you make it to your event today for " + goalName + "?",
         playSound: false,
         actions: '["Yes", "No"]',
         date: currDate
