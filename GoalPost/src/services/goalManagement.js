@@ -105,10 +105,11 @@ class goalManager {
 		const today = new Date();
 		for (let i = 0; i < eventTimes.length; i++) {
 			const date = eventTimes[i].toDate();
-			if (date >= today) {
-				break
+			let midnight = new Date(date.getTime());
+			midnight.setHours(23,59,59,9999);
+			if (today >= midnight) {
+				eventIndex++;
 			}
-			eventIndex = i;
 		}
 		return eventIndex;
 	}
@@ -125,13 +126,12 @@ class goalManager {
 	}
 
 	getUserDebt(userID, userLogs, penalty, index) {
-		let now = (index === -1) ? userLogs[userID].length : index;
 		let debt = 0;
 		for (let i = 0; i < userLogs[userID].length; i++) {
 			if (userLogs[userID][i] === 0) {
 				debt += penalty;
 			}
-			if ((userLogs[userID][i] === -1) && (i < now)) {
+			if ((userLogs[userID][i] === -1) && (i < index)) {
 				debt += penalty;
 			}
 		}
@@ -143,11 +143,11 @@ class goalManager {
 		let l = [];
 		Object.keys(userLogs).forEach((u) => {
 			let p = this.getUserProgress(u, userLogs);
-			let debt = this.getUserDebt(u, userLogs, penalty, i);
+			let d = this.getUserDebt(u, userLogs, penalty, i);
 			l.push({
 				userID: u,
 				progress: p,
-				debt: debt
+				debt: d
 			});
 		});
 		l.sort(function(a, b) {
