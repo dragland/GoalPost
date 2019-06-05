@@ -100,6 +100,19 @@ class goalManager {
 		);
 	};
 
+	getCurrentIndex(eventTimes) {
+		let eventIndex = 0;
+		const today = new Date();
+		for (let i = 0; i < eventTimes.length; i++) {
+			const date = eventTimes[i].toDate();
+			if (date >= today) {
+				break
+			}
+			eventIndex = i;
+		}
+		return eventIndex;
+	}
+
 	getUserProgress(userID, userLogs) {
 		let done = 0;
 		let total = userLogs[userID].length;
@@ -111,56 +124,45 @@ class goalManager {
 		return ((done/total) * 100).toFixed(2);
 	}
 
-	getUserScore(userID, userLogs, penalty, eventIndex) {
-		let now = (eventIndex === -1) ? userLogs[userID].length : eventIndex;
-		let score = 0;
+	getUserDebt(userID, userLogs, penalty, index) {
+		let now = (index === -1) ? userLogs[userID].length : index;
+		let debt = 0;
 		for (let i = 0; i < userLogs[userID].length; i++) {
-			let dif = 0;
-			if (userLogs[userID][i] === 1) {
-				dif = penalty;
-			}
 			if (userLogs[userID][i] === 0) {
-				dif = -1 * penalty;
+				debt += penalty;
 			}
 			if ((userLogs[userID][i] === -1) && (i < now)) {
-				dif = -1 * penalty;
+				debt += penalty;
 			}
-			score += dif;
 		}
-		return score;
+		return debt;
 	}
 
-	getSortedUsers(userLogs, penalty, eventIndex) {
+	getSortedUsers(userLogs, eventTimes, penalty) {
+		let i = this.getCurrentIndex(eventTimes);
 		let l = [];
 		Object.keys(userLogs).forEach((u) => {
 			let p = this.getUserProgress(u, userLogs);
-			let s = this.getUserScore(u, userLogs, penalty, eventIndex);
+			let debt = this.getUserDebt(u, userLogs, penalty, i);
 			l.push({
 				userID: u,
 				progress: p,
-				score: s
+				debt: debt
 			});
 		});
 		l.sort(function(a, b) {
-			return a.score - b.score;
+			return a.progress - b.progress;
 		});
 		return l.reverse();
 	}
 
-	getTotalPot(userLogs, penalty, eventIndex) {
-		let now = (eventIndex === -1) ? userLogs[userID].length : eventIndex;
-		let count = 0;
+	getTotalPot(userLogs, eventTimes, penalty) {
+		let i = this.getCurrentIndex(eventTimes);
+		let pot = 0;
 		Object.keys(userLogs).forEach((u) => {
-			for (let i = 0; i < userLogs[u].length; i++) {
-				if (userLogs[u][i] === 0) {
-					count++;
-				}
-				if ((userLogs[u][i] === -1) && (i < now)) {
-					count++;
-				}
-			}
+			pot += this.getUserDebt(u, userLogs, penalty, i);
 		});
-		return count * penalty;
+		return pot;
 	}
 
 	getCashOutText(userID, userLogs, penalty, eventIndex) {
@@ -173,7 +175,7 @@ class goalManager {
 			// return everybody else owes u so much :()
 		}
 		else {
-			let score = getUserScore(userID, userLogs, penalty);
+			let score = getUserDebt(userID, userLogs, penalty);
 			if (score >= 0) {
 				// return order[0].userID owes you *score
 			}
