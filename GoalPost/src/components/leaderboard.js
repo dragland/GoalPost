@@ -12,29 +12,30 @@ export default class Leaderboard extends Component {
 
   async populateUsers() {
     const usersMap = await Cloud.loadUsersMap('this_text_doesnt_matter?');
-    data = this.props.users.map(({ userID, progress, score }) => {
+    data = this.props.users.map(({ userID, progress, debt }) => {
       const { user_name, profile_pic } =  usersMap[userID];
       return { 
+        key : userID,
         user_name : user_name,
         profile_pic : profile_pic,
         progress : progress, 
-        score : score
+        debt : debt,
       };
     });
     this.setState({ data: data });
   }
 
   renderItem = ({ item, index }) => {
+    var avatar = <Avatar size="medium" rounded />;
+    if (item.profile_pic.length > 0) {
+      avatar = <Avatar size="medium" rounded source={{ uri: item.profile_pic }} />;
+    }
     return(
       <View style={styles.boardEntry}>
         <Text style={baseStyles.heading2}>#{index + 1}</Text>
-        <Avatar
-          size="medium"
-          rounded
-          source={{ uri: item.profile_pic }}
-        />
+        { avatar }
         <View style={[styles.progressBox, { width: Math.round(item.progress) }]} />
-        <Text style={baseStyles.text}>{item.score}</Text>
+        <Text style={baseStyles.text}>{item.debt}</Text>
       </View>
     );
   }
