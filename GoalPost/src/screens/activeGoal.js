@@ -17,6 +17,7 @@ class ActiveGoal extends React.Component {
   state = {
     userID: this.props.navigation.getParam("userID", ""),
     goalID: this.props.navigation.getParam("goalID", ""),
+    goalName: "",
     userMap: {},
     eventIndex: -1,
     yesNoDisabled: false
@@ -44,11 +45,11 @@ class ActiveGoal extends React.Component {
 
   async componentDidMount() {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
-    const users = await Cloud.loadUsersMap(this.state.userID);
     var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
 
     //@cherry here are some jank ass examples lmao
-    Alert.alert(JSON.stringify(GoalManager.getSortedUsers(goal.user_logs, goal.penalty, eventIndex)));
+    const users = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
+
     // Alert.alert("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.penalty, eventIndex)) + "$");
 
     // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserProgress(this.state.userID, goal.user_logs)) + "%");
@@ -57,17 +58,18 @@ class ActiveGoal extends React.Component {
     this.setState({
       eventIndex: eventIndex,
       yesNoDisabled: disable,
-      userMap: users
+      userMap: users,
+      goalName: goal.goal_name
     });
   }
 
   render() {
     return (
       <View style={baseStyles.flatScreen}>
-        <GoBackButton navigation={this.props.navigation} />
-        <View style={{ flex: 0.35, alignSelf: "stretch" }}>
+        <GoBackButton navigation={this.props.navigation} flex={0.1} />
+        <View style={{ flex: 0.3, alignSelf: "stretch" }}>
           <Text style={baseStyles.text}>Current GoalPost:</Text>
-          <Text style={baseStyles.heading}>{this.state.goalID}</Text>
+          <Text style={baseStyles.heading}>{this.state.goalName}</Text>
           <Text style={baseStyles.text}>Did you complete today's goal?</Text>
 
           <View
@@ -98,7 +100,7 @@ class ActiveGoal extends React.Component {
             />
           </View>
         </View>
-        <Leaderboard />
+        <Leaderboard users={this.state.userMap} flex={0.65} />
       </View>
     );
   }
