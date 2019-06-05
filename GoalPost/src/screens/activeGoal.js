@@ -30,7 +30,6 @@ class ActiveGoal extends React.Component {
       this.state.eventIndex,
       true
     );
-    Alert.alert("Keep up the good work!");
   };
 
   registerNo = async () => {
@@ -41,7 +40,6 @@ class ActiveGoal extends React.Component {
       this.state.eventIndex,
       false
     );
-    Alert.alert("You have chosen...poorly.");
   };
 
   async componentDidMount() {
@@ -50,9 +48,11 @@ class ActiveGoal extends React.Component {
     var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
 
     //@cherry here are some jank ass examples lmao
-    Alert.alert(JSON.stringify(GoalManager.getSortedUsers(goal.user_logs, goal.penalty)));
+    Alert.alert(JSON.stringify(GoalManager.getSortedUsers(goal.user_logs, goal.penalty, eventIndex)));
+    // Alert.alert("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.penalty, eventIndex)) + "$");
+
     // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserProgress(this.state.userID, goal.user_logs)) + "%");
-    // Alert.alert("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.penalty)) + "$");
+    // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserScore(this.state.userID, goal.user_logs, eventIndex)) + "$");
 
     this.setState({
       eventIndex: eventIndex,

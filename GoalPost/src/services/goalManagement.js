@@ -111,7 +111,8 @@ class goalManager {
 		return ((done/total) * 100).toFixed(2);
 	}
 
-	getUserScore(userID, userLogs, penalty) {
+	getUserScore(userID, userLogs, penalty, eventIndex) {
+		let now = (eventIndex === -1) ? userLogs[userID].length : eventIndex;
 		let score = 0;
 		for (let i = 0; i < userLogs[userID].length; i++) {
 			let dif = 0;
@@ -121,16 +122,19 @@ class goalManager {
 			if (userLogs[userID][i] === 0) {
 				dif = -1 * penalty;
 			}
+			if ((userLogs[userID][i] === -1) && (i < now)) {
+				dif = -1 * penalty;
+			}
 			score += dif;
 		}
 		return score;
 	}
 
-	getSortedUsers(userLogs, penalty) {
+	getSortedUsers(userLogs, penalty, eventIndex) {
 		let l = [];
 		Object.keys(userLogs).forEach((u) => {
 			let p = this.getUserProgress(u, userLogs);
-			let s = this.getUserScore(u, userLogs, penalty);
+			let s = this.getUserScore(u, userLogs, penalty, eventIndex);
 			l.push({
 				userID: u,
 				progress: p,
@@ -143,11 +147,15 @@ class goalManager {
 		return l.reverse();
 	}
 
-	getTotalPot(userLogs, penalty) {
+	getTotalPot(userLogs, penalty, eventIndex) {
+		let now = (eventIndex === -1) ? userLogs[userID].length : eventIndex;
 		let count = 0;
 		Object.keys(userLogs).forEach((u) => {
 			for (let i = 0; i < userLogs[u].length; i++) {
 				if (userLogs[u][i] === 0) {
+					count++;
+				}
+				if ((userLogs[u][i] === -1) && (i < now)) {
 					count++;
 				}
 			}
@@ -155,9 +163,9 @@ class goalManager {
 		return count * penalty;
 	}
 
-	getCashOutText(userID, userLogs, penalty) {
-		let order = this.getSortedUsers(userLogs, penalty);
-		let pot = getTotalPot(userLogs, penalty);
+	getCashOutText(userID, userLogs, penalty, eventIndex) {
+		let order = this.getSortedUsers(userLogs, penalty, eventIndex);
+		let pot = getTotalPot(userLogs, penalty, eventIndex);
 		if (pot === 0) {
 			//return congrats you all did the thing weeeeee
 		}
@@ -173,6 +181,7 @@ class goalManager {
 				// return please pay order[0].userID -1*score
 			}
 		}
+		return "hi " + userID + ", you owe x y$.";
 	}
 }
 
