@@ -35,7 +35,7 @@ export default class Leaderboard extends Component {
         <Text style={baseStyles.heading2}>#{index + 1}</Text>
         { avatar }
         <View style={[styles.progressBox, { width: Math.round(item.progress) }]} />
-        <Text style={baseStyles.text}>{item.debt}</Text>
+        <Text style={baseStyles.text}> -${item.debt}</Text>
       </View>
     );
   }

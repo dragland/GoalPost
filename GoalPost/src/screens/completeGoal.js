@@ -68,7 +68,7 @@ class CompleteGoal extends React.Component {
               onBackdropPress={this.toggleModal}
             >
               <View style={styles.modalView}>
-                <Text style={baseStyles.text}>Please Venmo the following people:</Text>
+                <Text style={baseStyles.text}>How to receive your share of the pot:</Text>
                 {this.state.userMap && this.state.userMap.map(this.getPayouts)}
               </View>
             </Modal>
