@@ -18,8 +18,8 @@ const baseStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 24,
     textAlign: "center",
-    lineHeight: 42,
-    margin: 15
+    lineHeight: 32,
+    margin: 10
   },
   heading2: {
     color: "#484848",

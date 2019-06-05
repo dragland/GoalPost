@@ -1,10 +1,60 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { FlatList, ScrollView, View, Text, StyleSheet } from "react-native";
 import { Avatar } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
+import { NavigationEvents } from "react-navigation";
+import { Cloud } from "../services/database";
 
 export default class Leaderboard extends Component {
+  state = {
+    data: []
+  }
+
+  async populateUsers() {
+    const usersMap = await Cloud.loadUsersMap('this_text_doesnt_matter?');
+    data = this.props.users.map(({ userID, progress, score }) => {
+      const { user_name, profile_pic } =  usersMap[userID];
+      return { 
+        user_name : user_name,
+        profile_pic : profile_pic,
+        progress : progress, 
+        score : score
+      };
+    });
+    this.setState({ data: data });
+  }
+
+  renderItem = ({ item, index }) => {
+    return(
+      <View style={styles.boardEntry}>
+        <Text style={baseStyles.heading2}>#{index + 1}</Text>
+        <Avatar
+          size="medium"
+          rounded
+          source={{ uri: item.profile_pic }}
+        />
+        <View style={[styles.progressBox, { width: Math.round(item.progress) }]} />
+        <Text style={baseStyles.text}>{item.score}</Text>
+      </View>
+    );
+  }
+
   render() {
+    return (
+      <View style={[styles.mainContainer, { flex: this.props.flex || 0.55 }]}>
+        <NavigationEvents onDidFocus={() => this.populateUsers()} />
+        <Text style={baseStyles.text}>
+          <Text style={{ fontWeight: "bold" }}>CURRENT LEADERBOARD</Text>
+        </Text>
+        <ScrollView>
+          <FlatList 
+            data={this.state.data} 
+            renderItem={this.renderItem} 
+          />
+        </ScrollView>
+      </View>
+    );
+    /*
     return (
       <View style={[styles.mainContainer, { flex: this.props.flex || 0.55 }]}>
         <Text style={baseStyles.text}>
@@ -52,6 +102,7 @@ export default class Leaderboard extends Component {
         </View>
       </View>
     );
+    */
   }
 }
 
@@ -75,6 +126,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#2CAAFF",
     height: 15,
     margin: 5,
-    marginRight: 15
+    marginLeft: 10,
+    marginRight: 15,
+    borderRadius: 20
   },
 });

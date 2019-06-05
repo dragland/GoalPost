@@ -7,7 +7,7 @@ export default class GoBackButton extends Component {
     return (
       <View
         style={{
-          flex: 0.1,
+          flex: this.props.flex || 0.1,
           paddingHorizontal: 20,
           paddingVertical: 10
         }}
