@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Image, View, StyleSheet, Text } from "react-native";
+import { Image, View, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import GoBackButton from "../components/goBackButton";

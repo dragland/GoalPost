@@ -25,7 +25,8 @@ class CompleteGoal extends React.Component {
 
   async componentDidMount() {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
-    const users = GoalManager.getSortedUsers( goal.user_logs, goal.event_times, goal.penalty);
+    const users = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
+    const pot = GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty);
     // userID, progress, debt
     const rank = users.findIndex(({ userID }) => userID == this.state.userID) + 1;
     this.setState({ userMap: users, rank: rank });

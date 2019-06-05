@@ -6,8 +6,7 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
-  Picker,
-  Alert
+  Picker
 } from "react-native";
 import { Input, CheckBox } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -135,8 +134,6 @@ class CreateGoal extends React.Component {
       this.state.cost
     );
     await NotificationManager.scheduleNotifications(this.state.userID, this.state.userMap[this.state.userID].user_name, goalID);
-    Alert.alert("successfully created goal with ID: ", goalID);
-
     this.props.navigation.goBack();
   };
 

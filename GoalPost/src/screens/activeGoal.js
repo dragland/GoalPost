@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Alert } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import GoBackButton from "../components/goBackButton";
@@ -46,15 +46,8 @@ class ActiveGoal extends React.Component {
   async componentDidMount() {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
     var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
-
-    //@cherry here are some jank ass examples lmao
     const users = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
-
-    // Alert.alert("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.penalty, eventIndex)) + "$");
-
-    // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserProgress(this.state.userID, goal.user_logs)) + "%");
-    // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserScore(this.state.userID, goal.user_logs, eventIndex)) + "$");
-    // console.log("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty)) + "$");
+    const pot = GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty);
 
     this.setState({
       eventIndex: eventIndex,

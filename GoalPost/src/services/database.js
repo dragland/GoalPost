@@ -1,4 +1,3 @@
-import {Alert} from "react-native";
 import firebase from 'react-native-firebase';
 import FireStoreParser from 'firestore-parser';
 
