@@ -5,7 +5,6 @@ import FBSDK from "react-native-fbsdk";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
-import PushNotificationAndroid from 'react-native-push-notification'
 
 //const App = () => <Routes/>
 const { AccessToken } = FBSDK;
