@@ -155,7 +155,7 @@ class goalManager {
 		return count * penalty;
 	}
 
-	getCashOutMap(userID, userLogs, penalty) {
+	getCashOutText(userID, userLogs, penalty) {
 		let order = this.getSortedUsers(userLogs, penalty);
 		let pot = getTotalPot(userLogs, penalty);
 		if (pot === 0) {
