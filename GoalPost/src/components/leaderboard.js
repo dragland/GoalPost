@@ -15,7 +15,7 @@ export default class Leaderboard extends Component {
           <Avatar
             size="medium"
             rounded
-            source={require("../../res/davy.jpg")}
+            source={{uri: "https://graph.facebook.com/2285281658220754/picture"}}
           />
           <View style={[styles.progressBox, { width: 160}]} />
           <Text style={baseStyles.text}>+$15.00</Text>
