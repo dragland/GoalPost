@@ -5,6 +5,7 @@ import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "rea
 import { NavigationEvents } from "react-navigation";
 import baseStyles from "../../styles/baseStyles";
 import StandardButton from "../components/standardButton";
+import CenterImage from "../components/centerImage";
 
 import { Cloud } from "../services/database";
 import { facebookService } from "../services/FacebookService";
@@ -52,13 +53,17 @@ export default class Login extends React.Component {
     return (
       <View style={baseStyles.flatScreen}>
         <NavigationEvents onDidFocus={this.startTimer} />
-        <View style={{ flex: 0.3, alignSelf: "stretch" }}>
-          <Text style={baseStyles.heading}>
-            Welcome to GoalPost!
-          </Text>
+        <View style={{ flex: 1, alignSelf: "stretch" }}>
           <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: 'center' }} >
+            <Text style={baseStyles.heading}>
+              Welcome to GoalPost!
+            </Text>
+            <CenterImage
+              flex={1}
+              image={require("../../res/logo.png")}
+            />
             <StandardButton
-              title="About"
+              title="User Guide"
               containerStyle={{
                 alignSelf: "center",
                 width: 150,
@@ -78,7 +83,7 @@ export default class Login extends React.Component {
                   GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition.
                   For example, if a group of friends wanted to go to the gym every week until summer and hold each other accountable, they would be able to configure this goal through our app and also invite their friends. Then, at each event during the goal, users would check in using the app, facilitating group accountability. As an extra incentive, when a user fails to check in, they will get charged a penalty which goes into a central pot. At the end of the goal, the pot gets split evenly, incentivizing users to maximize their goal completion through fostering a culture of collaborative competition.
                 </Text>
-                {this.state.isModalVisible}
+                <Button title="Got it" onPress={this.toggleModal} />
               </View>
             </Modal>
           </View>
