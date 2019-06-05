@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { FlatList, ScrollView, View, Text, StyleSheet } from "react-native";
+import ProgressBar from 'react-native-progress/Bar';
 import { Avatar } from "react-native-elements";
 import baseStyles from "../../styles/baseStyles";
 import { NavigationEvents } from "react-navigation";
+
 import { Cloud } from "../services/database";
 
 export default class Leaderboard extends Component {
@@ -34,7 +36,8 @@ export default class Leaderboard extends Component {
       <View style={styles.boardEntry}>
         <Text style={baseStyles.heading2}>#{index + 1}</Text>
         { avatar }
-        <View style={[styles.progressBox, { width: Math.round(item.progress) }]} />
+        <Text style={baseStyles.text}> </Text>
+        <ProgressBar progress={item.progress/100} width={150} height={15} color={"#2CAAFF"} />
         <Text style={baseStyles.text}> -${item.debt}</Text>
       </View>
     );
@@ -122,13 +125,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-start",
     margin: 5
-  },
-  progressBox: {
-    backgroundColor: "#2CAAFF",
-    height: 15,
-    margin: 5,
-    marginLeft: 10,
-    marginRight: 15,
-    borderRadius: 20
-  },
+  }
 });
