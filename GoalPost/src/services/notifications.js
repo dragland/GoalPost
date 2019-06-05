@@ -5,9 +5,15 @@ class localNotificationManager {
   constructor() {
     this.PushNotification = require('react-native-push-notification');
     this.PushNotification.configure({
-        onNotification: function(notification) {
-            console.log( 'NOTIFICATION:', notification );
-            // process the notification
+        onNotification: function(info) {
+          if (info.action === "Yes") {
+            Cloud.checkInToEvent(info.userID, info.goalID, info.eventIndex, true);
+            this.cancelLocalNotifications({id: info.id});
+          }
+          if (info.action === "No") {
+            Cloud.checkInToEvent(info.userID, info.goalID, info.eventIndex, false);
+            this.cancelLocalNotifications({id: info.id});
+          }
         },
         popInitialNotification: true,
         requestPermissions: true,
@@ -29,9 +35,9 @@ class localNotificationManager {
         message: "Did you make it to your event today for " + goalName + "?",
         playSound: false,
         actions: '["Yes", "No"]',
-        curUserID: userID,
+        userID: userID,
         goalID: goalID,
-        eventInd: ind,
+        eventIndex: ind,
         date: currDate
       });
     }

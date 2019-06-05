@@ -5,7 +5,6 @@ import FBSDK from "react-native-fbsdk";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
-import PushNotificationAndroid from 'react-native-push-notification'
 
 //const App = () => <Routes/>
 const { AccessToken } = FBSDK;
@@ -17,21 +16,6 @@ export default class App extends Component {
     this.state = {
       accessToken: null,
     };
-
-    (function() {
-      // Register all the valid actions for notifications here and add the action handler for each action
-      PushNotificationAndroid.registerNotificationActions(['Yes','No']);
-      DeviceEventEmitter.addListener('notificationActionReceived', function(action){
-        const info = JSON.parse(action.dataJSON);
-        console.log('Notification action received: ' + info);
-        if (info.action == 'Accept') {
-          // Do work pertaining to Accept action here
-        } else if (info.action == 'Reject') {
-          // Do work pertaining to Reject action here
-        }
-        // Add all the required actions handlers
-      });
-    })(); 
   }
 
   componentDidMount() {
