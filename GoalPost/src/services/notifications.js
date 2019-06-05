@@ -29,6 +29,9 @@ class localNotificationManager {
         message: "Did you make it to your event today for " + goalName + "?",
         playSound: false,
         actions: '["Yes", "No"]',
+        curUserID: userID,
+        goalID: goalID,
+        eventInd: ind,
         date: currDate
       });
     }
