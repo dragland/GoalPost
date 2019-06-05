@@ -54,6 +54,7 @@ class ActiveGoal extends React.Component {
 
     // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserProgress(this.state.userID, goal.user_logs)) + "%");
     // Alert.alert(users[this.state.userID].user_name + ": " + JSON.stringify(GoalManager.getUserScore(this.state.userID, goal.user_logs, eventIndex)) + "$");
+    // console.log("total pot: " + JSON.stringify(GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty)) + "$");
 
     this.setState({
       eventIndex: eventIndex,
