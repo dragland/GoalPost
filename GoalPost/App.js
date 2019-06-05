@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Alert, DeviceEventEmitter } from "react-native";
+import { Platform, StyleSheet, Text, View, Alert } from "react-native";
 import Routes from "./routes";
 import FBSDK from "react-native-fbsdk";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
+import PushNotificationAndroid from 'react-native-push-notification'
 
 //const App = () => <Routes/>
 const { AccessToken } = FBSDK;

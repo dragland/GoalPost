@@ -8,11 +8,11 @@ class localNotificationManager {
         onNotification: function(info) {
           if (info.action === "Yes") {
             Cloud.checkInToEvent(info.userID, info.goalID, info.eventIndex, true);
-            this.cancelLocalNotifications({id: info.id});
+            this.cancelLocalNotifications({id: info.notificationId});
           }
           if (info.action === "No") {
             Cloud.checkInToEvent(info.userID, info.goalID, info.eventIndex, false);
-            this.cancelLocalNotifications({id: info.id});
+            this.cancelLocalNotifications({id: info.notificationId});
           }
         },
         popInitialNotification: true,
