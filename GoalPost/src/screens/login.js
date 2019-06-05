@@ -27,11 +27,12 @@ export default class Login extends React.Component {
   login = async () => {
     const token = await AccessToken.getCurrentAccessToken();
     if (token) {
+      // let result = await facebookService.fetchProfile();
       const infoRequest = new GraphRequest('/me', null, async (error, result) => {
         if (error) {
           alert(error);
         } else {
-          const r = await Cloud.loginUser(result.id, result.name, "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/146/upside-down-face_1f643.png");
+          const r = await Cloud.loginUser(result.id, result.name, "https://graph.facebook.com/" + result.id + "/picture");
           this.callNav(result);
         }
       });
