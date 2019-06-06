@@ -6,6 +6,7 @@ import StandardButton from "../components/standardButton";
 import GoBackButton from "../components/goBackButton";
 import CenterImage from "../components/centerImage";
 import Leaderboard from "../components/leaderboard";
+import Payment from "../components/payment";
 
 import { Cloud } from "../services/database";
 import { facebookService } from "../services/FacebookService";
@@ -87,7 +88,7 @@ class CompleteGoal extends React.Component {
               onBackdropPress={this.toggleModal}
             >
               <View style={styles.modalView}>
-                <Text style={baseStyles.text}>How to receive your share of the pot:</Text>
+                <Payment userID={this.state.userID} users={this.state.userMap} logs={this.state.userLogs} pot={this.state.pot} />
               </View>
             </Modal>
           </View>

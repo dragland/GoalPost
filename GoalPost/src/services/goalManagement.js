@@ -163,27 +163,6 @@ class goalManager {
 		});
 		return pot;
 	}
-
-	getCashOutText(userID, userLogs, penalty, eventIndex) {
-		let order = this.getSortedUsers(userLogs, penalty, eventIndex);
-		let pot = getTotalPot(userLogs, penalty, eventIndex);
-		if (pot === 0) {
-			//return congrats you all did the thing weeeeee
-		}
-		if (userID === order[0].userID) {
-			// return everybody else owes u so much :()
-		}
-		else {
-			let score = getUserDebt(userID, userLogs, penalty);
-			if (score >= 0) {
-				// return order[0].userID owes you *score
-			}
-			else {
-				// return please pay order[0].userID -1*score
-			}
-		}
-		return "hi " + userID + ", you owe x y$.";
-	}
 }
 
 export const GoalManager = new goalManager();
