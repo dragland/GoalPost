@@ -35,12 +35,12 @@ export default class Login extends React.Component {
   login = async () => {
     const token = await AccessToken.getCurrentAccessToken();
     if (token) {
+      this.setState({spinner: true});
       // let result = await facebookService.fetchProfile();
       const infoRequest = new GraphRequest('/me', null, async (error, result) => {
         if (error) {
           alert(error);
         } else {
-          this.setState({spinner: true});
           const r = await Cloud.loginUser(result.id, result.name, "https://graph.facebook.com/" + result.id + "/picture");
           this.callNav(result);
         }
