@@ -9,7 +9,7 @@ export default class RepeatCheckBox extends Component {
         <CheckBox
           checkedIcon="dot-circle-o"
           uncheckedIcon="circle-o"
-          checkedColor="#E97C44"
+          checkedColor="#4DD796"
           containerStyle={styles.containerStyle}
           checked={this.props.checked}
           onIconPress={this.props.onIconPress}

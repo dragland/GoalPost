@@ -4,7 +4,7 @@ import { Button } from "react-native-elements";
 export default class StandardButton extends Component {
   render() {
     const title = "  " + this.props.title.toUpperCase() + "  ";
-    const color = this.props.orange ? "#2CAAFF" : "#666";
+    const color = this.props.color ? "#4DD796" : "#666";
 
     return (
       <Button

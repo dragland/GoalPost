@@ -34,7 +34,7 @@ const baseStyles = StyleSheet.create({
     textAlign: "center"
   },
   highlight: {
-    color: "#2CAAFF",
+    color: "#4DD796",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center"

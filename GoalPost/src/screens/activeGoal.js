@@ -79,7 +79,7 @@ class ActiveGoal extends React.Component {
               }}
               onPress={this.registerYes}
               disabled={this.state.yesNoDisabled}
-              orange
+              color
             />
             <StandardButton
               title="No"

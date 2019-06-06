@@ -304,7 +304,7 @@ class CreateGoal extends React.Component {
                 this.state.cost
               )
             }
-            orange
+            color
           />
         </View>
       </View>

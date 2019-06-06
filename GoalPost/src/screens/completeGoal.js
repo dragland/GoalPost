@@ -61,7 +61,7 @@ class CompleteGoal extends React.Component {
                 marginHorizontal: 15
               }}
               onPress={this.toggleModal}
-              orange
+              color
             />
             <Modal
               isVisible={this.state.isModalVisible}

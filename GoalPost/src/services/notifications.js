@@ -23,7 +23,7 @@ class localNotificationManager {
       this.PushNotification.localNotificationSchedule({
         largeIcon: "ic_launcher",
         smallIcon: "ic_notification",
-        color: "#24a4ff",
+        color: "#4DD798",
         title: "Hi " + userName.split(" ")[0] + ", make sure to check in!",
         message: "Did you make it to your event today for " + goalName + "?",
         playSound: false,

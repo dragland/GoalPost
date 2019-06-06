@@ -120,7 +120,7 @@ class PendingGoal extends React.Component {
               title="Accept"
               containerStyle={styles.buttonContainer}
               onPress={this.acceptGoal}
-              orange
+              color
             />
             <StandardButton
               title="Reject"
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     lineHeight: 17
   },
   highlight: {
-    color: "#2CAAFF"
+    color: "#4DD796"
   },
   buttonContainer: {
     alignSelf: "center",
