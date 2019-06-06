@@ -11,26 +11,31 @@ export default class Payment extends Component {
     let pot = this.props.pot;
     let num = Object.keys(logs).length
     let profit = pot/num;
-    return {userID, users, logs, pot, num, profit}
+
+    for (let i = 0; i < num; i++) {
+      users[logs[i].userID].rank = i;
+      users[logs[i].userID].debt = logs[i].debt;
+    }
+    return {userID, users, logs, pot, num, profit};
   }
 
   getCashOutText(data) {
-    if (data.num === 1) {
+    if ((data.num === 1) || (data.pot === 0)) {
       return this.getCheckText();
     }
     // if (rank = 0) {
-    //    return this.getPayAllText();
+    //    return this.getPayAllText(data.info);
     // }
-    // else {
-    //   return this.getPayInText(winner, debt, profit);
-    // }
+    else {
+      return this.getPayInText(data.users[data.logs[0].userID].user_name, data.users[data.userID].debt, data.profit);
+    }
   }
 
   getCheckText() {
     return <Text style={styles.block}>Congratulations on finishing your goal, you are all set!</Text>;
   }
 
-  getPayAllText() {
+  getPayAllText(info) {
     // for each user:
     //   request debt
     //   pay profit
@@ -38,15 +43,11 @@ export default class Payment extends Component {
   }
 
   getPayInText(winner, debt, profit) {
+    let s = "";
     if (debt > 0) {
-      // return <Text>Please pay {winner} {debt}.</Text>;
-      // add
+      s = "Please pay "+winner+ " $"+debt+".\n\n";
     }
-    if (pot > 0) {
-      // return <Text>{winner} should be paying you {profit} shortly.</Text>;
-      // add
-    }
-    return "idk bro";
+    return <Text style={styles.block}>{s}{winner} should be paying you ${profit} shortly.</Text>;
   }
 
   render() {
