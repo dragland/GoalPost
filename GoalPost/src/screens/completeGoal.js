@@ -41,16 +41,25 @@ class CompleteGoal extends React.Component {
     });
   }
 
-  getPayouts = ({ userID, progress, debt }) => {
-    // TODO actually calculate this out
-    return (
-      <Text style={baseStyles.text}><Text style={{ fontWeight: 'bold' }}>{userID}: </Text>{debt}</Text>
-    );
-  };
-
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+  getRankText = () => {
+    let j = this.state.rank % 10;
+    let k = this.state.rank % 100;
+    let s = this.state.rank.toString();
+    if (j == 1 && k != 11) {
+        return s + "st";
+    }
+    if (j == 2 && k != 12) {
+        return s + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return s + "rd";
+    }
+    return s + "th";
+  }
 
   render() {
     return (
@@ -58,7 +67,7 @@ class CompleteGoal extends React.Component {
         <GoBackButton navigation={this.props.navigation} />
         <View style={{ flex: 0.3, alignSelf: "stretch" }}>
           <Text style={baseStyles.heading}>
-            Congratulations, you got {this.state.rank} place!
+            Congratulations, you got {this.getRankText()} place!
           </Text>
           <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }} >
             <StandardButton
@@ -79,7 +88,6 @@ class CompleteGoal extends React.Component {
             >
               <View style={styles.modalView}>
                 <Text style={baseStyles.text}>How to receive your share of the pot:</Text>
-                {this.state.userMap && this.state.userLogs.map(this.getPayouts)}
               </View>
             </Modal>
           </View>

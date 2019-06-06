@@ -24,7 +24,7 @@ export default class Login extends React.Component {
   };
 
   startTimer = () => {
-    this.interval = setInterval(this.login, 1000);
+    this.interval = setInterval(this.login, 100);
   }
 
   callNav = (profile) => {
