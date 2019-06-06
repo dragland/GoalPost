@@ -16,6 +16,7 @@ class PendingGoal extends React.Component {
   static navigationOptions = {
     title: "PendingGoal"
   };
+  
   state = {
     userID: "",
     goalID: "",

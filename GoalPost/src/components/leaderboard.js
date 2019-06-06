@@ -8,14 +8,11 @@ import { NavigationEvents } from "react-navigation";
 import { Cloud } from "../services/database";
 
 export default class Leaderboard extends Component {
-  state = {
-    data: []
-  }
 
-  async populateUsers() {
-    const usersMap = await Cloud.loadUsersMap('this_text_doesnt_matter?');
-    data = this.props.users.map(({ userID, progress, debt }) => {
-      const { user_name, profile_pic } =  usersMap[userID];
+  populateUsers() {
+    users = this.props.users;
+    data = this.props.logs.map(({ userID, progress, debt }) => {
+      const { user_name, profile_pic } =  users[userID];
       return { 
         key : userID,
         user_name : user_name,
@@ -24,7 +21,7 @@ export default class Leaderboard extends Component {
         debt : debt,
       };
     });
-    this.setState({ data: data });
+    return data;
   }
 
   renderItem = ({ item, index }) => {
@@ -44,69 +41,20 @@ export default class Leaderboard extends Component {
   }
 
   render() {
+    let data = this.populateUsers();
     return (
       <View style={[styles.mainContainer, { flex: this.props.flex || 0.55 }]}>
-        <NavigationEvents onDidFocus={() => this.populateUsers()} />
         <Text style={baseStyles.text}>
           <Text style={{ fontWeight: "bold" }}>CURRENT LEADERBOARD</Text>
         </Text>
         <ScrollView>
           <FlatList 
-            data={this.state.data} 
+            data={data} 
             renderItem={this.renderItem} 
           />
         </ScrollView>
       </View>
     );
-    /*
-    return (
-      <View style={[styles.mainContainer, { flex: this.props.flex || 0.55 }]}>
-        <Text style={baseStyles.text}>
-          <Text style={{ fontWeight: "bold" }}>CURRENT LEADERBOARD</Text>
-        </Text>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#1</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={{uri: "https://graph.facebook.com/2285281658220754/picture"}}
-          />
-          <View style={[styles.progressBox, { width: 160}]} />
-          <Text style={baseStyles.text}>+$15.00</Text>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#2</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../res/cam.jpg")}
-          />
-          <View style={[styles.progressBox, { width: 120}]} />
-          <Text style={baseStyles.text}>-$5.00</Text>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#3</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../res/jesus.jpg")}
-          />
-          <View style={[styles.progressBox, { width: 120}]} />
-          <Text style={baseStyles.text}>-$5.00</Text>
-        </View>
-        <View style={styles.boardEntry}>
-          <Text style={baseStyles.heading2}>#4</Text>
-          <Avatar
-            size="medium"
-            rounded
-            source={require("../../res/cherry.jpg")}
-          />
-          <View style={[styles.progressBox, { width: 80}]} />
-          <Text style={baseStyles.text}>-$15.00</Text>
-        </View>
-      </View>
-    );
-    */
   }
 }
 

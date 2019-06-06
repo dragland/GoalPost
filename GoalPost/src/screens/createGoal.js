@@ -31,6 +31,7 @@ class CreateGoal extends React.Component {
   static navigationOptions = {
     title: "CreateGoal"
   };
+  
   state = {
     userID: this.props.navigation.getParam("userID", ""),
     goalID: "",

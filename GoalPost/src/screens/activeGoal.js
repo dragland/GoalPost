@@ -14,11 +14,14 @@ class ActiveGoal extends React.Component {
   static navigationOptions = {
     title: "ActiveGoal"
   };
+
   state = {
     userID: this.props.navigation.getParam("userID", ""),
     goalID: this.props.navigation.getParam("goalID", ""),
     goalName: "",
     userMap: {},
+    userLogs: [],
+    pot: 0,
     eventIndex: -1,
     yesNoDisabled: false
   };
@@ -31,6 +34,7 @@ class ActiveGoal extends React.Component {
       this.state.eventIndex,
       true
     );
+    await this.queryGoal();
   };
 
   registerNo = async () => {
@@ -41,20 +45,28 @@ class ActiveGoal extends React.Component {
       this.state.eventIndex,
       false
     );
+    await this.queryGoal();
   };
 
-  async componentDidMount() {
+  queryGoal = async () => {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
     var { eventIndex, disable } = GoalManager.getEventIndex(this.state.userID, goal.event_times, goal.user_logs);
-    const users = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
+    const users = await Cloud.loadUsersMap(this.state.userID);
+    const logs = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
     const pot = GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty);
 
     this.setState({
       eventIndex: eventIndex,
       yesNoDisabled: disable,
       userMap: users,
+      userLogs: logs,
+      pot: pot,
       goalName: goal.goal_name
     });
+  }
+
+  async componentDidMount() {
+    await this.queryGoal();
   }
 
   render() {
@@ -94,7 +106,7 @@ class ActiveGoal extends React.Component {
             />
           </View>
         </View>
-        <Leaderboard users={this.state.userMap} flex={0.65} />
+        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} flex={0.65} />
       </View>
     );
   }

@@ -15,21 +15,30 @@ class CompleteGoal extends React.Component {
   static navigationOptions = {
     title: "CompleteGoal"
   };
+
   state = {
     userID: this.props.navigation.getParam("userID", ""),
     goalID: this.props.navigation.getParam("goalID", ""),
-    userMap: null,
+    userMap: {},
+    userLogs: [],
+    pot: 0,
     rank: 0,
     isModalVisible: false
   };
 
   async componentDidMount() {
     const goal = await Cloud.loadGoal(this.state.userID, this.state.goalID);
-    const users = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
+    const users = await Cloud.loadUsersMap(this.state.userID);
+    const logs = GoalManager.getSortedUsers(goal.user_logs, goal.event_times, goal.penalty);
     const pot = GoalManager.getTotalPot(goal.user_logs, goal.event_times, goal.penalty);
     // userID, progress, debt
-    const rank = users.findIndex(({ userID }) => userID == this.state.userID) + 1;
-    this.setState({ userMap: users, rank: rank });
+    const rank = logs.findIndex(({ userID }) => userID == this.state.userID) + 1;
+    this.setState({
+      userMap: users,
+      userLogs: logs,
+      pot: pot,
+      rank: rank
+    });
   }
 
   getPayouts = ({ userID, progress, debt }) => {
@@ -70,12 +79,12 @@ class CompleteGoal extends React.Component {
             >
               <View style={styles.modalView}>
                 <Text style={baseStyles.text}>How to receive your share of the pot:</Text>
-                {this.state.userMap && this.state.userMap.map(this.getPayouts)}
+                {this.state.userMap && this.state.userLogs.map(this.getPayouts)}
               </View>
             </Modal>
           </View>
         </View>
-        <Leaderboard users={this.state.userMap} flex={0.65} />
+        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} flex={0.65} />
       </View>
     );
   }
