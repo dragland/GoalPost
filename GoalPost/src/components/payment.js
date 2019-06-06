@@ -23,9 +23,9 @@ export default class Payment extends Component {
     if ((data.num === 1) || (data.pot === 0)) {
       return this.getCheckText();
     }
-    // if (rank = 0) {
-    //    return this.getPayAllText(data.info);
-    // }
+    if (data.userID === data.logs[0].userID) {
+      return this.getPayAllText(data.logs, data.users, data.profit);
+    }
     else {
       return this.getPayInText(data.users[data.logs[0].userID].user_name, data.users[data.userID].debt, data.profit);
     }
@@ -35,19 +35,33 @@ export default class Payment extends Component {
     return <Text style={styles.block}>Congratulations on finishing your goal, you are all set!</Text>;
   }
 
-  getPayAllText(info) {
-    // for each user:
-    //   request debt
-    //   pay profit
-    return <Text>getPayAllText()</Text>;
+  getPayAllText(logs, users, profit) {
+    // let u = "832129823840667";
+    let u = "2503986359645412";
+    let s = "";
+    let d = users[u].debt;
+    let n = users[u].user_name;
+
+    let total = profit - d;
+    if (total > 0) {
+      return <Text style={styles.block}>Please pay {n} ${total}.</Text>;
+    }
+    if (total < 0) {
+      return <Text style={styles.block}>Please charge {n} ${-1*total}.</Text>;
+    }
   }
 
   getPayInText(winner, debt, profit) {
-    let s = "";
-    if (debt > 0) {
-      s = "Please pay "+winner+ " $"+debt+".\n\n";
+    let total = profit - debt;
+    if (total === 0) {
+      return this.getCheckText();
     }
-    return <Text style={styles.block}>{s}{winner} should be paying you ${profit} shortly.</Text>;
+    if (total > 0) {
+      return <Text style={styles.block}>{winner} should be paying you ${total} shortly.</Text>;
+    }
+    else {
+      return <Text style={styles.block}>Please pay {winner} ${-1*total}.</Text>;
+    }
   }
 
   render() {
