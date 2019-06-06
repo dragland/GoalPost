@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, StyleSheet } from "react-native";
+import { View, FlatList, ScrollView, Text, StyleSheet } from "react-native";
 import baseStyles from "../../styles/baseStyles";
 
 export default class Payment extends Component {
@@ -24,7 +24,7 @@ export default class Payment extends Component {
       return this.getCheckText();
     }
     if (data.userID === data.logs[0].userID) {
-      return this.getPayAllText(data.logs, data.users, data.profit);
+      return this.getPayAllText(data.userID, data.logs, data.users, data.num, data.profit);
     }
     else {
       return this.getPayInText(data.users[data.logs[0].userID].user_name, data.users[data.userID].debt, data.profit);
@@ -35,20 +35,26 @@ export default class Payment extends Component {
     return <Text style={styles.block}>Congratulations on finishing your goal, you are all set!</Text>;
   }
 
-  getPayAllText(logs, users, profit) {
-    // let u = "832129823840667";
-    let u = "2503986359645412";
-    let s = "";
-    let d = users[u].debt;
-    let n = users[u].user_name;
-
-    let total = profit - d;
-    if (total > 0) {
-      return <Text style={styles.block}>Please pay {n} ${total}.</Text>;
+  getPayAllText(userID, logs, users, num, profit) {
+    let data = [];
+    for (let i = 0; i < num; i++) {
+      let u = logs[i].userID;
+      if (userID !== u) {
+        let d = users[u].debt;
+        let n = users[u].user_name;
+        let total = profit - d;
+        if (total > 0) {
+          data.push({key: "Please pay "+n+" $"+total+".\n"});
+        }
+        if (total < 0) {
+          data.push({key: "Please charge "+n+" $"+-1*total+".\n"});
+        }
+      }
     }
-    if (total < 0) {
-      return <Text style={styles.block}>Please charge {n} ${-1*total}.</Text>;
-    }
+    return <FlatList
+      data={data}
+      renderItem={({item}) => <Text style={styles.block}>{item.key}</Text>}
+    />
   }
 
   getPayInText(winner, debt, profit) {
