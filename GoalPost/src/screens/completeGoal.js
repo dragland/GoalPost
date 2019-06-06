@@ -92,7 +92,7 @@ class CompleteGoal extends React.Component {
             </Modal>
           </View>
         </View>
-        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} flex={0.65} />
+        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} pot={this.state.pot} flex={0.65} />
       </View>
     );
   }

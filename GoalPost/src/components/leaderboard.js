@@ -10,8 +10,9 @@ import { Cloud } from "../services/database";
 export default class Leaderboard extends Component {
 
   populateUsers() {
-    users = this.props.users;
-    data = this.props.logs.map(({ userID, progress, debt }) => {
+    let users = this.props.users;
+    let pot = this.props.pot;
+    let data = this.props.logs.map(({ userID, progress, debt }) => {
       const { user_name, profile_pic } =  users[userID];
       return { 
         key : userID,
@@ -21,7 +22,7 @@ export default class Leaderboard extends Component {
         debt : debt,
       };
     });
-    return data;
+    return {data, pot};
   }
 
   renderItem = ({ item, index }) => {
@@ -41,15 +42,18 @@ export default class Leaderboard extends Component {
   }
 
   render() {
-    let data = this.populateUsers();
+    let parsed = this.populateUsers();
     return (
       <View style={[styles.mainContainer, { flex: this.props.flex || 0.55 }]}>
+        <Text style={baseStyles.text}>
+          <Text style={{ fontWeight: "bold" }}>TOTAL POT: ${parsed.pot}{"\n"}</Text>
+        </Text>
         <Text style={baseStyles.text}>
           <Text style={{ fontWeight: "bold" }}>CURRENT LEADERBOARD</Text>
         </Text>
         <ScrollView>
           <FlatList 
-            data={data} 
+            data={parsed.data} 
             renderItem={this.renderItem} 
           />
         </ScrollView>
