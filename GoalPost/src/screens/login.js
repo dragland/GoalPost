@@ -68,6 +68,7 @@ export default class Login extends React.Component {
     }
     return (
       <View style={baseStyles.flatScreen}>
+        <NavigationEvents onDidFocus={this.startTimer} />
         <View style={{ flex: 1, alignSelf: "stretch" }}>
           <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: 'center' }} >
             <Text style={baseStyles.heading}>
