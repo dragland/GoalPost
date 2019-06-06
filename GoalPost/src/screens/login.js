@@ -3,6 +3,7 @@ import { Button, View, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
 import { NavigationEvents } from "react-navigation";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import StandardButton from "../components/standardButton";
 import CenterImage from "../components/centerImage";
@@ -17,7 +18,8 @@ export default class Login extends React.Component {
 
   state = {
     loggedIn: false,
-    isModalVisible: false
+    isModalVisible: false,
+    spinner: true,
   };
 
   startTimer = () => {
@@ -27,6 +29,7 @@ export default class Login extends React.Component {
   callNav = (profile) => {
     clearInterval(this.interval);
     this.props.navigation.navigate("Home", { userID: profile.id });
+    this.setState({spinner: false});
   }
 
   login = async () => {
@@ -37,11 +40,15 @@ export default class Login extends React.Component {
         if (error) {
           alert(error);
         } else {
+          this.setState({spinner: true});
           const r = await Cloud.loginUser(result.id, result.name, "https://graph.facebook.com/" + result.id + "/picture");
           this.callNav(result);
         }
       });
       new GraphRequestManager().addRequest(infoRequest).start();
+    }
+    else {
+      this.setState({spinner: false});
     }
   }
 
@@ -50,9 +57,16 @@ export default class Login extends React.Component {
   };
 
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <NavigationEvents onDidFocus={this.startTimer} />
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={baseStyles.flatScreen}>
-        <NavigationEvents onDidFocus={this.startTimer} />
         <View style={{ flex: 1, alignSelf: "stretch" }}>
           <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: 'center' }} >
             <Text style={baseStyles.heading}>
