@@ -13,8 +13,8 @@ export default class CreateGoalButton extends Component {
         }}
         type="clear"
         buttonStyle={{
-          backgroundColor: "#FFF",
-          borderRadius: 100,
+          backgroundColor: "#4DD796",
+          borderRadius: 80,
           shadowColor: "#000",
           shadowOffset: { height: 15, width: 0 },
           shadowOpacity: 1.0,
@@ -25,7 +25,7 @@ export default class CreateGoalButton extends Component {
           name="plus"
           type="material-community"
           color="#444"
-          size={30}
+          size={40}
         />
         onPress={() =>
           this.props.navigation.navigate("CreateGoal", {
