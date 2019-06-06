@@ -23,7 +23,7 @@ class ActiveGoal extends React.Component {
     userLogs: [],
     pot: 0,
     eventIndex: -1,
-    yesNoDisabled: false
+    yesNoDisabled: true
   };
 
   registerYes = async () => {
