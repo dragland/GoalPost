@@ -18,7 +18,7 @@ class FacebookService {
   makeLoginButton(callback) {
     return (
       <LoginButton
-        readPermissions={["public_profile"]}
+        readPermissions={["public_profile", "user_friends"]}
         onLoginFinished={(error, result) => {
           alert('finished login');
           if (error) {
