@@ -1,3 +1,10 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Davy Ragland | dragland@stanford.edu
+*/
+
 import React, { Component } from "react";
 import { View, FlatList, ScrollView, Text, StyleSheet } from "react-native";
 import baseStyles from "../../styles/baseStyles";

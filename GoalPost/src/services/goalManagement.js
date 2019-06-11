@@ -1,3 +1,12 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Davy Ragland | dragland@stanford.edu
+  Jesus Cervantes | cerjesus@stanford.edu
+  Cherry Zou | cherryz@stanford.edu
+*/
+
 import { Cloud } from "./database";
 
 class goalManager {

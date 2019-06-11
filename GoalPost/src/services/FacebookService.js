@@ -1,3 +1,10 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Cam Thouati | cameron8@stanford.edu
+*/
+
 import React from "react";
 import FBSDK from "react-native-fbsdk";
 

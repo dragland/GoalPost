@@ -1,3 +1,12 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Cherry Zou | cherryz@stanford.edu
+  Davy Ragland | dragland@stanford.edu
+  Jesus Cervantes | cerjesus@stanford.edu
+*/
+
 import React from "react";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";

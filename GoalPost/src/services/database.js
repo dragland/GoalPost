@@ -1,3 +1,10 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Davy Ragland | dragland@stanford.edu
+*/
+
 import firebase from 'react-native-firebase';
 import FireStoreParser from 'firestore-parser';
 

@@ -1,3 +1,11 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Jesus Cervantes | cerjesus@stanford.edu
+  Davy Ragland | dragland@stanford.edu
+*/
+
 import { Cloud } from "./database";
 
 class localNotificationManager {

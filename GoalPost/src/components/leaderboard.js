@@ -1,3 +1,11 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Cherry Zou | cherryz@stanford.edu
+  Davy Ragland | dragland@stanford.edu
+*/
+
 import React, { Component } from "react";
 import { FlatList, ScrollView, View, Text, StyleSheet } from "react-native";
 import ProgressBar from 'react-native-progress/Bar';

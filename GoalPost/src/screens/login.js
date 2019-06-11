@@ -1,3 +1,12 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Davy Ragland | dragland@stanford.edu
+  Cherry Zou | cherryz@stanford.edu
+  Cam Thouati | cameron8@stanford.edu
+*/
+
 import React from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";

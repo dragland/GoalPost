@@ -1,3 +1,10 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Cherry Zou | cherryz@stanford.edu
+*/
+
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
