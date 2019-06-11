@@ -146,7 +146,7 @@ class goalManager {
 			l.push({
 				userID: u,
 				progress: p,
-				debt: d
+				debt: d.toFixed(2)
 			});
 		});
 		l.sort(function(a, b) {
@@ -161,7 +161,7 @@ class goalManager {
 		Object.keys(userLogs).forEach((u) => {
 			pot += this.getUserDebt(u, userLogs, penalty, i);
 		});
-		return pot;
+		return pot.toFixed(2);
 	}
 }
 

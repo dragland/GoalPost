@@ -8,13 +8,13 @@ export default class Payment extends Component {
     let userID = this.props.userID;
     let users = this.props.users;
     let logs = this.props.logs;
-    let pot = this.props.pot.toFixed(2);
+    let pot = this.props.pot;
     let num = Object.keys(logs).length
     let profit = (pot/num).toFixed(2);
 
     for (let i = 0; i < num; i++) {
       users[logs[i].userID].rank = i;
-      users[logs[i].userID].debt = logs[i].debt.toFixed(2);
+      users[logs[i].userID].debt = logs[i].debt
     }
     return {userID, users, logs, pot, num, profit};
   }
