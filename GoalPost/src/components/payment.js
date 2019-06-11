@@ -82,7 +82,7 @@ export default class Payment extends Component {
     let data = this.calculatePaymentInfo();
     return (
       <View>
-        <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>Your share of the ${data.pot} pot is ${data.profit} and your net debt is ${data.users[data.userID].debt}</Text></Text>
+        <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>Your share of the ${data.pot} pot is ${data.profit} and your debt is ${data.users[data.userID].debt}</Text></Text>
         <Text style={styles.break}>{"\n"}</Text>
         {this.getCashOutText(data)}
       </View>
