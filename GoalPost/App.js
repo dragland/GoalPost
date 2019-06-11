@@ -1,12 +1,19 @@
+/*
+  Stanford University
+  CS194W | GoalPost | Spring 2019
+
+  Cam Thouati | cameron8@stanford.edu
+  Cherry Zou | cherryz@stanford.edu
+*/
+
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, Alert } from "react-native";
-import Routes from "./routes";
+import { createSwitchNavigator } from "react-navigation";
 import FBSDK from "react-native-fbsdk";
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
+
+import Routes from "./routes";
 import Login from "./src/screens/login";
 import Home from "./src/screens/home";
 
-//const App = () => <Routes/>
 const { AccessToken } = FBSDK;
 
 export default class App extends Component {
@@ -32,11 +39,6 @@ export default class App extends Component {
 
   render() {
     return <Routes/>;
-    /*
-    const Navigator = makeRootNavigator(this.state.accessToken);
-    const AppContainer = createAppContainer(Navigator);
-    return <AppContainer />;
-    */
   }
 }
 
