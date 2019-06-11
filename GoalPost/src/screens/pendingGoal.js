@@ -50,7 +50,7 @@ class PendingGoal extends React.Component {
       startDate: startDate,
       endDate: endDate,
       members: members,
-      penalty: goal.penalty,
+      penalty: goal.penalty.toFixed(2),
       userMap: users
     });
   }
