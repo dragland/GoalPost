@@ -10,6 +10,8 @@ GoalPost is a social app that incentivizes users to help reach their goals throu
 For example, if a group of friends wanted to go to the gym every week until summer and hold each other accountable, they would be able to configure this goal through our app and also invite their friends. Then, at each event during the goal, users would check in using the app, facilitating group accountability. As an extra incentive, when a user fails to check in, they will get charged a penalty which goes into a central pot. At the end of the goal, the pot gets split evenly, incentivizing users to maximize their goal completion through fostering a culture of collaborative competition.
 
 # Documentation
+[Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
+
 [Project Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
   
 # Team Members
