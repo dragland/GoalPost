@@ -5,9 +5,13 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  
  # Project Synopsis
-GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition. 
+GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition :)
 
-For example, if a group of friends wanted to go to the gym every week until summer and hold each other accountable, they would be able to configure this goal through our app and also invite their friends. Then, at each event during the goal, users would check in using the app, facilitating group accountability. As an extra incentive, when a user fails to check in, they will get charged a penalty which goes into a central pot. At the end of the goal, the pot gets split evenly, incentivizing users to maximize their goal completion through fostering a culture of collaborative competition.
+We all have goals or habits we want to achieve; going to the gym, meditating, reading, the list goes on. But it can often be hard to motivate ourselves when we go at it alone. So, we often turn to our friends to work together to hold each other accountable. These days though, especially as a college student, getting schedules to line up to do activities together can be difficult if not impossible. 
+
+This is where GoalPost comes in. Through GoalPost, users can create goals, like going to the gym, for whatever timeframe however often they want and invite their friends to join them. Every day that people are supposed to go to the gym, they can check-in through the app and see how everyone else is doing. For those feeling extra daring, groups can also choose to specify a cash penalty for every missed event. All the money from these penalties will go into a pot that will be divided up at the end of the goal. Those who did better than average will make a profit, while those who did worse will end up at a loss. 
+
+Changing ourselves for the better can be hard, GoalPost is here to help friends empower each other to create the changes they want to see in themselves.
 
 # Documentation
 [Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
