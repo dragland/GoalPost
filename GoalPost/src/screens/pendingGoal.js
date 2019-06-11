@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import GoBackButton from "../components/goBackButton";
 import CenterImage from "../components/centerImage";
@@ -25,7 +26,8 @@ class PendingGoal extends React.Component {
     endDate: "",
     members: [],
     penalty: 0,
-    userMap: {}
+    userMap: {},
+    spinner: true
   };
 
   async componentDidMount() {
@@ -51,7 +53,8 @@ class PendingGoal extends React.Component {
       endDate: endDate,
       members: members,
       penalty: goal.penalty.toFixed(2),
-      userMap: users
+      userMap: users,
+      spinner: false
     });
   }
 
@@ -73,6 +76,13 @@ class PendingGoal extends React.Component {
   };
 
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} />

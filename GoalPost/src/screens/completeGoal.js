@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Image, StyleSheet, View, Text } from "react-native";
 import Modal from "react-native-modal";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import StandardButton from "../components/standardButton";
 import GoBackButton from "../components/goBackButton";
@@ -24,7 +25,8 @@ class CompleteGoal extends React.Component {
     userLogs: [],
     pot: 0,
     rank: 0,
-    isModalVisible: false
+    isModalVisible: false,
+    spinner: true
   };
 
   async componentDidMount() {
@@ -38,7 +40,8 @@ class CompleteGoal extends React.Component {
       userMap: users,
       userLogs: logs,
       pot: pot,
-      rank: rank
+      rank: rank,
+      spinner: false
     });
   }
 
@@ -63,6 +66,13 @@ class CompleteGoal extends React.Component {
   }
 
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} />

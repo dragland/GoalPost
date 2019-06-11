@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
+import Spinner from 'react-native-loading-spinner-overlay';
 import baseStyles from "../../styles/baseStyles";
 import GoBackButton from "../components/goBackButton";
 import StandardButton from "../components/standardButton";
@@ -23,7 +24,8 @@ class ActiveGoal extends React.Component {
     userLogs: [],
     pot: 0,
     eventIndex: -1,
-    yesNoDisabled: true
+    yesNoDisabled: true,
+    spinner: true
   };
 
   registerYes = async () => {
@@ -61,7 +63,8 @@ class ActiveGoal extends React.Component {
       userMap: users,
       userLogs: logs,
       pot: pot,
-      goalName: goal.goal_name
+      goalName: goal.goal_name,
+      spinner: false
     });
   }
 
@@ -70,6 +73,13 @@ class ActiveGoal extends React.Component {
   }
 
   render() {
+    if (this.state.spinner) {
+      return (
+        <View style={styles.screen}>
+          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} flex={0.1} />
