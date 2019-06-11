@@ -8,7 +8,8 @@
 */
 
 import React from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
 import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
 import { NavigationEvents } from "react-navigation";
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -35,7 +36,7 @@ export default class Login extends React.Component {
   };
 
   startTimer = () => {
-    this.interval = setInterval(this.login, 100);
+    this.interval = setInterval(this.login, 200);
   }
 
   callNav = (profile) => {
@@ -64,6 +65,28 @@ export default class Login extends React.Component {
     }
   }
 
+  makeButton = title => {
+    title = "  " + title.toUpperCase() + "  ";
+    return (
+      <Button
+        title={title}
+        titleStyle={{ 
+          color: "#FFF",
+          fontSize: 20,
+          letterSpacing: 1
+        }}
+        buttonStyle={{
+          borderColor: "#FFF",
+          borderWidth: 2,
+          borderRadius: 25
+        }}
+        containerStyle={{ width: 180 }}
+        onPress={this.toggleModal}
+        type="clear"
+      />
+    );
+  }
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
@@ -80,26 +103,12 @@ export default class Login extends React.Component {
     return (
       <View style={baseStyles.flatScreen}>
         <NavigationEvents onDidFocus={this.startTimer} />
-        <View style={{ flex: 1, alignSelf: "stretch" }}>
-          <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: 'center' }} >
-            <Text style={baseStyles.heading}>
-              Welcome to GoalPost!
-            </Text>
-            <CenterImage
-              flex={1}
-              image={require("../../res/logo.png")}
-            />
-            <StandardButton
-              title="User Guide"
-              containerStyle={{
-                alignSelf: "center",
-                width: 150,
-                marginTop: 20,
-                marginHorizontal: 15
-              }}
-              onPress={this.toggleModal}
-              color
-            />
+        <View style={styles.titleBox}>
+          <Text style={styles.title}>Welcome to GoalPost!</Text>
+        </View>
+        <View style={styles.buttonBox}>
+          {this.makeButton("User Guide")}
+        </View>
             <Modal 
               propagateSwipe
               isVisible={this.state.isModalVisible}
@@ -108,30 +117,65 @@ export default class Login extends React.Component {
             >
               <View style={styles.modalView}>
                 <Tutorial />
-                <Button title="Got it" onPress={this.toggleModal} />
+                <Button title="Got it" titleStyle={{ fontSize: 18 }} containerStyle={{ height: 60, justifyContent: "center" }} onPress={this.toggleModal} type='clear' />
               </View>
             </Modal>
-          </View>
-          <View style={styles.container}>
-            <LoginButton readPermissions={["public_profile"]} />
-          </View>
+        <View style={styles.fbButtonBox}>
+          <LoginButton style={styles.fbButton} readPermissions={["public_profile"]} />
         </View>
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  titleBox: {
+    flex: 1, // 0.57
+    backgroundColor: "#4dd796",
+    paddingTop: 200,
+    paddingHorizontal: 30
+  },
+  title: {
+    color: "#FFF",
+    fontSize: 60,
+    fontWeight: "400",
+    textAlign: "left",
+  },
+  buttonBox: {
+    top: "67%", // "57%",
+    alignItems: "flex-start",
+    paddingLeft: 30,
+    position: "absolute",
+    zIndex: 100
+  },
+  fbButtonBox: {
+    top: "58%",
+    left: "0%",
+    borderColor: "#FFF",
+    borderWidth: 1.3,
+    borderRadius: 25,
+    
     justifyContent: "center",
     alignItems: "center",
+    position: "absolute",
+    marginLeft: 85,
+    paddingLeft: 15,
+    paddingVertical: 1,
+
+    transform: [
+      { scaleY: 1.5 },
+      { scaleX: 1.5 },
+    ],
+    zIndex: 100
+  },
+  fbButton: {
+    height: 30, // 50,
+    width: 190, //280,
+    backgroundColor: "transparent",
   },
   modalView: {
     flex: 0.7,
     backgroundColor: '#FFF',
     borderRadius: 10,
-    padding: 10
   }
 });
