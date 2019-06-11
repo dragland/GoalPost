@@ -7,13 +7,14 @@
 */
 
 import React from "react";
-import { Button, Image, StyleSheet, View, Text } from "react-native";
-import Modal from "react-native-modal";
+import { Text, View, StyleSheet } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
+import Modal from "react-native-modal";
+
 import baseStyles from "../../styles/baseStyles";
+
 import StandardButton from "../components/standardButton";
 import GoBackButton from "../components/goBackButton";
-import CenterImage from "../components/centerImage";
 import Leaderboard from "../components/leaderboard";
 import Payment from "../components/payment";
 

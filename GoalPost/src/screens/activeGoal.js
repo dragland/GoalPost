@@ -8,11 +8,12 @@
 
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 import Spinner from 'react-native-loading-spinner-overlay';
+
 import baseStyles from "../../styles/baseStyles";
-import GoBackButton from "../components/goBackButton";
+
 import StandardButton from "../components/standardButton";
+import GoBackButton from "../components/goBackButton";
 import Leaderboard from "../components/leaderboard";
 
 import { Cloud } from "../services/database";

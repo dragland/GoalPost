@@ -9,18 +9,13 @@
 */
 
 import React from "react";
-import {
-  RefreshControl,
-  ScrollView,
-  SectionList,
-  StyleSheet,
-  View,
-  Text
-} from "react-native";
-import { Button, Input, Icon, ListItem } from "react-native-elements";
+import { Text, View, StyleSheet, RefreshControl, ScrollView, SectionList } from "react-native";
+import { Icon, ListItem } from "react-native-elements";
 import { NavigationEvents } from "react-navigation";
 import Spinner from 'react-native-loading-spinner-overlay';
+
 import baseStyles from "../../styles/baseStyles";
+
 import CreateGoalButton from "../components/createGoalButton";
 
 import { Cloud } from "../services/database";
@@ -48,7 +43,7 @@ class Home extends React.Component {
     return (
       <ListItem
         title={item.goalName}
-        subtitle={"You have completed this task " + item.numTasks + " times!"}
+        subtitle={"You have participated in this goal " + item.numTasks + " times!"}
         onPress={() => {
           if (title == "Active Goals") {
             this.props.navigation.navigate("ActiveGoal", {
@@ -104,12 +99,6 @@ class Home extends React.Component {
       this.setState({refreshing: false});
     });
   }
-
-  // componentDidMount() {
-  //   setInterval(() => {
-  //     this.setState({ spinner: false });
-  //   }, 5000); // experiment with this
-  // }
 
   render() {
     if (this.state.spinner) {

@@ -8,13 +8,13 @@
 */
 
 import React from "react";
-import { Image, View, StyleSheet, Text } from "react-native";
-import { Button, Icon } from "react-native-elements";
+import { Text, View, StyleSheet } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay';
+
 import baseStyles from "../../styles/baseStyles";
-import GoBackButton from "../components/goBackButton";
-import CenterImage from "../components/centerImage";
+
 import StandardButton from "../components/standardButton";
+import GoBackButton from "../components/goBackButton";
 import LetterRow from "../components/letterRow";
 
 import { Cloud } from "../services/database";

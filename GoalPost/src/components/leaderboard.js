@@ -8,10 +8,10 @@
 
 import React, { Component } from "react";
 import { FlatList, ScrollView, View, Text, StyleSheet } from "react-native";
-import ProgressBar from 'react-native-progress/Bar';
 import { Avatar } from "react-native-elements";
+import ProgressBar from 'react-native-progress/Bar';
+
 import baseStyles from "../../styles/baseStyles";
-import { NavigationEvents } from "react-navigation";
 
 import { Cloud } from "../services/database";
 

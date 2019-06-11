@@ -8,12 +8,14 @@
 */
 
 import React from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
-import Modal from "react-native-modal";
+import { Text, View, StyleSheet, Button } from "react-native";
 import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
 import { NavigationEvents } from "react-navigation";
 import Spinner from 'react-native-loading-spinner-overlay';
+import Modal from "react-native-modal";
+
 import baseStyles from "../../styles/baseStyles";
+
 import StandardButton from "../components/standardButton";
 import CenterImage from "../components/centerImage";
 import Tutorial from "../components/tutorial";

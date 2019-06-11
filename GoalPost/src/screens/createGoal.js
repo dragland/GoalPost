@@ -9,29 +9,20 @@
 */
 
 import React from "react";
-import {
-  Button,
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableWithoutFeedback,
-  Picker
-} from "react-native";
-import { Input, CheckBox } from "react-native-elements";
+import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Input } from "react-native-elements";
 import DateTimePicker from "react-native-modal-datetime-picker";
-import baseStyles from "../../styles/baseStyles";
-
-// import custom components
-import RepeatCheckBox from "../components/repeatCheckBox";
-import InputRow from "../components/inputRow";
-import GoBackButton from "../components/goBackButton";
-import StandardButton from "../components/standardButton";
 import update from "immutability-helper";
 import Modal from "react-native-modal";
 import MultiSelect from 'react-native-multiple-select';
 
-// import custom functions
+import baseStyles from "../../styles/baseStyles";
+
+import StandardButton from "../components/standardButton";
+import GoBackButton from "../components/goBackButton";
+import InputRow from "../components/inputRow";
+import RepeatCheckBox from "../components/repeatCheckBox";
+
 import { Cloud } from "../services/database";
 import { facebookService } from '../services/FacebookService';
 import { GoalManager } from '../services/goalManagement';

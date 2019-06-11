@@ -7,6 +7,7 @@
 
 import React, { Component } from "react";
 import { View, ScrollView, Text, StyleSheet } from "react-native";
+
 import baseStyles from "../../styles/baseStyles";
 
 export default class Tutorial extends Component {

@@ -6,7 +6,8 @@
 */
 
 import React, { Component } from "react";
-import { View, FlatList, ScrollView, Text, StyleSheet } from "react-native";
+import { View, FlatList, Text, StyleSheet } from "react-native";
+
 import baseStyles from "../../styles/baseStyles";
 
 export default class Payment extends Component {
