@@ -2,6 +2,10 @@
 #
 android/app/google-services.json
 
+#Android
+#
+android/app/my-upload-key.keystore
+
 #Lock
 #
 GoalPost/package-lock.json
