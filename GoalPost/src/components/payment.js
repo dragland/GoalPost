@@ -8,13 +8,13 @@ export default class Payment extends Component {
     let userID = this.props.userID;
     let users = this.props.users;
     let logs = this.props.logs;
-    let pot = this.props.pot;
+    let pot = this.props.pot.toFixed(2);
     let num = Object.keys(logs).length
-    let profit = pot/num;
+    let profit = (pot/num).toFixed(2);
 
     for (let i = 0; i < num; i++) {
       users[logs[i].userID].rank = i;
-      users[logs[i].userID].debt = logs[i].debt;
+      users[logs[i].userID].debt = logs[i].debt.toFixed(2);
     }
     return {userID, users, logs, pot, num, profit};
   }
@@ -44,10 +44,10 @@ export default class Payment extends Component {
         let n = users[u].user_name;
         let total = profit - d;
         if (total > 0) {
-          data.push({key: "Please pay "+n+" $"+total+".\n"});
+          data.push({key: "Please pay "+n+" $"+total.toFixed(2)+"\n"});
         }
         if (total < 0) {
-          data.push({key: "Please charge "+n+" $"+-1*total+".\n"});
+          data.push({key: "Please charge "+n+" $"+(-1*total).toFixed(2)+"\n"});
         }
       }
     }
@@ -58,15 +58,15 @@ export default class Payment extends Component {
   }
 
   getPayInText(winner, debt, profit) {
-    let total = profit - debt;
+    let total = (profit - debt).toFixed(2);
     if (total === 0) {
       return this.getCheckText();
     }
     if (total > 0) {
-      return <Text style={styles.block}>{winner} should be paying you ${total} shortly.</Text>;
+      return <Text style={styles.block}>{winner} should be paying you ${total.toFixed(2)} shortly</Text>;
     }
     else {
-      return <Text style={styles.block}>Please pay {winner} ${-1*total}.</Text>;
+      return <Text style={styles.block}>Please pay {winner} ${(-1*total).toFixed(2)}</Text>;
     }
   }
 
@@ -74,7 +74,7 @@ export default class Payment extends Component {
     let data = this.calculatePaymentInfo();
     return (
       <View>
-        <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>In order to receive your money, refer to the following instructions:</Text></Text>
+        <Text style={styles.title}><Text style={{ fontWeight: 'bold' }}>Your share of the ${data.pot} pot is ${data.profit} and your net debt is ${data.users[data.userID].debt}</Text></Text>
         <Text style={styles.break}>{"\n"}</Text>
         {this.getCashOutText(data)}
       </View>
