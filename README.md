@@ -13,6 +13,10 @@ This is where GoalPost comes in. Through GoalPost, users can create goals, like 
 
 Changing ourselves for the better can be hard, GoalPost is here to help friends empower each other to create the changes they want to see in themselves.
 
+| View your goals! | Check into Goals! | Complete goals & earn money! | Create & join more goals with friends! |
+| ----- | ----- | ------ | ------ |
+| ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_home.png) | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_active.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_complete_cashout.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_pending.png) |
+
 # Documentation
 [Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
 
