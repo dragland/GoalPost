@@ -197,6 +197,8 @@ const styles = StyleSheet.create({
     flex: 0.7,
     backgroundColor: "#FFF",
     borderRadius: 10,
-    padding: 20
+    paddingHorizontal: 15,
+    paddingTop: 15,
+    paddingBottom: 10
   }
 });

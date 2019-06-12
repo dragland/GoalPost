@@ -121,9 +121,6 @@ class CompleteGoal extends React.Component {
 const styles = StyleSheet.create({
   modalView: {
     flex: 0.7,
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    padding: 10
   }
 });
 
