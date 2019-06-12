@@ -85,11 +85,11 @@ class CompleteGoal extends React.Component {
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} />
-        <View style={{ flex: 0.3, alignSelf: "stretch" }}>
+        <View style={{ flex: 0.3, alignSelf: "stretch", paddingHorizontal: 20 }}>
           <Text style={baseStyles.heading}>
-            Congratulations, you got {this.getRankText()} place!
+            Congratulations, you got{"\n"}{this.getRankText()} place!
           </Text>
-          <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }} >
+          <View style={{ flex: 0.5, flexDirection: "row", justifyContent: "center" }} >
             <StandardButton
               title="Cash Out"
               containerStyle={{

@@ -189,10 +189,10 @@ class Home extends React.Component {
         </ScrollView>
         <View style={{flex: 0.11, alignSelf: "stretch", paddingHorizontal: 15 }}>
           <View style={{flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-            {this.makeButton("Make New Goal")}
             <View style={styles.fbButtonBox}>
               {facebookService.makeLogoutButton(styles.fbButton, this.logout)}
             </View>
+            {this.makeButton("Make New Goal")}
           </View>
 
         </View>
