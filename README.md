@@ -3,6 +3,8 @@
 <img src="https://github.com/StanfordCS194/GoalPost/raw/master/wiki/logo.png" width="150">
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+[Download from Play store here](https://play.google.com/store/apps/details?id=com.goalpost)
  
  # Project Synopsis
 GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition :)
