@@ -3,6 +3,8 @@
 <img src="https://github.com/StanfordCS194/GoalPost/raw/master/wiki/logo.png" width="150">
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+[Download from Play store here](https://play.google.com/store/apps/details?id=com.goalpost)
  
  # Project Synopsis
 GoalPost is a social app that incentivizes users to help reach their goals through collaborative dynamics and friendly competition :)
@@ -13,7 +15,7 @@ This is where GoalPost comes in. Through GoalPost, users can create goals, like 
 
 Changing ourselves for the better can be hard, GoalPost is here to help friends empower each other to create the changes they want to see in themselves.
 
-| Manage your goals! | Track your progress! | Complete goals & earn money! | Create & join more goals with friends! |
+| Manage your goals! | Track your progress! | Complete goals & earn money! | Create & join goals with friends! |
 | ----- | ----- | ------ | ------ |
 | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_home.png) | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_active.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_complete_cashout.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_pending.png) |
 
@@ -25,7 +27,7 @@ Changing ourselves for the better can be hard, GoalPost is here to help friends 
 # Team Members
 Member | Photo | Contributions
 --- | --- | ---
-Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150"> | <ul><li>Product design & architecture</li><li>Project management</li><li>Backend API design & architecture</li><li>State & data management</li><li>Navigation control flow </li><li>Data pipelining</li><li>Database transaction management for social goals</li><li>Systems Integration</li><li>Payment algorithm</li><li>Product deployment</li><li>Documentation</li></ul>
+Davy Ragland | <img src="https://web.stanford.edu/~dragland/davy_ragland.jpg" width="150"> | <ul><li>Product design & architecture</li><li>Project management</li><li>Backend API design & architecture</li><li>State & data management</li><li>Navigation control flow </li><li>Data pipelining</li><li>Database transaction management for social goals</li><li>Systems Integration</li><li>Payment algorithm</li><li>Product deployment</li><li>Marketing</li><li>Documentation</li></ul>
 Cherry Zou | <img src="https://i.ibb.co/wKbTpxK/IMG-2837.jpg" width="150"> | <ul><li>User experience design & architecture</li><li>Screen prototyping</li><li>User interface design, styling, & implementation</li><li>Data management</li><li>Data pipelining</li><li>Input validation & edge case handling<li>Navigational flow</li></ul>
 Jesus Cervantes | <img src = "https://pbs.twimg.com/profile_images/1065319003441098753/AbFHOZ-E_400x400.jpg" width="150"> | <ul><li>Problem statement & needfinding research</li><li>Event management</li><li>Scheduling design</li><li>Notification integration</li><li>Goal creation flow</li><li>User testing & benchmarking</li><li>Documentation</li></ul>
 Cam Thouati | <img src="https://user-images.githubusercontent.com/38739818/55916294-d2bce300-5ba0-11e9-9a47-132b7748adcf.jpeg" width="150"> | <ul><li>Facebook integration for logging in as a unique user</li><li>authentication flow & state management</li></ul>
