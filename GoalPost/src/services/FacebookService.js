@@ -40,9 +40,10 @@ class FacebookService {
     );
   }
 
-  makeLogoutButton(callback) {
+  makeLogoutButton(style, callback) {
     return (
       <LoginButton
+        style={style}
         onLogoutFinished={() => {
           callback();
         }}

@@ -9,21 +9,29 @@
 */
 
 import React from "react";
-import { Text, View, StyleSheet, RefreshControl, ScrollView, SectionList } from "react-native";
-import { Icon, ListItem } from "react-native-elements";
+import {
+  Text,
+  View,
+  StyleSheet,
+  RefreshControl,
+  ScrollView,
+  SectionList
+} from "react-native";
+import { Icon, ListItem, Button } from "react-native-elements";
 import { NavigationEvents } from "react-navigation";
-import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from "react-native-loading-spinner-overlay";
 
 import baseStyles from "../../styles/baseStyles";
 
 import CreateGoalButton from "../components/createGoalButton";
+import StandardButton from "../components/standardButton";
 
 import { Cloud } from "../services/database";
-import { facebookService } from '../services/FacebookService';
-import { GoalManager } from '../services/goalManagement';
+import { facebookService } from "../services/FacebookService";
+import { GoalManager } from "../services/goalManagement";
 
 class Home extends React.Component {
-  state = { 
+  state = {
     userID: "",
     userName: "",
     profilePic: "",
@@ -43,7 +51,9 @@ class Home extends React.Component {
     return (
       <ListItem
         title={item.goalName}
-        subtitle={"You have participated in this goal " + item.numTasks + " times!"}
+        subtitle={
+          "You have participated in this goal " + item.numTasks + " times!"
+        }
         onPress={() => {
           if (title == "Active Goals") {
             this.props.navigation.navigate("ActiveGoal", {
@@ -64,6 +74,7 @@ class Home extends React.Component {
           }
         }}
         leftIcon=<Icon name="flag" type="font-awesome" color={color} />
+        containerStyle={{ marginHorizontal: 5 }}
         chevron
       />
     );
@@ -80,7 +91,10 @@ class Home extends React.Component {
     const user = await Cloud.loadUser(userID);
     const active = await GoalManager.getGoalNames(userID, user.active_goals);
     const pending = await GoalManager.getGoalNames(userID, user.pending_goals);
-    const completed = await GoalManager.getGoalNames(userID, user.completed_goals);
+    const completed = await GoalManager.getGoalNames(
+      userID,
+      user.completed_goals
+    );
 
     this.setState({
       userID: userID,
@@ -94,10 +108,40 @@ class Home extends React.Component {
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     this.populateGoalLists().then(() => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
     });
+  };
+
+  makeButton = title => {
+    title = title.toUpperCase();
+    return (
+      <Button
+        title={title}
+        titleStyle={{
+          color: "#FFF",
+          fontSize: 17,
+          lineHeight: 18
+        }}
+        buttonStyle={{
+          // backgroundColor: "#BABABA",
+          backgroundColor: "#4dd796",
+          borderColor: "#FFF",
+          borderWidth: 1,
+          borderRadius: 15
+        }}
+        containerStyle={{ 
+          width: 200
+        }}
+        onPress={() =>
+          this.props.navigation.navigate("CreateGoal", {
+            userID: this.state.userID
+          })
+        }
+        type="clear"
+      />
+    );
   }
 
   render() {
@@ -105,85 +149,105 @@ class Home extends React.Component {
       return (
         <View style={styles.screen}>
           <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
-          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+          <Spinner
+            visible
+            textContent={"Loading..."}
+            textStyle={{ color: "#FFF" }}
+          />
         </View>
       );
     }
     return (
-      <View style={styles.screen}>
+      <View style={baseStyles.flatScreen}>
         <NavigationEvents onDidFocus={() => this.populateGoalLists()} />
-        <View style={{ flex: 0.17, flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flex: 0.8 }}>
-            <Text style={baseStyles.heading2}>
-              Hi, {this.state.userName}!{"\n"}Here are your Goals
-            </Text>
-          </View>
-          <CreateGoalButton
-            userID={this.state.userID}
-            navigation={this.props.navigation}
-          />
+        <View style={styles.titleBox}>
+          <Text style={styles.title}>
+            Hi, {this.state.userName}!{"\n"}Here are your Goals
+          </Text>
         </View>
-        <View
-          style={{
-            flex: 0.83,
-            borderTopWidth: 2,
-            borderTopColor: "#444",
-            borderBottomWidth: 4,
-            borderBottomColor: "#DDD"
-          }}
-        >
-          <ScrollView
-            refreshControl={ 
-              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
-          }>
-            <SectionList
-              sections={[
-                { title: "Active Goals", data: this.state.active },
-                { title: "Pending Invites", data: this.state.pending },
-                { title: "Completed Goals", data: this.state.completed }
-              ]}
-              renderItem={this.renderItem}
-              renderSectionHeader={({ section }) => (
-                <Text style={styles.sectionHeader}>{section.title}</Text>
-              )}
-              keyExtractor={(item, index) => index}
+        <ScrollView
+          style={styles.scrollView}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
             />
-          </ScrollView>
-        </View>
+          }
+        >
+          <SectionList
+            sections={[
+              { title: "Active Goals", data: this.state.active },
+              { title: "Pending Invites", data: this.state.pending },
+              { title: "Completed Goals", data: this.state.completed }
+            ]}
+            renderItem={this.renderItem}
+            renderSectionHeader={({ section }) => (
+              <Text style={styles.sectionHeader}>{section.title}</Text>
+            )}
+            keyExtractor={(item, index) => index}
+          />
+        </ScrollView>
+        <View style={{flex: 0.11, alignSelf: "stretch", paddingHorizontal: 15 }}>
+          <View style={{flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+            {this.makeButton("Make New Goal")}
+            <View style={styles.fbButtonBox}>
+              {facebookService.makeLogoutButton(styles.fbButton, this.logout)}
+            </View>
+          </View>
 
-        <View style={styles.container}>
-          {facebookService.makeLogoutButton(() => {
-              this.logout();
-          })}
         </View>
-
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1
+  titleBox: {
+    flex: 0.19,
+    alignSelf: "stretch",
+    backgroundColor: "#4dd796",
+    paddingTop: 30,
+    paddingHorizontal: 20,
+    elevation: 5
+  },
+  title: {
+    color: "#FFF",
+    fontSize: 32,
+    fontWeight: "400",
+    textAlign: "left"
+  },
+  scrollView: {
+    flex: 0.7,
+    alignSelf: "stretch"
   },
   sectionHeader: {
     paddingTop: 2,
-    paddingLeft: 10,
+    paddingLeft: 20,
     paddingRight: 10,
     paddingBottom: 2,
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "300",
     backgroundColor: "#EEE"
   },
-  buttonStyle: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    justifyContent: "flex-start"
+  fbButtonBox: {
+    justifyContent: "center",
+    alignItems: "center",
+
+    //backgroundColor: "#BABABA",
+    backgroundColor: "#4dd796",
+    borderColor: "#FFF",
+    borderWidth: 1,
+    borderRadius: 15,
+
+    paddingVertical: 3,
+    paddingHorizontal: 40,
   },
-  titleStyle: {
-    color: "#484848",
-    textAlign: "left"
+  fbButton: {
+    height: 30,
+    width: 85,
+    //backgroundColor: "#4dd796",
+    backgroundColor: "transparent",
+    transform: [{ scaleY: 1.4 }, { scaleX: 1.4 }]
   }
 });
 

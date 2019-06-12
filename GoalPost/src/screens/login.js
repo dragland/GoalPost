@@ -10,9 +10,14 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
-import { AccessToken, GraphRequest, GraphRequestManager, LoginButton } from "react-native-fbsdk";
+import {
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+  LoginButton
+} from "react-native-fbsdk";
 import { NavigationEvents } from "react-navigation";
-import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from "react-native-loading-spinner-overlay";
 import Modal from "react-native-modal";
 
 import baseStyles from "../../styles/baseStyles";
@@ -32,45 +37,52 @@ export default class Login extends React.Component {
   state = {
     loggedIn: false,
     isModalVisible: false,
-    spinner: true,
+    spinner: true
   };
 
   startTimer = () => {
     this.interval = setInterval(this.login, 200);
-  }
+  };
 
-  callNav = (profile) => {
+  callNav = profile => {
     clearInterval(this.interval);
     this.props.navigation.navigate("Home", { userID: profile.id });
-    this.setState({spinner: false});
-  }
+    this.setState({ spinner: false });
+  };
 
   login = async () => {
     const token = await AccessToken.getCurrentAccessToken();
     if (token) {
-      this.setState({spinner: true});
+      this.setState({ spinner: true });
       // let result = await facebookService.fetchProfile();
-      const infoRequest = new GraphRequest('/me', null, async (error, result) => {
-        if (error) {
-          alert(error);
-        } else {
-          const r = await Cloud.loginUser(result.id, result.name, "https://graph.facebook.com/" + result.id + "/picture");
-          this.callNav(result);
+      const infoRequest = new GraphRequest(
+        "/me",
+        null,
+        async (error, result) => {
+          if (error) {
+            alert(error);
+          } else {
+            const r = await Cloud.loginUser(
+              result.id,
+              result.name,
+              "https://graph.facebook.com/" + result.id + "/picture"
+            );
+            this.callNav(result);
+          }
         }
-      });
+      );
       new GraphRequestManager().addRequest(infoRequest).start();
+    } else {
+      this.setState({ spinner: false });
     }
-    else {
-      this.setState({spinner: false});
-    }
-  }
+  };
 
   makeButton = title => {
     title = "  " + title.toUpperCase() + "  ";
     return (
       <Button
         title={title}
-        titleStyle={{ 
+        titleStyle={{
           color: "#FFF",
           fontSize: 20,
           letterSpacing: 1
@@ -85,7 +97,7 @@ export default class Login extends React.Component {
         type="clear"
       />
     );
-  }
+  };
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -96,7 +108,11 @@ export default class Login extends React.Component {
       return (
         <View style={styles.screen}>
           <NavigationEvents onDidFocus={this.startTimer} />
-          <Spinner visible textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+          <Spinner
+            visible
+            textContent={"Loading..."}
+            textStyle={{ color: "#FFF" }}
+          />
         </View>
       );
     }
@@ -106,22 +122,29 @@ export default class Login extends React.Component {
         <View style={styles.titleBox}>
           <Text style={styles.title}>Welcome to GoalPost!</Text>
         </View>
-        <View style={styles.buttonBox}>
-          {this.makeButton("User Guide")}
-        </View>
-            <Modal 
-              propagateSwipe
-              isVisible={this.state.isModalVisible}
-              onBackButtonPress={this.toggleModal}
-              onBackdropPress={this.toggleModal}
-            >
-              <View style={styles.modalView}>
-                <Tutorial />
-                <Button title="Got it" titleStyle={{ fontSize: 18 }} containerStyle={{ height: 60, justifyContent: "center" }} onPress={this.toggleModal} type='clear' />
-              </View>
-            </Modal>
+        <View style={styles.buttonBox}>{this.makeButton("User Guide")}</View>
+        <Modal
+          propagateSwipe
+          isVisible={this.state.isModalVisible}
+          onBackButtonPress={this.toggleModal}
+          onBackdropPress={this.toggleModal}
+        >
+          <View style={styles.modalView}>
+            <Tutorial />
+            <Button
+              title="Got it"
+              titleStyle={{ fontSize: 18 }}
+              containerStyle={{ height: 60, justifyContent: "center" }}
+              onPress={this.toggleModal}
+              type="clear"
+            />
+          </View>
+        </Modal>
         <View style={styles.fbButtonBox}>
-          <LoginButton style={styles.fbButton} readPermissions={["public_profile"]} />
+          <LoginButton
+            style={styles.fbButton}
+            readPermissions={["public_profile"]}
+          />
         </View>
       </View>
     );
@@ -139,7 +162,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 60,
     fontWeight: "400",
-    textAlign: "left",
+    textAlign: "left"
   },
   buttonBox: {
     top: "67%", // "57%",
@@ -154,7 +177,7 @@ const styles = StyleSheet.create({
     borderColor: "#FFF",
     borderWidth: 1.3,
     borderRadius: 25,
-    
+
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
@@ -162,20 +185,17 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingVertical: 1,
 
-    transform: [
-      { scaleY: 1.5 },
-      { scaleX: 1.5 },
-    ],
+    transform: [{ scaleY: 1.5 }, { scaleX: 1.5 }],
     zIndex: 100
   },
   fbButton: {
     height: 30, // 50,
     width: 190, //280,
-    backgroundColor: "transparent",
+    backgroundColor: "transparent"
   },
   modalView: {
     flex: 0.7,
-    backgroundColor: '#FFF',
-    borderRadius: 10,
+    backgroundColor: "#FFF",
+    borderRadius: 10
   }
 });
