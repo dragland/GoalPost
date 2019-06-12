@@ -20,7 +20,9 @@ Changing ourselves for the better can be hard, GoalPost is here to help friends 
 | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_home.png) | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_active.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_complete_cashout.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_pending.png) |
 
 # Documentation
-[Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
+[Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQtTpBaCZgE5vn4RMUQUb66PcugORHVo4PZK_RZM0OliYvAB0FzNAtZ9w-H3_n0DfjMWU8qA5lKFiKu/pub?start=true&loop=true&delayms=3000)
+
+[Demo slides abridged](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
 
 [Project Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
   
@@ -51,8 +53,5 @@ Cam Thouati de Tazoult | C++, Java, Blockchain, RDBMS, React | short | backend, 
     * <cameron8@stanford.edu>
     
 ***
-# Team Presentation Links
-* [Short form Slide Deck](https://docs.google.com/presentation/d/1crxI95b6uK0n9s_NWTLjI1SAwbZ6kGnbaIVZEMECVYA/edit?usp=sharing)
-* [Long form Slide Deck](https://docs.google.com/presentation/d/1Pv35EPJJizW-sWB3J4vASOelKeZ9vEYVgwYr_033rW0/edit?usp=sharing) 
 
 Made with ❤ in Stanford, CA
