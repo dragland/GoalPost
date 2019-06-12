@@ -131,9 +131,7 @@ class Home extends React.Component {
           borderWidth: 1,
           borderRadius: 15
         }}
-        containerStyle={{ 
-          width: 180
-        }}
+        containerStyle={{ width: 180 }}
         onPress={() =>
           this.props.navigation.navigate("CreateGoal", {
             userID: this.state.userID

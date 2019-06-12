@@ -49,6 +49,19 @@ class goalManager {
 		return dates;
 	}
 
+        getNextDate(userID, eventTimes, userLogs) {
+          var nextDate = null;
+          const today = new Date();
+          for (var i = 0; i < eventTimes.length; i++) {
+            const date = eventTimes[i].toDate();
+            if (date > today) {
+              nextDate = date;
+              break;
+            }
+          }
+          return nextDate;
+        }
+
 	getEventIndex(userID, eventTimes, userLogs) {
 		var eventIndex = -1;
 		const today = new Date();
