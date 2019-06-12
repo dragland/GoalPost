@@ -85,11 +85,11 @@ class CompleteGoal extends React.Component {
     return (
       <View style={baseStyles.flatScreen}>
         <GoBackButton navigation={this.props.navigation} />
-        <View style={{ flex: 0.3, alignSelf: "stretch", paddingHorizontal: 20 }}>
+        <View style={{ flex: 0.25, alignSelf: "stretch", paddingHorizontal: 20 }}>
           <Text style={baseStyles.heading}>
             Congratulations, you got{"\n"}{this.getRankText()} place!
           </Text>
-          <View style={{ flex: 0.5, flexDirection: "row", justifyContent: "center" }} >
+          <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }} >
             <StandardButton
               title="Cash Out"
               containerStyle={{
@@ -112,7 +112,7 @@ class CompleteGoal extends React.Component {
             </Modal>
           </View>
         </View>
-        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} pot={this.state.pot} flex={0.65} />
+        <Leaderboard users={this.state.userMap} logs={this.state.userLogs} pot={this.state.pot} flex={0.75} />
       </View>
     );
   }
