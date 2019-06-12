@@ -74,13 +74,11 @@ class PendingGoal extends React.Component {
       this.state.userMap[this.state.userID].user_name,
       this.state.goalID
     );
-    this.props.navigation.state.params.refresh();
     this.props.navigation.goBack();
   };
 
   rejectGoal = async () => {
     await Cloud.rejectPendingGoal(this.state.userID, this.state.goalID);
-    this.props.navigation.state.params.refresh();
     this.props.navigation.goBack();
   };
 
