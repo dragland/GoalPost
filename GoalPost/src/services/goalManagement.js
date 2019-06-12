@@ -50,16 +50,14 @@ class goalManager {
 	}
 
         getNextDate(userID, eventTimes, userLogs) {
-          var nextDate = null;
           const today = new Date();
           for (var i = 0; i < eventTimes.length; i++) {
             const date = eventTimes[i].toDate();
             if (date > today) {
-              nextDate = date;
-              break;
+              return date;
             }
           }
-          return nextDate;
+          return new Date(0); // lets user know today was last date
         }
 
 	getEventIndex(userID, eventTimes, userLogs) {

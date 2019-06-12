@@ -60,46 +60,66 @@ class ActiveGoal extends React.Component {
     await this.queryGoal();
   };
 
-  topText = () => {
-    if (this.state.yesNoDisabled) {
-      return "Your next goal will be on:";
-    }
-    return "Did you complete today's goal?";
-  };
-
   topContent = () => {
     if (this.state.yesNoDisabled && this.state.nextEventTime) {
+      if (this.state.nextEventTime.getTime() == new Date(0).getTime()) {
+        return (
+          <View style={{ flex: 1, paddingHorizontal: 10, paddingTop: 20 }}>
+            <Text style={baseStyles.text}>
+              You've completed all the tasks for this goal! Wait for all your
+              teammates to check in.
+            </Text>
+          </View>
+        );
+      }
       return (
-        <View style={{ flex: 1, flexDirection: "row", justifyContent: "center", paddingTop: 20 }}>
-          <Text style={{fontSize: 30}}>{this.state.nextEventTime.toDateString()}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={baseStyles.text}>Your next goal will be on:</Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingTop: 20
+            }}
+          >
+            <Text style={{ fontSize: 30 }}>
+              {this.state.nextEventTime.toDateString()}
+            </Text>
+          </View>
         </View>
       );
     }
     return (
-      <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
-        <StandardButton
-          title="Yes"
-          containerStyle={{
-            alignSelf: "center",
-            width: 100,
-            marginTop: 20,
-            marginHorizontal: 15
-          }}
-          onPress={this.registerYes}
-          disabled={this.state.yesNoDisabled}
-          color
-        />
-        <StandardButton
-          title="No"
-          containerStyle={{
-            alignSelf: "center",
-            width: 100,
-            marginTop: 20,
-            marginHorizontal: 15
-          }}
-          onPress={this.registerNo}
-          disabled={this.state.yesNoDisabled}
-        />
+      <View style={{ flex: 1 }}>
+        <Text style={baseStyles.text}>Did you complete today's goal?</Text>
+        <View
+          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
+        >
+          <StandardButton
+            title="Yes"
+            containerStyle={{
+              alignSelf: "center",
+              width: 100,
+              marginTop: 20,
+              marginHorizontal: 15
+            }}
+            onPress={this.registerYes}
+            disabled={this.state.yesNoDisabled}
+            color
+          />
+          <StandardButton
+            title="No"
+            containerStyle={{
+              alignSelf: "center",
+              width: 100,
+              marginTop: 20,
+              marginHorizontal: 15
+            }}
+            onPress={this.registerNo}
+            disabled={this.state.yesNoDisabled}
+          />
+        </View>
       </View>
     );
   };
@@ -125,9 +145,13 @@ class ActiveGoal extends React.Component {
 
     nextEventTime = null;
     if (disable) {
-      nextEventTime = GoalManager.getNextDate(this.state.userID, goal.event_times, goal.user_logs);
+      nextEventTime = GoalManager.getNextDate(
+        this.state.userID,
+        goal.event_times,
+        goal.user_logs
+      );
     }
-    
+
     this.setState({
       eventIndex: eventIndex,
       nextEventTime: nextEventTime,
@@ -162,7 +186,6 @@ class ActiveGoal extends React.Component {
         <View style={{ flex: 0.3, alignSelf: "stretch" }}>
           <Text style={baseStyles.text}>Current GoalPost:</Text>
           <Text style={baseStyles.heading}>{this.state.goalName}</Text>
-          <Text style={baseStyles.text}>{this.topText()}</Text>
           {this.topContent()}
         </View>
         <Leaderboard
