@@ -10,5 +10,5 @@
 
 import { AppRegistry } from 'react-native';
 import App from './App';
-console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
+console.disableYellowBox = true;
 AppRegistry.registerComponent('GoalPost', () => App);
