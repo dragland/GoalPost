@@ -26,7 +26,7 @@ export default class Tutorial extends Component {
           Is there something you always wanted to achieve that felt far away?
           Take your first baby steps by creating a goal!
           {"\n\n"}
-          By clicking on the big plus button at the top of the home page, you
+          By clicking on the "make new goal" button at the bottom of the home page, you
           will be able to create a goal that you want to accomplish.
           {"\n\n"}
           You can select when you want it to start, when you want it to end, and
