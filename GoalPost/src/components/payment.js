@@ -66,7 +66,7 @@ export default class Payment extends Component {
   }
 
   getPayInText(winner, debt, profit) {
-    let total = (profit - debt).toFixed(2);
+    let total = profit - debt;
     if (total === 0) {
       return this.getCheckText();
     }
