@@ -132,7 +132,7 @@ class Home extends React.Component {
           borderRadius: 15
         }}
         containerStyle={{ 
-          width: 200
+          width: 180
         }}
         onPress={() =>
           this.props.navigation.navigate("CreateGoal", {
