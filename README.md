@@ -1,6 +1,6 @@
 # GoalPost
 
-<img src="https://github.com/StanfordCS194/GoalPost/raw/master/wiki/logo.png" width="150">
+<img src="https://github.com/dragland/GoalPost/raw/master/wiki/logo.png" width="150">
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -17,14 +17,14 @@ Changing ourselves for the better can be hard, GoalPost is here to help friends 
 
 | Manage your goals! | Track your progress! | Complete goals & earn money! | Create & join goals with friends! |
 | ----- | ----- | ------ | ------ |
-| ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_home.png) | ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_active.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_complete_cashout.png) |  ![](https://github.com/StanfordCS194/GoalPost/blob/master/wiki/screen_pending.png) |
+| ![](https://github.com/dragland/GoalPost/blob/master/wiki/screen_home.png) | ![](https://github.com/dragland/GoalPost/blob/master/wiki/screen_active.png) |  ![](https://github.com/dragland/GoalPost/blob/master/wiki/screen_complete_cashout.png) |  ![](https://github.com/dragland/GoalPost/blob/master/wiki/screen_pending.png) |
 
 # Documentation
 [Demo slides](https://docs.google.com/presentation/d/e/2PACX-1vQtTpBaCZgE5vn4RMUQUb66PcugORHVo4PZK_RZM0OliYvAB0FzNAtZ9w-H3_n0DfjMWU8qA5lKFiKu/pub?start=true&loop=true&delayms=3000)
 
 [Demo slides abridged](https://docs.google.com/presentation/d/e/2PACX-1vQfrQ9KbgRG5zrJu_vrHvydWDV2OzH7VlAKknjQbSM2B7bRFt3W5N-8RbaTG9iH3kXYAHl8biiLEasx/pub?start=true&loop=true&delayms=3000)
 
-[Project Wiki](https://github.com/StanfordCS194/GoalPost/wiki)
+[Project Wiki](https://github.com/dragland/GoalPost/wiki)
   
 # Team Members
 Member | Photo | Contributions
